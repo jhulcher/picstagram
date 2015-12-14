@@ -1,8 +1,6 @@
 # Picstagram
 
-[Picstagram Link][heroku]
-This domain's app is hosted via Heroku but accessed via www.picstagram.us.
-[heroku]: www.picstagram.us
+www.picstagram.us
 
 
 ## Minimum Viable Product
