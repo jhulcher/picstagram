@@ -7,6 +7,7 @@ id              | integer   | not null, primary key
 user_name       | string    | not null, unique, indexed
 password_digest | string    | not null
 session_token   | string    | not null, unique, indexed
+session_token   | string    | not null, unique, indexed
 
 
 ## Pics (via cloudinary)
