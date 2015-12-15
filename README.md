@@ -78,7 +78,7 @@ the image.
 
 [Details][phase-five]
 
-### Phase 6: CSS Beautification - approx. 1 day
+### Phase 6: CSS Beautification - approx. 1 day + Holiday Break
 
 I will employ CSS to style the site, centering everything. I want the site to
 have a very polished and professional appearance, potentially using drop

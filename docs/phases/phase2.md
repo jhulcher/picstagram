@@ -16,4 +16,5 @@
 * api/users/follows/index.json.jbuilder
 
 ### Gems
-* Paperclip (Initial research indicates this gem may help for image storage)
+* Cloudinary
+* Figaro

@@ -9,7 +9,6 @@
 
 ### Stores
 * Pics
-* Follows
 
 ### Actions
 * ApiActions.receiveAllPics
