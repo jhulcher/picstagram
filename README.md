@@ -28,11 +28,10 @@ Users should be able to do the following:
 ## Implementation Timeline
 
 
-### Phase 1: User, Sessions: Models, Controllers, JSON API - approx. 1 days
+### Phase 1: User, Sessions: Models, Controllers - approx. 1 days
 
 A 'User' model and controller in order to allow users to create an account and
-to sign-in/sign-out. A Sessions controller will be created. I will create JSON
-API views for user sign-up and sign-in.
+to sign-in/sign-out. A Sessions controller will be created.
 
 [Details][phase-one]
 
