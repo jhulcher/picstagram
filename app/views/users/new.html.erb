@@ -1,27 +1,39 @@
+
+
 <div class="tall wide">
   <center>
     <div class="vert_center wide">
       <h1>Picstagram</h1>
-      <h4>Sign Up:</h4>
       <form action="<%= users_url %>" method="post">
         <%= auth_token_input %>
-        <label>
-          <input type="text"
-                  name="user[username]"
-                  placeholder='Username'
-                  value="">
-        </label>
-        <br></br>
-        <label>
-          <input type="password"
-                 name="user[password]"
-                 placeholder='Password'
-                 value="">
-        </label>
-        <br></br>
-        <input type="submit" value="Sign Up!" class="login">
-        <br></br>
-        <%= link_to "Already registered?  Sign In!", new_sessions_url %>
+          <table class="bottom_pad">
+            <tr>
+              <td>
+                <input type="text"
+                        name="user[username]"
+                        placeholder='Username'
+                        value="">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="bottom_pad">
+                  <input type="password"
+                         name="user[password]"
+                         placeholder='Password'
+                         value=""
+                         class="bottom_pad">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="submit" value="Sign Up!" class="login">
+              </td>
+            </tr>
+          </table>
+          <div class="bottom_pad"> </div>
+      Already registered? &nbsp; <%= link_to "Sign In!", new_sessions_url, :class => "under" %>
       </form>
     </div>
   </center>
