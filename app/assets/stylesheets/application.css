@@ -15,7 +15,7 @@
  */
  html, body, header, nav, h1, a,
  ul, li, strong, main, button, i,
- section, img, div, h2, p, form,
+ section, img, div, h2, h4, button, p, form,
  fieldset, label, input, textarea,
  span, article, footer, time, small {
    margin: 0;
@@ -29,10 +29,25 @@
    /*vertical-align: inherit;*/
    box-sizing: inherit;
    background: transparent;
+   font-family: montserrat;
+ }
+
+ h4 {
+   padding: 10px;
  }
 
  ul {
    list-style: none;
+ }
+
+ html {
+   height: 100%;
+   width: 100%;
+ }
+
+ body {
+   height: 100%;
+   width: 100%
  }
 
  img {
@@ -57,16 +72,22 @@
 
  input[type="text"],
  textarea {
-   border: 1px solid black;
+   border: 1px solid grey;
    text-align: left;
+   width: 165px;
+   font-size: 15px;
+   padding: 0px 0px 2px 5px;
    -webkit-appearance: none;
    -moz-appearance: none;
  }
 
  input[type="password"],
  textarea {
-   border: 1px solid black;
+   border: 1px solid grey;
    text-align: left;
+   width: 165px;
+   font-size: 15px;
+   padding: 0px 0px 2px 5px;
    -webkit-appearance: none;
    -moz-appearance: none;
  }
@@ -74,16 +95,43 @@
  button,
  input[type="submit"] {
    cursor: pointer;
+   padding: 1px 0px 1px 0px;
+   -webkit-appearance: none;
+   -moz-appearance: none;
  }
 
-  /*.parent {
-    position: relative;
-  }
-  .child {
+ .login {
+   color: white;
+   border-radius: 5px;
+   border: 1px solid #2a8cef;
+   background: #2a8cef;
+   box-shadow: 1px 1px #474747;
+   width: 165px;
+ }
+
+ h1 {
+   color: #2a8cef;
+   font-family: courgette;
+   padding: 10px;
+   font-weight: bold;
+   font-size: 50px;
+   text-shadow: 1px 1px #474747;
+   /*padding: 5px;*/
+ }
+
+ .tall {
+   height: 100%;
+ }
+
+ .wide {
+   width: 100%;
+ }
+
+  .vert_center {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-  }*/
+  }
 
 
  /* Clearfix */
@@ -93,3 +141,8 @@
    display: block;
    clear: both;
  }
+
+ @font-face {
+    font-family: 'title';
+    src: url('http://domain.com/fonts/font.ttf');
+}
