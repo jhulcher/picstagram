@@ -1,28 +1,38 @@
 <div class="tall wide">
-<center>
-  <div class="vert_center wide">
-    <h1>Picstagram</h1>
-    <h4>Sign In:</h4>
-    <form action="<%= sessions_url %>" method="post">
-      <%= auth_token_input %>
-      <label>
-        <input type="text"
-                name="user[username]"
-                placeholder='Username'
-                value="">
-      </label>
-      <br></br>
-      <label>
-        <input type="password"
-               name="user[password]"
-               placeholder='Password'
-               value="">
-      </label>
-      <br></br>
-      <input type="submit" value="Sign In!" class="login">
-      <br></br>
-      <%= link_to "New around here?  Sign Up!", new_user_url %>
-    </form>
-  </div>
-</center>
+  <center>
+    <div class="vert_center wide">
+      <h1>Picstagram</h1>
+      <form action="<%= sessions_url %>" method="post">
+        <%= auth_token_input %>
+          <table class="bottom_pad">
+            <tr>
+              <td>
+                <input type="text"
+                        name="user[username]"
+                        placeholder='Username'
+                        value="">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="bottom_pad">
+                  <input type="password"
+                         name="user[password]"
+                         placeholder='Password'
+                         value=""
+                         class="bottom_pad">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="submit" value="Sign In!" class="login">
+              </td>
+            </tr>
+          </table>
+          <div class="bottom_pad"> </div>
+      New around here? &nbsp; <%= link_to "Sign Up!", new_user_url, :class => "under" %>
+      </form>
+    </div>
+  </center>
 </div>
