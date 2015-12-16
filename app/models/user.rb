@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
-  # has_many :pics
+  has_many :follows,
+  primary_key: :id,
+  foreign_key: :follower_id,
+  class_name: "Follow"
 
   after_initialize :ensure_session_token
 

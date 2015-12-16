@@ -1,26 +1,28 @@
-<div class="tall">
-<center class="tall">
-  <div class="login" class="tall">
-    <h1>Picstagram</h1>
-    <h2>Sign Up!</h2>
-    <form action="<%= users_url %>" method="post">
-      <%= auth_token_input %>
-      <label>
-        <input type="text"
-                name="user[username]"
-                placeholder='Username'
-                value="">
-      </label>
-      <br></br>
-      <label>
-        <input type="password"
-               name="user[password]"
-               placeholder='Password'
-               value="">
-      </label>
-      <br></br>
-      <input type="submit" value="Sign Up">
-    </form>
-  </div>
-</center>
+<div class="tall wide">
+  <center>
+    <div class="vert_center wide">
+      <h1>Picstagram</h1>
+      <h4>Sign Up:</h4>
+      <form action="<%= users_url %>" method="post">
+        <%= auth_token_input %>
+        <label>
+          <input type="text"
+                  name="user[username]"
+                  placeholder='Username'
+                  value="">
+        </label>
+        <br></br>
+        <label>
+          <input type="password"
+                 name="user[password]"
+                 placeholder='Password'
+                 value="">
+        </label>
+        <br></br>
+        <input type="submit" value="Sign Up!" class="login">
+        <br></br>
+        <%= link_to "Already registered?  Sign In!", new_sessions_url %>
+      </form>
+    </div>
+  </center>
 </div>

@@ -2,12 +2,14 @@
 <html>
 <head>
   <title>Picstagram</title>
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>  <link href='https://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  
   <center>
     <% if signed_in? %>
     <table>
@@ -20,23 +22,11 @@
         </td>
       </tr>
     </table>
-    <% else %>
-    <table>
-      <tr>
-        <td>
-          <%= link_to "Sign In", new_sessions_url %>
-        </td>
-        <td>
-          <%= link_to "Sign Up", new_user_url %>
-        </td>
-      </tr>
-    </table>
     <% end %>
     <%= render "layouts/errors" %>
   </center>
 
-  <div class="tall">
-    <%= yield %>
-  </div>
+  <%= yield %>
+
 </body>
 </html>
