@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Picstagram</title>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>  <link href='https://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>  <link href='https://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -10,21 +10,22 @@
 </head>
 <body>
 
-  <center>
     <% if signed_in? %>
-    <table>
-      <tr>
-        <td>
-          Logged in as <%= current_user.username %>
-        </td>
-        <td>
-          <%= button_to "Sign Out", sessions_url, :method => :delete %>
-        </td>
-      </tr>
-    </table>
-    <% end %>
+      <center>
+        <table>
+          <tr>
+            <td>
+              Logged in as <%= current_user.username %>
+            </td>
+            <td>
+              <%= button_to "Sign Out", sessions_url, :method => :delete %>
+            </td>
+          </tr>
+        </table>
+        <% end %>
+      </center>
+
     <%= render "layouts/errors" %>
-  </center>
 
   <%= yield %>
 
