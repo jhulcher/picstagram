@@ -1,5 +1,6 @@
-json.array! @follows do |follow|
+json.array! @followees do |followee|
 
-  json.followed_id follow.followed_id
+  json.id followee.id
+  json.username followee.username
 
 end
