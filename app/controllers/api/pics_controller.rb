@@ -1,12 +1,8 @@
 class Api::PicsController < ApplicationController
   before_filter :require_signed_in!
 
-  # def index
-  #   @pics = User.find(params[:user_id]).pics
-  # end
-
   def index
-    @pics = current_user.pics
+    @pics = Pic.all
   end
 
   def show
