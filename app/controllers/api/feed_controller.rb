@@ -1,4 +1,4 @@
-class Api::FeedsController < ApplicationController
+class Api::FeedController < ApplicationController
   before_filter :require_signed_in!
 
   def index

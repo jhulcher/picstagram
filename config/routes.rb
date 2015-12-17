@@ -9,13 +9,8 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :follows, only: [:create, :index, :destroy]
     resources :pics, only: [:create, :destroy, :index, :show]
-
-    resources :users, only: [:index] do
-      resources :pics, only: [:index]
-    end
-
-    resources :feeds, only: [:index]
-
+    resources :users, only: [:index, :show]
+    resources :feed, only: [:index]
   end
 
 end

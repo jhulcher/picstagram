@@ -1,13 +1,12 @@
 class Api::UsersController < ApplicationController
   before_filter :require_signed_in!
 
-  # #fix: should not be current user
-  # def index
-  #   @pics = current_user.pics
-  # end
-
   def index
     @users = User.all
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   private
