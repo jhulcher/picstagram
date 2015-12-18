@@ -1,18 +1,26 @@
 var ApiUtil = require("../util/api_util.js");
 var PicStore = require("../stores/pic.js");
 var React = require("react");
+var Pic = require("./pic.jsx");
+var FeedEntry = require("./feed_entry.jsx");
 
-var UserPicsIndex = React.createClass({
+var Feed = React.createClass({
+
   getInitialState: function () {
     return (
-        { pics: [] }
+      { pics: [] }
     );
   },
 
   componentDidMount: function () {
-    PicStore.addListener(function () {
+    ApiUtil.fetchFeedForUser();
+    this.listener = PicStore.addListener(function () {
       this.setState({ pics: PicStore.all() });
     }.bind(this));
+  },
+
+  componentWillUnmount: function () {
+    this.listener.remove();
   },
 
   render: function () {
@@ -20,17 +28,16 @@ var UserPicsIndex = React.createClass({
       <ul>
         { this.state.pics.map (function (pic) {
           return (
-            <li key={pic.id} onClick={this.handleClick.bind(null, pic.id)}>
-              { pic.id }
-              { pic.username }
-              { pic.id }
-              { pic.public_id }
+            <li key={pic.id} >
+              <center>
+                <FeedEntry pic={ pic }> </FeedEntry>
+              </center>
             </li>
           );
-        }.bind(this))}
+        })}
       </ul>
     );
   }
 });
 
-module.exports = UserPicsIndex;
+module.exports = Feed;

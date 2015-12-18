@@ -1,5 +1,6 @@
 json.array! @followee_pics do |pic|
 
+  json.id pic.id
   json.username pic.user.username
   json.user_id pic.user_id
   json.public_id pic.public_id
