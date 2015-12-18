@@ -25,6 +25,7 @@ var UserIndex = React.createClass({
     this.listener.remove();
   },
 
+
   render: function () {
     return (
       <ul>
