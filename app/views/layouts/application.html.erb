@@ -4,12 +4,16 @@
   <title>Picstagram</title>
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>  <link href='https://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
     <% if signed_in? %>
+      <script type="text/javascript">
+          window.current_user_id = <%= current_user.id %>;
+      </script>
+
       <center>
         <table>
           <tr>

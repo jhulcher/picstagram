@@ -9,6 +9,13 @@ var ApiActions = {
     });
   },
 
+  receiveAllFollowees: function (followees) {
+    AppDispatcher.dispatch({
+      actionType: Constants.FOLLOWEES_RECEIVED,
+      followees: followees
+    });
+  },
+
   receiveAllPicsFromUser: function (pics) {
     AppDispatcher.dispatch({
       actionType: Constants.PICS_RECEIVED,

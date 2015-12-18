@@ -50,10 +50,12 @@
 	var UserStore = __webpack_require__(166);
 	var UserIndex = __webpack_require__(184);
 	var ReactRouter = __webpack_require__(185);
-	var User = __webpack_require__(236);
 	var PicStore = __webpack_require__(183);
 	var Pic = __webpack_require__(237);
-	var UserPicsIndex = __webpack_require__(238);
+	var Album = __webpack_require__(239);
+	var Feed = __webpack_require__(241);
+	var FeedEntry = __webpack_require__(242);
+	var FolloweesStore = __webpack_require__(243);
 	
 	var Route = ReactRouter.Route;
 	var IndexRoute = ReactRouter.IndexRoute;
@@ -75,9 +77,9 @@
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: UserIndex }),
-	  React.createElement(Route, { path: 'user', component: User }),
-	  React.createElement(Route, { path: 'pics', component: UserPicsIndex })
+	  React.createElement(IndexRoute, { component: Feed }),
+	  React.createElement(Route, { path: 'album', component: Album }),
+	  React.createElement(Route, { path: 'pic/:id', component: Pic })
 	);
 	
 	ReactDOM.render(React.createElement(
@@ -19680,6 +19682,7 @@
 	var ApiActions = __webpack_require__(160);
 	var UserStore = __webpack_require__(166);
 	var PicStore = __webpack_require__(183);
+	var FolloweesStore = __webpack_require__(243);
 	
 	var ApiUtil = {
 	  fetchUsers: function () {
@@ -19690,6 +19693,53 @@
 	      success: function (response) {
 	        ApiActions.receiveAllUsers(response);
 	        UserStore.all();
+	      }
+	    });
+	  },
+	
+	  fetchFollowees: function () {
+	    $.ajax({
+	      url: "/api/follows",
+	      method: "GET",
+	      dataType: "json",
+	      success: function (response) {
+	        ApiActions.receiveAllFollowees(response);
+	        FolloweesStore.all();
+	      }
+	    });
+	  },
+	
+	  followUser: function (id) {
+	    $.ajax({
+	      url: "/api/follows",
+	      data: { follow: { followed_id: id } },
+	      method: "POST",
+	      success: function (response) {
+	        ApiActions.receiveAllFollowees(response);
+	        FolloweesStore.all();
+	      }
+	    });
+	  },
+	
+	  unfollowUser: function (id) {
+	    $.ajax({
+	      url: "/api/follows/" + id,
+	      method: "DELETE",
+	      success: function (response) {
+	        ApiActions.receiveAllFollowees(response);
+	        FolloweesStore.all();
+	      }
+	    });
+	  },
+	
+	  fetchFeedForUser: function () {
+	    $.ajax({
+	      url: "/api/feed",
+	      method: "GET",
+	      dataType: "json",
+	      success: function (response) {
+	        ApiActions.receiveAllPicsFromUser(response);
+	        PicStore.all();
 	      }
 	    });
 	  },
@@ -19705,7 +19755,6 @@
 	      }
 	    });
 	  }
-	
 	};
 	
 	window.ApiUtil = ApiUtil;
@@ -19724,6 +19773,13 @@
 	    AppDispatcher.dispatch({
 	      actionType: Constants.USERS_RECEIVED,
 	      users: users
+	    });
+	  },
+	
+	  receiveAllFollowees: function (followees) {
+	    AppDispatcher.dispatch({
+	      actionType: Constants.FOLLOWEES_RECEIVED,
+	      followees: followees
 	    });
 	  },
 	
@@ -20060,7 +20116,8 @@
 	var Constants = {
 	
 	  USERS_RECEIVED: "USERS_RECEIVED",
-	  PICS_RECEIVED: "PICS_RECEIVED"
+	  PICS_RECEIVED: "PICS_RECEIVED",
+	  FOLLOWEES_RECEIVED: "FOLLOWEES_RECEVIED"
 	
 	};
 	
@@ -20073,7 +20130,6 @@
 	var Store = __webpack_require__(167).Store;
 	var AppDispatcher = __webpack_require__(161);
 	var CONSTANTS = __webpack_require__(165);
-	var PicStore = __webpack_require__(183);
 	
 	var _users = [];
 	
@@ -26547,23 +26603,29 @@
 	var ApiUtil = __webpack_require__(159);
 	var UserStore = __webpack_require__(166);
 	var React = __webpack_require__(1);
-	// var History = require("react-router").History;
+	var PicStore = __webpack_require__(183);
+	var FolloweesStore = __webpack_require__(243);
+	
 	var UserIndex = React.createClass({
 	  displayName: "UserIndex",
 	
-	  // mixins: [History],
 	  getInitialState: function () {
 	    return { users: [] };
 	  },
 	
 	  handleClick: function (id) {
-	    this.props.history.pushState(null, "user", { id: id });
+	    this.props.history.pushState(null, "album", { id: id });
 	  },
 	
 	  componentDidMount: function () {
 	    ApiUtil.fetchUsers();
 	    this.listener = UserStore.addListener((function () {
 	      this.setState({ users: UserStore.all() });
+	    }).bind(this));
+	
+	    ApiUtil.fetchFollowees();
+	    this.listener = FolloweesStore.addListener((function () {
+	      this.setState({ followees: FolloweesStore.all() });
 	    }).bind(this));
 	  },
 	
@@ -26572,19 +26634,40 @@
 	  },
 	
 	  render: function () {
+	    var followStatus = 0;
+	
 	    return React.createElement(
 	      "ul",
 	      null,
 	      this.state.users.map((function (user) {
 	        return React.createElement(
 	          "li",
-	          { key: user.id, onClick: this.handleClick.bind(null, user.id) },
+	          null,
 	          React.createElement(
-	            "center",
+	            "ul",
 	            null,
-	            user.username,
-	            React.createElement("br", null),
-	            React.createElement("br", null)
+	            React.createElement(
+	              "li",
+	              { key: user.id,
+	                onClick: this.handleClick.bind(null, user.id) },
+	              React.createElement(
+	                "center",
+	                null,
+	                user.username,
+	                user.id
+	              )
+	            ),
+	            React.createElement(
+	              "li",
+	              null,
+	              React.createElement(
+	                "center",
+	                null,
+	                followStatus,
+	                React.createElement("br", null),
+	                React.createElement("br", null)
+	              )
+	            )
 	          )
 	        );
 	      }).bind(this))
@@ -31361,40 +31444,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ApiUtil = __webpack_require__(159);
-	var UserStore = __webpack_require__(166);
-	var React = __webpack_require__(1);
-	
-	var User = React.createClass({
-	  displayName: "User",
-	
-	  getInitialState: function () {
-	    return { user: [] };
-	  },
-	
-	  componentDidMount: function () {
-	    this.setState({
-	      user: UserStore.find(parseInt(this.props.location.query.id))
-	    });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      "div",
-	      { key: this.state.user.id },
-	      "hi",
-	      this.state.user.id
-	    );
-	  }
-	
-	});
-	
-	module.exports = User;
-
-/***/ },
+/* 236 */,
 /* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31402,26 +31452,34 @@
 	var UserStore = __webpack_require__(166);
 	var React = __webpack_require__(1);
 	var PicStore = __webpack_require__(183);
+	var History = __webpack_require__(185).History;
 	
 	var Pic = React.createClass({
 	  displayName: "Pic",
 	
-	  getInitialState: function () {
-	    return { pic: [] };
-	  },
+	  mixins: [History],
 	
-	  componentDidMount: function () {
-	    this.setState({
-	      pic: PicStore.find(parseInt(this.props.location.query.id))
-	    });
+	  getInitialState: function () {
+	    return { pic: PicStore.find(parseInt(this.props.params.id)) };
 	  },
 	
 	  render: function () {
 	    return React.createElement(
-	      "div",
-	      { key: this.state.pic.id },
-	      "hey there",
-	      this.state.pic.id
+	      "center",
+	      null,
+	      React.createElement(
+	        "div",
+	        { key: this.state.pic.id },
+	        "this is a pic by ",
+	        this.state.pic.username,
+	        React.createElement("br", null),
+	        "pic id: ",
+	        this.state.pic.id,
+	        React.createElement("br", null),
+	        this.state.pic.publics_id,
+	        React.createElement("br", null),
+	        this.state.pic.created_at
+	      )
 	    );
 	  }
 	
@@ -31430,45 +31488,260 @@
 	module.exports = Pic;
 
 /***/ },
-/* 238 */
+/* 238 */,
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ApiUtil = __webpack_require__(159);
 	var PicStore = __webpack_require__(183);
 	var React = __webpack_require__(1);
+	var AlbumEntry = __webpack_require__(240);
+	var FolloweesStore = __webpack_require__(243);
 	
-	var UserPicsIndex = React.createClass({
-	  displayName: "UserPicsIndex",
+	var Album = React.createClass({
+	  displayName: "Album",
 	
 	  getInitialState: function () {
 	    return { pics: [] };
 	  },
 	
 	  componentDidMount: function () {
-	    PicStore.addListener((function () {
+	    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
+	    this.listener = PicStore.addListener((function () {
 	      this.setState({ pics: PicStore.all() });
 	    }).bind(this));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
 	  },
 	
 	  render: function () {
 	    return React.createElement(
 	      "ul",
 	      null,
-	      this.state.pics.map((function (pic) {
+	      React.createElement(
+	        "li",
+	        null,
+	        this.state.pics.username
+	      ),
+	      this.state.pics.map(function (pic) {
 	        return React.createElement(
 	          "li",
-	          { key: pic.id, onClick: this.handleClick.bind(null, pic.id) },
-	          pic.id,
-	          pic.username,
-	          pic.id,
-	          pic.public_id
+	          { key: pic.id },
+	          React.createElement(
+	            "center",
+	            null,
+	            React.createElement(
+	              AlbumEntry,
+	              { pic: pic },
+	              " "
+	            )
+	          )
 	        );
-	      }).bind(this))
+	      })
 	    );
 	  }
 	});
 	
-	module.exports = UserPicsIndex;
+	module.exports = Album;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(159);
+	var UserStore = __webpack_require__(166);
+	var React = __webpack_require__(1);
+	var PicStore = __webpack_require__(183);
+	var History = __webpack_require__(185).History;
+	var cur = window.current_user_id;
+	
+	var AlbumEntry = React.createClass({
+	  displayName: "AlbumEntry",
+	
+	  mixins: [History],
+	
+	  handleClick: function () {
+	    this.history.pushState(null, "pic/" + this.props.pic.id);
+	  },
+	
+	  handleUserClick: function () {
+	    this.history.pushState(null, "album", { id: this.props.pic.user_id });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "center",
+	      null,
+	      React.createElement("br", null),
+	      React.createElement(
+	        "div",
+	        { key: this.props.pic.id, onClick: this.handleClick },
+	        "pic id: ",
+	        this.props.pic.id,
+	        React.createElement("br", null),
+	        "url: ",
+	        this.props.pic.public_id,
+	        React.createElement("br", null),
+	        "time since; ",
+	        this.props.pic.created_at,
+	        React.createElement("br", null),
+	        React.createElement("br", null)
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = AlbumEntry;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(159);
+	var PicStore = __webpack_require__(183);
+	var React = __webpack_require__(1);
+	var Pic = __webpack_require__(237);
+	var FeedEntry = __webpack_require__(242);
+	
+	var Feed = React.createClass({
+	  displayName: "Feed",
+	
+	  getInitialState: function () {
+	    return { pics: [] };
+	  },
+	
+	  componentDidMount: function () {
+	    ApiUtil.fetchFeedForUser();
+	    this.listener = PicStore.addListener((function () {
+	      this.setState({ pics: PicStore.all() });
+	    }).bind(this));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "ul",
+	      null,
+	      this.state.pics.map(function (pic) {
+	        return React.createElement(
+	          "li",
+	          { key: pic.id },
+	          React.createElement(
+	            "center",
+	            null,
+	            React.createElement(
+	              FeedEntry,
+	              { pic: pic },
+	              " "
+	            )
+	          )
+	        );
+	      })
+	    );
+	  }
+	});
+	
+	module.exports = Feed;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(159);
+	var UserStore = __webpack_require__(166);
+	var React = __webpack_require__(1);
+	var PicStore = __webpack_require__(183);
+	var History = __webpack_require__(185).History;
+	var cur = window.current_user_id;
+	
+	var FeedEntry = React.createClass({
+	  displayName: "FeedEntry",
+	
+	  mixins: [History],
+	
+	  handleClick: function () {
+	    this.history.pushState(null, "pic/" + this.props.pic.id);
+	  },
+	
+	  handleUserClick: function () {
+	    this.history.pushState(null, "album", { id: this.props.pic.user_id });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "center",
+	      null,
+	      React.createElement(
+	        "div",
+	        { onClick: this.handleUserClick.bind(null, this.props.pic.user_id) },
+	        this.props.pic.username
+	      ),
+	      React.createElement("br", null),
+	      React.createElement(
+	        "div",
+	        { key: this.props.pic.id, onClick: this.handleClick },
+	        "pic id: ",
+	        this.props.pic.id,
+	        React.createElement("br", null),
+	        "url: ",
+	        this.props.pic.public_id,
+	        React.createElement("br", null),
+	        "time since; ",
+	        this.props.pic.created_at,
+	        React.createElement("br", null),
+	        React.createElement("br", null)
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = FeedEntry;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(167).Store;
+	var AppDispatcher = __webpack_require__(161);
+	var CONSTANTS = __webpack_require__(165);
+	
+	var _followees = [];
+	
+	var FolloweesStore = new Store(AppDispatcher);
+	
+	var resetFollowees = function (followees) {
+	  _followees = followees;
+	};
+	
+	FolloweesStore.find = function (id) {
+	  for (var x = 0; x < _followees.length; x++) {
+	    if (_followees[x].id === id) {
+	      return _followees[x];
+	    }
+	  }
+	};
+	
+	FolloweesStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case CONSTANTS.FOLLOWEES_RECEIVED:
+	      resetFollowees(payload.followees);
+	      FolloweesStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	FolloweesStore.all = function () {
+	  return _followees.slice(0);
+	};
+	
+	window.FolloweesStore = FolloweesStore;
+	
+	module.exports = FolloweesStore;
 
 /***/ }
 /******/ ]);

@@ -1,7 +1,6 @@
 var Store = require("flux/utils").Store;
 var AppDispatcher = require("../dispatcher/Dispatcher");
 var CONSTANTS = require("../constants/constants.js");
-var PicStore = require("./pic.js");
 
 var _users = [];
 
