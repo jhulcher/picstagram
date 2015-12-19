@@ -12,32 +12,44 @@ var UserIndex = React.createClass({
     );
   },
 
+  findFollowee: function (id) {
+    return ({
+      followee: FolloweesStore.find(parseInt(this.props.params.id))
+    });
+  },
+
   handleClick: function (id) {
     this.props.history.pushState( null, "album", {id: id} );
   },
 
   componentDidMount: function () {
     ApiUtil.fetchUsers();
-    this.listener = UserStore.addListener(function () {
+    this.userListener = UserStore.addListener(function () {
       this.setState({ users: UserStore.all() });
     }.bind(this));
 
     ApiUtil.fetchFollowees();
-    this.listener = FolloweesStore.addListener(function () {
+    this.followeeListener = FolloweesStore.addListener(function () {
       this.setState({ followees: FolloweesStore.all() });
     }.bind(this));
   },
 
   componentWillUnmount: function () {
-    this.listener.remove();
+    this.userListener.remove();
+    this.followeeListener.remove();
   },
 
   render: function () {
-    var followStatus = 0;
-
     return (
       <ul>
         { this.state.users.map (function (user) {
+
+          if (FolloweesStore.find(user.id)) {
+            var followStatus = "Unfollow";
+          } else {
+                followStatus = "Follow";
+          }
+
           return (
             <li>
               <ul>
@@ -52,7 +64,7 @@ var UserIndex = React.createClass({
                 <li>
                 <center>
 
-                  { followStatus }
+                { followStatus }
 
                   <br></br>
                   <br></br>
@@ -66,5 +78,7 @@ var UserIndex = React.createClass({
     );
   }
 });
+
+window.UserIndex = UserIndex;
 
 module.exports = UserIndex;

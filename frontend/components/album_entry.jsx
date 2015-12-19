@@ -4,6 +4,7 @@ var React = require("react");
 var PicStore = require("../stores/pic.js");
 var History = require("react-router").History;
 var cur = window.current_user_id;
+var FolloweesStore = require("../stores/followees.js");
 
 var AlbumEntry = React.createClass({
 
@@ -18,10 +19,20 @@ var AlbumEntry = React.createClass({
   },
 
   render: function () {
+    console.log(FolloweesStore.all());
+
+      if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
+        var followStatus = "Unfollow";
+      } else {
+            followStatus = "Follow";
+      }
+
     return (
       <center>
+          { this.props.pic.username } { followStatus }
           <br></br>
           <div key={ this.props.pic.id } onClick={this.handleClick}>
+
             pic id: { this.props.pic.id }
           <br></br>
             url: { this.props.pic.public_id }
