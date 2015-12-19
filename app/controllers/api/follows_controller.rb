@@ -13,13 +13,15 @@ class Api::FollowsController < ApplicationController
     @follow = Follow.new(follow_params)
     @follow.follower_id = current_user.id
     @follow.save!
-    render json: @follow
+    @followees = current_user.followees
+    render 'index'
   end
 
   def destroy
     @follow = Follow.find_by(followed_id: params[:id], follower_id: current_user.id)
     @follow.destroy!
-    render json: @follow
+    @followees = current_user.followees
+    render 'index'
   end
 
   private

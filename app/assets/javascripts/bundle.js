@@ -26613,33 +26613,45 @@
 	    return { users: [] };
 	  },
 	
+	  findFollowee: function (id) {
+	    return {
+	      followee: FolloweesStore.find(parseInt(this.props.params.id))
+	    };
+	  },
+	
 	  handleClick: function (id) {
 	    this.props.history.pushState(null, "album", { id: id });
 	  },
 	
 	  componentDidMount: function () {
 	    ApiUtil.fetchUsers();
-	    this.listener = UserStore.addListener((function () {
+	    this.userListener = UserStore.addListener((function () {
 	      this.setState({ users: UserStore.all() });
 	    }).bind(this));
 	
 	    ApiUtil.fetchFollowees();
-	    this.listener = FolloweesStore.addListener((function () {
+	    this.followeeListener = FolloweesStore.addListener((function () {
 	      this.setState({ followees: FolloweesStore.all() });
 	    }).bind(this));
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.listener.remove();
+	    this.userListener.remove();
+	    this.followeeListener.remove();
 	  },
 	
 	  render: function () {
-	    var followStatus = 0;
-	
 	    return React.createElement(
 	      "ul",
 	      null,
 	      this.state.users.map((function (user) {
+	
+	        if (FolloweesStore.find(user.id)) {
+	          var followStatus = "Unfollow";
+	        } else {
+	          followStatus = "Follow";
+	        }
+	
 	        return React.createElement(
 	          "li",
 	          null,
@@ -26674,6 +26686,8 @@
 	    );
 	  }
 	});
+	
+	window.UserIndex = UserIndex;
 	
 	module.exports = UserIndex;
 
@@ -31453,6 +31467,7 @@
 	var React = __webpack_require__(1);
 	var PicStore = __webpack_require__(183);
 	var History = __webpack_require__(185).History;
+	var FolloweesStore = __webpack_require__(243);
 	
 	var Pic = React.createClass({
 	  displayName: "Pic",
@@ -31463,15 +31478,40 @@
 	    return { pic: PicStore.find(parseInt(this.props.params.id)) };
 	  },
 	
+	  componentWillMount: function () {
+	    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
+	    this.listener = PicStore.addListener((function () {
+	      this.setState({ pic: PicStore.find(parseInt(this.props.params.id)) });
+	    }).bind(this));
+	
+	    ApiUtil.fetchFollowees();
+	    this.followListener = FolloweesStore.addListener((function () {
+	      this.forceUpdate();
+	    }).bind(this));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
+	    this.followListener.remove();
+	  },
+	
 	  render: function () {
+	    // console.log(this.state.pic);
+	    if (FolloweesStore.find(parseInt(this.state.pic.user_id))) {
+	      var followStatus = "Unfollow";
+	    } else {
+	      followStatus = "Follow";
+	    }
+	    // return empty div if pic is undefined
 	    return React.createElement(
 	      "center",
 	      null,
 	      React.createElement(
 	        "div",
 	        { key: this.state.pic.id },
-	        "this is a pic by ",
 	        this.state.pic.username,
+	        " ",
+	        followStatus,
 	        React.createElement("br", null),
 	        "pic id: ",
 	        this.state.pic.id,
@@ -31497,6 +31537,7 @@
 	var React = __webpack_require__(1);
 	var AlbumEntry = __webpack_require__(240);
 	var FolloweesStore = __webpack_require__(243);
+	var UserStore = __webpack_require__(166);
 	
 	var Album = React.createClass({
 	  displayName: "Album",
@@ -31510,21 +31551,22 @@
 	    this.listener = PicStore.addListener((function () {
 	      this.setState({ pics: PicStore.all() });
 	    }).bind(this));
+	
+	    ApiUtil.fetchFollowees();
+	    this.followListener = FolloweesStore.addListener((function () {
+	      this.forceUpdate();
+	    }).bind(this));
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.listener.remove();
+	    this.followListener.remove();
 	  },
 	
 	  render: function () {
 	    return React.createElement(
 	      "ul",
 	      null,
-	      React.createElement(
-	        "li",
-	        null,
-	        this.state.pics.username
-	      ),
 	      this.state.pics.map(function (pic) {
 	        return React.createElement(
 	          "li",
@@ -31556,6 +31598,7 @@
 	var PicStore = __webpack_require__(183);
 	var History = __webpack_require__(185).History;
 	var cur = window.current_user_id;
+	var FolloweesStore = __webpack_require__(243);
 	
 	var AlbumEntry = React.createClass({
 	  displayName: "AlbumEntry",
@@ -31571,9 +31614,20 @@
 	  },
 	
 	  render: function () {
+	    console.log(FolloweesStore.all());
+	
+	    if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
+	      var followStatus = "Unfollow";
+	    } else {
+	      followStatus = "Follow";
+	    }
+	
 	    return React.createElement(
 	      "center",
 	      null,
+	      this.props.pic.username,
+	      " ",
+	      followStatus,
 	      React.createElement("br", null),
 	      React.createElement(
 	        "div",
@@ -31604,6 +31658,7 @@
 	var React = __webpack_require__(1);
 	var Pic = __webpack_require__(237);
 	var FeedEntry = __webpack_require__(242);
+	var FolloweesStore = __webpack_require__(243);
 	
 	var Feed = React.createClass({
 	  displayName: "Feed",
@@ -31617,10 +31672,16 @@
 	    this.listener = PicStore.addListener((function () {
 	      this.setState({ pics: PicStore.all() });
 	    }).bind(this));
+	
+	    ApiUtil.fetchFollowees();
+	    this.followeesListener = FolloweesStore.addListener((function () {
+	      this.setState({ followees: FolloweesStore.all() });
+	    }).bind(this));
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.listener.remove();
+	    this.followeesListener.remove();
 	  },
 	
 	  render: function () {
@@ -31658,6 +31719,7 @@
 	var PicStore = __webpack_require__(183);
 	var History = __webpack_require__(185).History;
 	var cur = window.current_user_id;
+	var FolloweesStore = __webpack_require__(243);
 	
 	var FeedEntry = React.createClass({
 	  displayName: "FeedEntry",
@@ -31673,13 +31735,20 @@
 	  },
 	
 	  render: function () {
+	    if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
+	      var followStatus = "Unfollow";
+	    } else {
+	      followStatus = "Follow";
+	    }
 	    return React.createElement(
 	      "center",
 	      null,
 	      React.createElement(
 	        "div",
 	        { onClick: this.handleUserClick.bind(null, this.props.pic.user_id) },
-	        this.props.pic.username
+	        this.props.pic.username,
+	        " ",
+	        followStatus
 	      ),
 	      React.createElement("br", null),
 	      React.createElement(

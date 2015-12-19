@@ -3,6 +3,7 @@ var PicStore = require("../stores/pic.js");
 var React = require("react");
 var Pic = require("./pic.jsx");
 var FeedEntry = require("./feed_entry.jsx");
+var FolloweesStore = require("../stores/followees.js");
 
 var Feed = React.createClass({
 
@@ -17,10 +18,16 @@ var Feed = React.createClass({
     this.listener = PicStore.addListener(function () {
       this.setState({ pics: PicStore.all() });
     }.bind(this));
+
+    ApiUtil.fetchFollowees();
+    this.followeesListener = FolloweesStore.addListener(function () {
+      this.setState({ followees: FolloweesStore.all() });
+    }.bind(this));
   },
 
   componentWillUnmount: function () {
     this.listener.remove();
+    this.followeesListener.remove();
   },
 
   render: function () {
