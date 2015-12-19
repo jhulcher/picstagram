@@ -19,8 +19,6 @@ var AlbumEntry = React.createClass({
   },
 
   render: function () {
-    console.log(FolloweesStore.all());
-
       if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
         var followStatus = "Unfollow";
       } else {

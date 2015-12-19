@@ -16,6 +16,18 @@ var ApiUtil = {
     });
   },
 
+  fetchSinglePic: function (id) {
+    $.ajax({
+      url: "api/pics/" + id,
+      method: "GET",
+      dataType: "json",
+      success: function (response) {
+        ApiActions.receiveAllPicsFromUser(response);
+        UserStore.all();
+      }
+    });
+  },
+
   fetchFollowees: function () {
     $.ajax({
       url: "/api/follows",

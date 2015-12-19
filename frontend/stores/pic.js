@@ -30,7 +30,11 @@ PicStore.__onDispatch = function (payload) {
 };
 
 PicStore.all = function () {
-  return _pics.slice(0);
+  if (_pics.length > 1) {
+    return _pics.slice(0);
+  } else {
+    return [_pics];
+  }
 };
 
 window.PicStore = PicStore;
