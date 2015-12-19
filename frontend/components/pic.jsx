@@ -15,41 +15,34 @@ var Pic = React.createClass({
     );
   },
 
-  componentWillMount: function () {
-    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
-    this.listener = PicStore.addListener(function () {
-      this.setState({ pic: PicStore.find(parseInt(this.props.params.id)) });
-    }.bind(this));
-
+  componentDidMount: function () {
     ApiUtil.fetchFollowees();
     this.followListener = FolloweesStore.addListener(function () {
       this.forceUpdate();
     }.bind(this));
-  },
 
-  componentWillUnmount: function () {
-    this.listener.remove();
-    this.followListener.remove();
+    ApiUtil.fetchSinglePic(this.props.params.id);
+    this.listener = PicStore.addListener(function () {
+      this.forceUpdate();
+    }.bind(this));
   },
 
   render: function () {
-    // console.log(this.state.pic);
-    if (FolloweesStore.find(parseInt(this.state.pic.user_id))) {
+    if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
       var followStatus = "Unfollow";
     } else {
           followStatus = "Follow";
     }
-    // return empty div if pic is undefined
     return (
       <center>
-      <div key={ this.state.pic.id } >
-          { this.state.pic.username } { followStatus }
+      <div key={ PicStore.all()[0].id } >
+          { PicStore.all()[0].username } { followStatus }
           <br></br>
-          pic id: { this.state.pic.id }
+          pic id: { PicStore.all()[0].id }
           <br></br>
-          { this.state.pic.publics_id }
+          { PicStore.all()[0].public_id }
           <br></br>
-          { this.state.pic.created_at }
+          { PicStore.all()[0].created_at }
         </div>
       </center>
     );
