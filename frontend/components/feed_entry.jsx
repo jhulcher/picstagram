@@ -10,12 +10,27 @@ var FeedEntry = React.createClass({
 
   mixins: [History],
 
+  componentDidMount: function () {
+    ApiUtil.fetchFollowees();
+    this.followeesListener = FolloweesStore.addListener(function () {
+      this.setState({ followees: FolloweesStore.all() });
+    }.bind(this));
+  },
+
   handleClick: function () {
     this.history.pushState( null, "pic/" + this.props.pic.id );
   },
 
   handleUserClick: function () {
     this.history.pushState( null, "album", {id: this.props.pic.user_id} );
+  },
+
+  handleFollowClick: function (id, followStatus) {
+    if (followStatus === "Follow") {
+      ApiUtil.followUser(id);
+    } else {
+      ApiUtil.unfollowUser(id);
+    }
   },
 
   render: function () {
@@ -26,20 +41,26 @@ var FeedEntry = React.createClass({
     }
     return (
       <center>
-          <div onClick={
-            this.handleUserClick.bind(null, this.props.pic.user_id)
-            }>
-            { this.props.pic.username } { followStatus }
-          </div>
-          <br></br>
-          <div key={ this.props.pic.id } onClick={this.handleClick}>
+        <div className="cursor" onClick={
+          this.handleUserClick.bind(null, this.props.pic.user_id)}>
+          { this.props.pic.username }
+        </div>
+        <div className="cursor"
+          key={1111}
+          onClick={this.handleFollowClick.bind(
+          null, this.props.pic.user_id, followStatus)}>
+          { followStatus }
+        </div>        <br></br>
+        <div className="cursor"
+          key={ this.props.pic.id }
+          onClick={this.handleClick}>
             pic id: { this.props.pic.id }
-          <br></br>
+            <br></br>
             url: { this.props.pic.public_id }
-          <br></br>
-            time since; { this.props.pic.created_at }
-          <br></br>
-          <br></br>
+            <br></br>
+            time since: { this.props.pic.created_at }
+            <br></br>
+            <br></br>
         </div>
       </center>
     );

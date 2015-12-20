@@ -77,7 +77,7 @@
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: Feed }),
+	  React.createElement(IndexRoute, { component: UserIndex }),
 	  React.createElement(Route, { path: 'album', component: Album }),
 	  React.createElement(Route, { path: 'pic/:id', component: Pic })
 	);
@@ -19697,9 +19697,16 @@
 	    });
 	  },
 	
+	  logOut: function () {
+	    $.ajax({
+	      url: "/sessions",
+	      method: "DELETE"
+	    });
+	  },
+	
 	  fetchSinglePic: function (id) {
 	    $.ajax({
-	      url: "api/pics/" + id,
+	      url: "/api/pics/" + id,
 	      method: "GET",
 	      dataType: "json",
 	      success: function (response) {
@@ -26662,6 +26669,7 @@
 	var React = __webpack_require__(1);
 	var PicStore = __webpack_require__(183);
 	var FolloweesStore = __webpack_require__(184);
+	var NavBar = __webpack_require__(256);
 	
 	var UserIndex = React.createClass({
 	  displayName: "UserIndex",
@@ -26678,6 +26686,14 @@
 	
 	  handleClick: function (id) {
 	    this.props.history.pushState(null, "album", { id: id });
+	  },
+	
+	  handleFollowClick: function (id, followStatus) {
+	    if (followStatus === "Follow") {
+	      ApiUtil.followUser(id);
+	    } else {
+	      ApiUtil.unfollowUser(id);
+	    }
 	  },
 	
 	  componentDidMount: function () {
@@ -26699,47 +26715,40 @@
 	
 	  render: function () {
 	    return React.createElement(
-	      "ul",
+	      "center",
 	      null,
-	      this.state.users.map((function (user) {
-	
-	        if (FolloweesStore.find(user.id)) {
-	          var followStatus = "Unfollow";
-	        } else {
-	          followStatus = "Follow";
-	        }
-	
-	        return React.createElement(
-	          "li",
-	          null,
-	          React.createElement(
-	            "ul",
-	            null,
+	      React.createElement(NavBar, null),
+	      React.createElement(
+	        "ul",
+	        null,
+	        this.state.users.map((function (user, idx) {
+	          if (FolloweesStore.find(user.id)) {
+	            var followStatus = "Unfollow";
+	          } else {
+	            followStatus = "Follow";
+	          }
+	          return React.createElement(
+	            "li",
+	            { key: user.id * idx },
 	            React.createElement(
-	              "li",
-	              { key: user.id,
+	              "div",
+	              { className: "cursor",
+	                key: user.id,
 	                onClick: this.handleClick.bind(null, user.id) },
-	              React.createElement(
-	                "center",
-	                null,
-	                user.username,
-	                user.id
-	              )
+	              user.username
 	            ),
 	            React.createElement(
-	              "li",
-	              null,
-	              React.createElement(
-	                "center",
-	                null,
-	                followStatus,
-	                React.createElement("br", null),
-	                React.createElement("br", null)
-	              )
-	            )
-	          )
-	        );
-	      }).bind(this))
+	              "div",
+	              { className: "cursor",
+	                key: idx,
+	                onClick: this.handleFollowClick.bind(null, user.id, followStatus) },
+	              followStatus
+	            ),
+	            React.createElement("br", null),
+	            React.createElement("br", null)
+	          );
+	        }).bind(this))
+	      )
 	    );
 	  }
 	});
@@ -31524,6 +31533,8 @@
 	var PicStore = __webpack_require__(183);
 	var History = __webpack_require__(186).History;
 	var FolloweesStore = __webpack_require__(184);
+	var Search = __webpack_require__(255);
+	var NavBar = __webpack_require__(256);
 	
 	var Pic = React.createClass({
 	  displayName: "Pic",
@@ -31546,6 +31557,18 @@
 	    }).bind(this));
 	  },
 	
+	  handleUserClick: function () {
+	    this.history.pushState(null, "album", { id: PicStore.all()[0].user_id });
+	  },
+	
+	  handleFollowClick: function (id, followStatus) {
+	    if (followStatus === "Follow") {
+	      ApiUtil.followUser(id);
+	    } else {
+	      ApiUtil.unfollowUser(id);
+	    }
+	  },
+	
 	  render: function () {
 	    if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
 	      var followStatus = "Unfollow";
@@ -31555,18 +31578,33 @@
 	    return React.createElement(
 	      "center",
 	      null,
+	      React.createElement(NavBar, null),
 	      React.createElement(
 	        "div",
 	        { key: PicStore.all()[0].id },
-	        PicStore.all()[0].username,
-	        " ",
-	        followStatus,
+	        React.createElement(
+	          "div",
+	          { className: "cursor",
+	            key: PicStore.all()[0].id,
+	            onClick: this.handleUserClick,
+	            div: true },
+	          PicStore.all()[0].username
+	        ),
+	        React.createElement(
+	          "div",
+	          { className: "cursor",
+	            onClick: this.handleFollowClick.bind(null, PicStore.all()[0].user_id, followStatus) },
+	          followStatus
+	        ),
+	        React.createElement("br", null),
 	        React.createElement("br", null),
 	        "pic id: ",
 	        PicStore.all()[0].id,
 	        React.createElement("br", null),
+	        "url: ",
 	        PicStore.all()[0].public_id,
 	        React.createElement("br", null),
+	        "time since: ",
 	        PicStore.all()[0].created_at
 	      )
 	    );
@@ -31586,6 +31624,7 @@
 	var AlbumEntry = __webpack_require__(239);
 	var FolloweesStore = __webpack_require__(184);
 	var UserStore = __webpack_require__(166);
+	var NavBar = __webpack_require__(256);
 	
 	var Album = React.createClass({
 	  displayName: "Album",
@@ -31602,7 +31641,7 @@
 	
 	    ApiUtil.fetchFollowees();
 	    this.followListener = FolloweesStore.addListener((function () {
-	      this.forceUpdate();
+	      this.setState({ followees: FolloweesStore.all() });
 	    }).bind(this));
 	  },
 	
@@ -31611,25 +31650,69 @@
 	    this.followListener.remove();
 	  },
 	
+	  handleFollowClick: function (id, followStatus) {
+	    if (followStatus === "Follow") {
+	      ApiUtil.followUser(id);
+	    } else {
+	      ApiUtil.unfollowUser(id);
+	    }
+	  },
+	
 	  render: function () {
+	    var count = 0;
 	    return React.createElement(
 	      "ul",
 	      null,
-	      this.state.pics.map(function (pic) {
-	        return React.createElement(
-	          "li",
-	          { key: pic.id },
-	          React.createElement(
-	            "center",
-	            null,
+	      React.createElement(NavBar, null),
+	      this.state.pics.map((function (pic, idx) {
+	        count += 1;
+	        if (FolloweesStore.find(parseInt(pic.user_id))) {
+	          var followStatus = "Unfollow";
+	        } else {
+	          followStatus = "Follow";
+	        }
+	        if (PicStore.all().length === 1) {
+	          return React.createElement(
+	            "li",
+	            { key: pic.user_id },
+	            pic.username,
 	            React.createElement(
-	              AlbumEntry,
-	              { pic: pic },
-	              " "
-	            )
-	          )
-	        );
-	      })
+	              "div",
+	              { className: "cursor",
+	                key: 1111,
+	                onClick: this.handleFollowClick.bind(null, pic.user_id, followStatus) },
+	              followStatus
+	            ),
+	            React.createElement("br", null),
+	            React.createElement("br", null),
+	            "User has no pics"
+	          );
+	        } else {
+	          if (count === 1) {
+	            return React.createElement(
+	              "li",
+	              { key: pic.user_id },
+	              pic.username,
+	              React.createElement(
+	                "div",
+	                { className: "cursor",
+	                  key: 1111,
+	                  onClick: this.handleFollowClick.bind(null, pic.user_id, followStatus) },
+	                followStatus
+	              ),
+	              React.createElement("br", null),
+	              React.createElement("br", null),
+	              React.createElement(AlbumEntry, { pic: pic, key: pic.id })
+	            );
+	          } else {
+	            return React.createElement(
+	              "li",
+	              { key: pic.id },
+	              React.createElement(AlbumEntry, { pic: pic, key: pic.id })
+	            );
+	          }
+	        }
+	      }).bind(this))
 	    );
 	  }
 	});
@@ -31667,17 +31750,14 @@
 	    } else {
 	      followStatus = "Follow";
 	    }
-	
 	    return React.createElement(
 	      "center",
 	      null,
-	      this.props.pic.username,
-	      " ",
-	      followStatus,
-	      React.createElement("br", null),
 	      React.createElement(
 	        "div",
-	        { key: this.props.pic.id, onClick: this.handleClick },
+	        { className: "cursor",
+	          key: this.props.pic.id,
+	          onClick: this.handleClick },
 	        "pic id: ",
 	        this.props.pic.id,
 	        React.createElement("br", null),
@@ -31705,6 +31785,9 @@
 	var Pic = __webpack_require__(237);
 	var FeedEntry = __webpack_require__(241);
 	var FolloweesStore = __webpack_require__(184);
+	var Search = __webpack_require__(255);
+	var UserStore = __webpack_require__(166);
+	var NavBar = __webpack_require__(256);
 	
 	var Feed = React.createClass({
 	  displayName: "Feed",
@@ -31731,25 +31814,54 @@
 	  },
 	
 	  render: function () {
-	    return React.createElement(
-	      "ul",
-	      null,
-	      this.state.pics.map(function (pic) {
-	        return React.createElement(
+	    if (FolloweesStore.all().length === 0) {
+	      return React.createElement(
+	        "ul",
+	        null,
+	        React.createElement(NavBar, null),
+	        React.createElement(
 	          "li",
-	          { key: pic.id },
-	          React.createElement(
-	            "center",
-	            null,
+	          null,
+	          "You're not following anyone!",
+	          React.createElement("br", null),
+	          "Start following to get your feed going!"
+	        )
+	      );
+	    } else if (PicStore.all()[0].length === 0) {
+	      return React.createElement(
+	        "ul",
+	        null,
+	        React.createElement(NavBar, null),
+	        React.createElement(
+	          "li",
+	          null,
+	          "The users you're following haven't uploaded pics yet.",
+	          React.createElement("br", null),
+	          "Follow more users to get your feed going!"
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        "ul",
+	        null,
+	        React.createElement(NavBar, null),
+	        this.state.pics.map(function (pic) {
+	          return React.createElement(
+	            "li",
+	            { key: pic.id },
 	            React.createElement(
-	              FeedEntry,
-	              { pic: pic },
-	              " "
+	              "center",
+	              null,
+	              React.createElement(
+	                FeedEntry,
+	                { pic: pic },
+	                " "
+	              )
 	            )
-	          )
-	        );
-	      })
-	    );
+	          );
+	        })
+	      );
+	    }
 	  }
 	});
 	
@@ -31772,12 +31884,27 @@
 	
 	  mixins: [History],
 	
+	  componentDidMount: function () {
+	    ApiUtil.fetchFollowees();
+	    this.followeesListener = FolloweesStore.addListener((function () {
+	      this.setState({ followees: FolloweesStore.all() });
+	    }).bind(this));
+	  },
+	
 	  handleClick: function () {
 	    this.history.pushState(null, "pic/" + this.props.pic.id);
 	  },
 	
 	  handleUserClick: function () {
 	    this.history.pushState(null, "album", { id: this.props.pic.user_id });
+	  },
+	
+	  handleFollowClick: function (id, followStatus) {
+	    if (followStatus === "Follow") {
+	      ApiUtil.followUser(id);
+	    } else {
+	      ApiUtil.unfollowUser(id);
+	    }
 	  },
 	
 	  render: function () {
@@ -31791,22 +31918,30 @@
 	      null,
 	      React.createElement(
 	        "div",
-	        { onClick: this.handleUserClick.bind(null, this.props.pic.user_id) },
-	        this.props.pic.username,
-	        " ",
+	        { className: "cursor", onClick: this.handleUserClick.bind(null, this.props.pic.user_id) },
+	        this.props.pic.username
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "cursor",
+	          key: 1111,
+	          onClick: this.handleFollowClick.bind(null, this.props.pic.user_id, followStatus) },
 	        followStatus
 	      ),
+	      "        ",
 	      React.createElement("br", null),
 	      React.createElement(
 	        "div",
-	        { key: this.props.pic.id, onClick: this.handleClick },
+	        { className: "cursor",
+	          key: this.props.pic.id,
+	          onClick: this.handleClick },
 	        "pic id: ",
 	        this.props.pic.id,
 	        React.createElement("br", null),
 	        "url: ",
 	        this.props.pic.public_id,
 	        React.createElement("br", null),
-	        "time since; ",
+	        "time since: ",
 	        this.props.pic.created_at,
 	        React.createElement("br", null),
 	        React.createElement("br", null)
@@ -31816,6 +31951,130 @@
 	});
 	
 	module.exports = FeedEntry;
+
+/***/ },
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(159);
+	var UserStore = __webpack_require__(166);
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(186).History;
+	
+	var Search = React.createClass({
+	  displayName: "Search",
+	
+	  handleInput: function (event) {
+	    this.setState({ inputVal: event.currentTarget.value });
+	  },
+	
+	  getInitialState: function () {
+	    var nameArray = [];
+	    ApiUtil.fetchUsers();
+	    this.userListener = UserStore.addListener(function () {
+	      UserStore.all().map(function (user) {
+	        nameArray.push(user.username);
+	      });
+	    });
+	    return { inputVal: "", names: nameArray };
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	
+	  matches: function () {
+	    var matches = [];
+	
+	    if (this.state.inputVal !== "") {
+	      this.state.names.forEach((function (name) {
+	        var sub = name.slice(0, this.state.inputVal.length);
+	        if (sub.toLowerCase() === this.state.inputVal.toLowerCase()) {
+	          matches.push(name);
+	        }
+	      }).bind(this));
+	    }
+	    return matches;
+	  },
+	
+	  selectName: function (event) {
+	    var name = event.currentTarget.innerText;
+	    this.setState({ inputVal: name });
+	  },
+	
+	  render: function () {
+	    var results = this.matches();
+	    return React.createElement(
+	      "div",
+	      { className: "cursor float search" },
+	      React.createElement("input", { type: "text",
+	        placeholder: "search users",
+	        onChange: this.handleInput,
+	        value: this.state.inputVal }),
+	      React.createElement(
+	        "ul",
+	        { className: "left-align" },
+	        results.map((function (result, i) {
+	          return React.createElement(
+	            "li",
+	            { key: i,
+	              className: "drop-text",
+	              onClick: this.selectName },
+	            result
+	          );
+	        }).bind(this))
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = Search;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(159);
+	var UserStore = __webpack_require__(166);
+	var React = __webpack_require__(1);
+	var Search = __webpack_require__(255);
+	
+	var NavBar = React.createClass({
+	  displayName: "NavBar",
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "header" },
+	      React.createElement(
+	        "div",
+	        { className: "bar" },
+	        React.createElement(Search, null),
+	        React.createElement(
+	          "h2",
+	          null,
+	          "Picstagram"
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = NavBar;
 
 /***/ }
 /******/ ]);

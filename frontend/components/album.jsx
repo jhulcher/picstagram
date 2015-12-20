@@ -4,6 +4,7 @@ var React = require("react");
 var AlbumEntry = require("./album_entry.jsx");
 var FolloweesStore = require("../stores/followees.js");
 var UserStore = require("../stores/user.js");
+var NavBar = require("./nav_bar.jsx");
 
 var Album = React.createClass({
 
@@ -21,7 +22,7 @@ var Album = React.createClass({
 
     ApiUtil.fetchFollowees();
     this.followListener = FolloweesStore.addListener(function () {
-      this.forceUpdate();
+      this.setState({ followees: FolloweesStore.all() });
     }.bind(this));
   },
 
@@ -30,18 +31,68 @@ var Album = React.createClass({
     this.followListener.remove();
   },
 
+  handleFollowClick: function (id, followStatus) {
+    if (followStatus === "Follow") {
+      ApiUtil.followUser(id);
+    } else {
+      ApiUtil.unfollowUser(id);
+    }
+  },
+
   render: function () {
+    var count = 0;
     return (
       <ul>
-        { this.state.pics.map (function (pic) {
-          return (
-            <li key={pic.id} >
-              <center>
-                <AlbumEntry pic={ pic }> </AlbumEntry>
-              </center>
-            </li>
-          );
-        })}
+        <NavBar></NavBar>
+        {
+          this.state.pics.map (function (pic, idx) {
+            count += 1;
+            if (FolloweesStore.find(parseInt(pic.user_id))) {
+              var followStatus = "Unfollow";
+            } else {
+                  followStatus = "Follow";
+            }
+            if (PicStore.all().length === 1) {
+              return (
+                <li key={pic.user_id}>
+                  { pic.username }
+                  <div className="cursor"
+                    key={1111}
+                    onClick={this.handleFollowClick.bind(
+                    null, pic.user_id, followStatus)}>
+                    { followStatus }
+                  </div>
+                  <br></br>
+                  <br></br>
+                  User has no pics
+                </li>
+              );
+            } else {
+               if (count === 1) {
+                return (
+                  <li key={pic.user_id} >
+                      { pic.username }
+                      <div className="cursor"
+                        key={1111}
+                        onClick={this.handleFollowClick.bind(
+                        null, pic.user_id, followStatus)}>
+                        { followStatus }
+                      </div>
+                      <br></br>
+                      <br></br>
+                      <AlbumEntry pic={pic} key={pic.id}></AlbumEntry>
+                  </li>
+                );
+              } else {
+                return (
+                  <li key={pic.id} >
+                    <AlbumEntry pic={pic} key={pic.id} />
+                  </li>
+                );
+              }
+            }
+          }.bind(this))
+        }
       </ul>
     );
   }
