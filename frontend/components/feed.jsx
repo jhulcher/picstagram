@@ -4,6 +4,9 @@ var React = require("react");
 var Pic = require("./pic.jsx");
 var FeedEntry = require("./feed_entry.jsx");
 var FolloweesStore = require("../stores/followees.js");
+var Search = require("./search.jsx");
+var UserStore = require("../stores/user.js");
+var NavBar = require("./nav_bar.jsx");
 
 var Feed = React.createClass({
 
@@ -31,19 +34,46 @@ var Feed = React.createClass({
   },
 
   render: function () {
-    return (
-      <ul>
-        { this.state.pics.map (function (pic) {
-          return (
-            <li key={pic.id} >
-              <center>
-                <FeedEntry pic={ pic }> </FeedEntry>
-              </center>
-            </li>
-          );
-        })}
-      </ul>
-    );
+    if (FolloweesStore.all().length === 0) {
+      return (
+        <ul>
+          <NavBar></NavBar>
+          <li>
+            You're not following anyone!
+            <br></br>
+            Start following to get your feed going!
+          </li>
+        </ul>
+      );
+    } else if (PicStore.all()[0].length === 0) {
+      return (
+        <ul>
+          <NavBar></NavBar>
+          <li>
+            The users you're following haven't uploaded pics yet.
+            <br></br>
+            Follow more users to get your feed going!
+          </li>
+        </ul>
+      );
+    } else {
+      return (
+        <ul>
+          <NavBar></NavBar>
+          {
+            this.state.pics.map (function (pic) {
+              return (
+                <li key={pic.id} >
+                  <center>
+                    <FeedEntry pic={ pic }> </FeedEntry>
+                  </center>
+                </li>
+              );
+            })
+          }
+        </ul>
+      );
+    }
   }
 });
 

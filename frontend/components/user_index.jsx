@@ -3,6 +3,7 @@ var UserStore = require("../stores/user.js");
 var React = require("react");
 var PicStore = require("../stores/pic.js");
 var FolloweesStore = require("../stores/followees.js");
+var NavBar = require("./nav_bar.jsx");
 
 var UserIndex = React.createClass({
 
@@ -20,6 +21,14 @@ var UserIndex = React.createClass({
 
   handleClick: function (id) {
     this.props.history.pushState( null, "album", {id: id} );
+  },
+
+  handleFollowClick: function (id, followStatus) {
+    if (followStatus === "Follow") {
+      ApiUtil.followUser(id);
+    } else {
+      ApiUtil.unfollowUser(id);
+    }
   },
 
   componentDidMount: function () {
@@ -41,40 +50,37 @@ var UserIndex = React.createClass({
 
   render: function () {
     return (
-      <ul>
-        { this.state.users.map (function (user) {
-
-          if (FolloweesStore.find(user.id)) {
-            var followStatus = "Unfollow";
-          } else {
-                followStatus = "Follow";
-          }
-
-          return (
-            <li>
-              <ul>
-                <li key={user.id}
-                    onClick={this.handleClick.bind(null, user.id)
-                    }>
-                  <center>
+      <center >
+        <NavBar></NavBar>
+        <ul>
+          {
+            this.state.users.map (function (user, idx) {
+              if (FolloweesStore.find(user.id)) {
+                var followStatus = "Unfollow";
+              } else {
+                    followStatus = "Follow";
+              }
+              return (
+                <li key={user.id * idx}>
+                  <div className="cursor"
+                    key={user.id}
+                    onClick={this.handleClick.bind(null, user.id)}>
                     { user.username }
-                    { user.id }
-                  </center>
-                </li>
-                <li>
-                <center>
-
-                { followStatus }
-
+                  </div>
+                  <div className="cursor"
+                    key={idx}
+                    onClick={this.handleFollowClick.bind(
+                    null, user.id, followStatus)}>
+                    { followStatus }
+                  </div>
                   <br></br>
                   <br></br>
-                </center>
                 </li>
-              </ul>
-            </li>
-          );
-        }.bind(this))}
-      </ul>
+              );
+            }.bind(this))
+          }
+        </ul>
+      </center>
     );
   }
 });

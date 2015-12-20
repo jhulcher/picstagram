@@ -16,9 +16,16 @@ var ApiUtil = {
     });
   },
 
+  logOut: function () {
+    $.ajax({
+      url: "/sessions",
+      method: "DELETE"
+    });
+  },
+
   fetchSinglePic: function (id) {
     $.ajax({
-      url: "api/pics/" + id,
+      url: "/api/pics/" + id,
       method: "GET",
       dataType: "json",
       success: function (response) {

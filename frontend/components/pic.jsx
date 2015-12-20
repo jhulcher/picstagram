@@ -4,6 +4,8 @@ var React = require("react");
 var PicStore = require("../stores/pic.js");
 var History = require("react-router").History;
 var FolloweesStore = require("../stores/followees.js");
+var Search = require("./search.jsx");
+var NavBar = require("./nav_bar.jsx");
 
 var Pic = React.createClass({
 
@@ -27,6 +29,18 @@ var Pic = React.createClass({
     }.bind(this));
   },
 
+  handleUserClick: function () {
+    this.history.pushState( null, "album", {id: PicStore.all()[0].user_id} );
+  },
+
+  handleFollowClick: function (id, followStatus) {
+    if (followStatus === "Follow") {
+      ApiUtil.followUser(id);
+    } else {
+      ApiUtil.unfollowUser(id);
+    }
+  },
+
   render: function () {
     if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
       var followStatus = "Unfollow";
@@ -35,14 +49,29 @@ var Pic = React.createClass({
     }
     return (
       <center>
-      <div key={ PicStore.all()[0].id } >
-          { PicStore.all()[0].username } { followStatus }
+        <NavBar></NavBar>
+        <div key={ PicStore.all()[0].id }>
+          <div className="cursor"
+            key={ PicStore.all()[0].id }
+            onClick={this.handleUserClick}
+            div>
+              { PicStore.all()[0].username }
+          </div>
+          <div className="cursor"
+              onClick={
+                this.handleFollowClick.bind(
+                  null, PicStore.all()[0].user_id, followStatus
+                )
+              }>
+              { followStatus }
+          </div>
+          <br></br>
           <br></br>
           pic id: { PicStore.all()[0].id }
           <br></br>
-          { PicStore.all()[0].public_id }
+          url: { PicStore.all()[0].public_id }
           <br></br>
-          { PicStore.all()[0].created_at }
+          time since: { PicStore.all()[0].created_at }
         </div>
       </center>
     );
