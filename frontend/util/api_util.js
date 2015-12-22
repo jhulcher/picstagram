@@ -5,7 +5,7 @@ var FolloweesStore = require("../stores/followees.js");
 
 var ApiUtil = {
 
-  createPic: function (url) {
+  createPic: function (callBack, url) {
     $.ajax({
       url: "/api/pics",
       data: {pic:
@@ -15,8 +15,7 @@ var ApiUtil = {
             },
       method: "POST",
       success: function (response) {
-        ApiActions.receivePicFromUser(response);
-        PicStore.all();
+        callBack(response);
       }
     });
   },
