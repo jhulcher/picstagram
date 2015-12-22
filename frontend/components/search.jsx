@@ -10,14 +10,14 @@ var Search = React.createClass({
   },
 
   getInitialState: function () {
-    var nameArray = [];
-    ApiUtil.fetchUsers();
+    return {inputVal: "", names: []};
+  },
+
+  componentDidMount: function () {
     this.userListener = UserStore.addListener(function () {
-      UserStore.all().map (function (user) {
-        nameArray.push(user.username);
-      });
-    });
-    return {inputVal: "", names: nameArray};
+      this.setState({ names: UserStore.all() });
+    }.bind(this));
+    ApiUtil.fetchUsers();
   },
 
   componentWillUnmount: function () {
@@ -26,15 +26,24 @@ var Search = React.createClass({
 
   matches: function () {
     var matches = [];
-
     if (this.state.inputVal !== "") {
-      this.state.names.forEach(function (name) {
-        var sub = name.slice(0, this.state.inputVal.length);
+      this.state.names.forEach(function (user) {
+        var sub = user.username.slice(0, this.state.inputVal.length);
         if(sub.toLowerCase() === this.state.inputVal.toLowerCase()){
-          matches.push(name);
+          matches.push(user);
         }
       }.bind(this));
     }
+    return matches;
+  },
+
+  uniq: function (users) {
+    var matches = [];
+    users.forEach (function (user) {
+      if (matches.indexOf(user) === -1) {
+        matches.push(user);
+      }
+    });
     return matches;
   },
 
@@ -43,21 +52,36 @@ var Search = React.createClass({
     this.setState({ inputVal: name });
   },
 
+  inputKeyDown: function (e, input) {
+    if (e.keyCode === "13") {
+        var textarea = document.getElementById("search_input");
+        textarea.value += "\n" + input.value;
+        input.value = "";
+        return false;
+    }
+},
+
   render: function () {
     var results = this.matches();
+    var users = this.uniq(results);
     return (
-      <div className="cursor float search">
+      <div className="cursor search left">
         <input type="text"
-               placeholder="search users"
+               key="search_input"
+
+               onkeydown="return inputKeyDown(event, this);"
+
+               placeholder="Search Users"
                onChange={this.handleInput}
                value={this.state.inputVal} />
         <ul className="left-align">
           {
-            results.map(function (result, i) {
+            users.map(function (result, i) {
               return (
-                <li key={i}
+                <li key={result.id}
                     className="drop-text"
-                    onClick={this.selectName}>{result}
+                    onClick={this.selectName}>
+                  {result.username}
                 </li>
               );
             }.bind(this))

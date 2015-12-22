@@ -26,6 +26,18 @@ PicStore.__onDispatch = function (payload) {
         resetPics(payload.pics);
         PicStore.__emitChange();
         break;
+      case CONSTANTS.PIC_RECEIVED:
+        _pics.push(payload.pic);
+        PicStore.__emitChange();
+        break;
+      case CONSTANTS.DELETE_PIC:
+        _pics.forEach (function (pic, idx) {
+          if (payload.id === pic.id) {
+            _pics.splice(idx, 1);
+          }
+        });
+        PicStore.__emitChange();
+        break;
   }
 };
 

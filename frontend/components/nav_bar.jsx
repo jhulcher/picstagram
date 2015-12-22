@@ -2,6 +2,7 @@ var ApiUtil = require("../util/api_util.js");
 var UserStore = require("../stores/user.js");
 var React = require('react');
 var Search = require("./search.jsx");
+var UploadButton = require("./upload_button.jsx");
 
 var NavBar = React.createClass({
 
@@ -9,8 +10,9 @@ var NavBar = React.createClass({
     return (
       <div className="header">
         <div className="bar">
-          <Search/>
-          <h2>Picstagram</h2>
+          <Search></Search>
+          <h2 className="header-item">Picstagram</h2>
+          <UploadButton className="header-item right"></UploadButton>
         </div>
       </div>
     );
