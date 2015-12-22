@@ -82,7 +82,7 @@
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: Feed }),
+	  React.createElement(IndexRoute, { component: UserIndex }),
 	  React.createElement(Route, { path: 'album', component: Album }),
 	  React.createElement(Route, { path: 'pic/:id', component: Pic })
 	);
@@ -32067,7 +32067,7 @@
 	    return { pics: [] };
 	  },
 	
-	  componentDidMount: function () {
+	  componentWillMount: function () {
 	    ApiUtil.fetchFeedForUser();
 	    this.listener = PicStore.addListener((function () {
 	      this.setState({ pics: PicStore.all() });
@@ -32085,6 +32085,7 @@
 	  },
 	
 	  render: function () {
+	    debugger;
 	    if (this.state.pics.length === 1) {
 	      return React.createElement(
 	        "ul",
@@ -32104,19 +32105,6 @@
 	          )
 	        )
 	      );
-	    } else if (FolloweesStore.all().length === 0) {
-	      return React.createElement(
-	        "ul",
-	        null,
-	        React.createElement(NavBar, null),
-	        React.createElement(
-	          "li",
-	          null,
-	          "You're not following anyone!",
-	          React.createElement("br", null),
-	          "Start following to get your feed going!"
-	        )
-	      );
 	    } else if (PicStore.all()[0].length === 0) {
 	      return React.createElement(
 	        "ul",
@@ -32128,6 +32116,19 @@
 	          "The users you're following haven't uploaded pics yet.",
 	          React.createElement("br", null),
 	          "Follow more users to get your feed going!"
+	        )
+	      );
+	    } else if (FolloweesStore.all().length === 0) {
+	      return React.createElement(
+	        "ul",
+	        null,
+	        React.createElement(NavBar, null),
+	        React.createElement(
+	          "li",
+	          null,
+	          "You're not following anyone!",
+	          React.createElement("br", null),
+	          "Start following to get your feed going!"
 	        )
 	      );
 	    } else {

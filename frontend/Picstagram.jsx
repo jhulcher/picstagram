@@ -33,7 +33,7 @@ setInterval(function() {
 
 var routes = (
   <Route path="/" component={ App }>
-    <IndexRoute component={ Feed } />
+    <IndexRoute component={ UserIndex } />
     <Route path="album" component={ Album } />
     <Route path="pic/:id" component={ Pic } />
   </Route>

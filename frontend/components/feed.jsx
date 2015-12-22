@@ -17,7 +17,7 @@ var Feed = React.createClass({
     );
   },
 
-  componentDidMount: function () {
+  componentWillMount: function () {
     ApiUtil.fetchFeedForUser();
     this.listener = PicStore.addListener(function () {
       this.setState({ pics: PicStore.all() });
@@ -35,6 +35,7 @@ var Feed = React.createClass({
   },
 
   render: function () {
+    debugger
     if (this.state.pics.length === 1) {
       return (
         <ul>
@@ -46,17 +47,6 @@ var Feed = React.createClass({
             </li>
         </ul>
       );
-    } else if (FolloweesStore.all().length === 0) {
-      return (
-        <ul>
-          <NavBar></NavBar>
-          <li>
-            You're not following anyone!
-            <br></br>
-            Start following to get your feed going!
-          </li>
-        </ul>
-      );
     } else if (PicStore.all()[0].length === 0) {
       return (
         <ul>
@@ -65,6 +55,17 @@ var Feed = React.createClass({
             The users you're following haven't uploaded pics yet.
             <br></br>
             Follow more users to get your feed going!
+          </li>
+        </ul>
+      );
+    } else if (FolloweesStore.all().length === 0) {
+      return (
+        <ul>
+          <NavBar></NavBar>
+          <li>
+            You're not following anyone!
+            <br></br>
+            Start following to get your feed going!
           </li>
         </ul>
       );
