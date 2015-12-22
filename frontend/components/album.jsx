@@ -6,7 +6,7 @@ var FolloweesStore = require("../stores/followees.js");
 var UserStore = require("../stores/user.js");
 var NavBar = require("./nav_bar.jsx");
 var UploadButton = require("./upload_button.jsx");
-
+var cur = window.current_user_id;
 
 var Album = React.createClass({
 
@@ -55,13 +55,13 @@ var Album = React.createClass({
                 "User hasn't uploaded any pics yet!"
               );
             } else if (PicStore.all().length === 1) {
-
-              if (FolloweesStore.find(parseInt(pic[idx].user_id))) {
-                var followStatus = "Unfollow";
-              } else {
-                    followStatus = "Follow";
+              if (pic[idx].user_id !== cur) {
+                if (FolloweesStore.find(parseInt(pic[idx].user_id))) {
+                  var followStatus = "Unfollow";
+                } else {
+                      followStatus = "Follow";
+                }
               }
-
               return (
                 <li key={idx} >
                     { pic[idx].username }
@@ -71,20 +71,17 @@ var Album = React.createClass({
                       null, pic[idx].user_id, followStatus)}>
                       { followStatus }
                     </div>
-                    <br></br>
-                    <br></br>
                     <AlbumEntry pic={pic[idx]} key={pic[idx].id}></AlbumEntry>
                 </li>
               );
-
             } else {
-
-              if (FolloweesStore.find(parseInt(pic.user_id))) {
-                var followStatus = "Unfollow";
-              } else {
-                    followStatus = "Follow";
+              if (pic.user_id !== cur) {
+                if (FolloweesStore.find(parseInt(pic.user_id))) {
+                  var followStatus = "Unfollow";
+                } else {
+                      followStatus = "Follow";
+                }
               }
-
               return (
                 <li key={idx}>
                   { pic.username }
@@ -94,12 +91,9 @@ var Album = React.createClass({
                     null, pic.user_id, followStatus)}>
                     { followStatus }
                   </div>
-                  <br></br>
-                  <br></br>
                   <AlbumEntry pic={pic} key={pic.id}></AlbumEntry>
                 </li>
               );
-
             }
           }.bind(this))
         }

@@ -82,7 +82,7 @@
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: UserIndex }),
+	  React.createElement(IndexRoute, { component: Feed }),
 	  React.createElement(Route, { path: 'album', component: Album }),
 	  React.createElement(Route, { path: 'pic/:id', component: Pic })
 	);
@@ -26865,10 +26865,6 @@
 	var Search = React.createClass({
 	  displayName: "Search",
 	
-	  handleInput: function (event) {
-	    this.setState({ inputVal: event.currentTarget.value });
-	  },
-	
 	  getInitialState: function () {
 	    return { inputVal: "", names: [] };
 	  },
@@ -26912,12 +26908,22 @@
 	    this.setState({ inputVal: name });
 	  },
 	
-	  inputKeyDown: function (e, input) {
-	    if (e.keyCode === "13") {
-	      var textarea = document.getElementById("search_input");
-	      textarea.value += "\n" + input.value;
+	  handleInput: function (event) {
+	    this.setState({ inputVal: event.currentTarget.value });
+	  },
+	
+	  handleEnter: function (event) {
+	    console.log(input);
+	    console.log(event.keyCode);
+	    console.log(event);
+	    if (event.keyCode === 13) {
+	      console.log("ENTER");
+	      this.props.history.pushState(null, "album", { id: this.matches()[0].id });
 	      input.value = "";
-	      return false;
+	      // var textarea = document.getElementById("search_input");
+	      // textarea.value += "\n" + input.value;
+	      // input.value = "";
+	      // return false;
 	    }
 	  },
 	
@@ -26930,7 +26936,7 @@
 	      React.createElement("input", { type: "text",
 	        key: "search_input",
 	
-	        onkeydown: "return inputKeyDown(event, this);",
+	        onkeydown: this.handleEnter,
 	
 	        placeholder: "Search Users",
 	        onChange: this.handleInput,
@@ -31770,6 +31776,7 @@
 	var Search = __webpack_require__(187);
 	var NavBar = __webpack_require__(186);
 	var UploadButton = __webpack_require__(239);
+	var cur = window.current_user_id;
 	
 	var Pic = React.createClass({
 	  displayName: "Pic",
@@ -31815,10 +31822,23 @@
 	  },
 	
 	  render: function () {
-	    if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
-	      var followStatus = "Unfollow";
+	    if (PicStore.all()[0].user_id !== cur) {
+	      if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
+	        var followStatus = "Unfollow";
+	      } else {
+	        followStatus = "Follow";
+	      }
+	    }
+	    if (PicStore.all()[0].user_id === cur) {
+	      var deleteStatus = React.createElement(
+	        "h4",
+	        {
+	          onClick: this.handleDeleteClick,
+	          className: "cursor" },
+	        "Delete"
+	      );
 	    } else {
-	      followStatus = "Follow";
+	      deleteStatus = "";
 	    }
 	    return React.createElement(
 	      "center",
@@ -31842,22 +31862,10 @@
 	          followStatus
 	        ),
 	        React.createElement("br", null),
-	        React.createElement("br", null),
-	        "pic id: ",
-	        PicStore.all()[0].id,
-	        React.createElement("br", null),
-	        "url: ",
-	        PicStore.all()[0].public_id,
 	        React.createElement("img", { src: PicStore.all()[0].public_id }),
 	        React.createElement("br", null),
-	        React.createElement(
-	          "h4",
-	          { onClick: this.handleDeleteClick.bind(null, PicStore.all()[0].id),
-	            className: "cursor" },
-	          "Delete"
-	        ),
+	        deleteStatus,
 	        React.createElement("br", null),
-	        "time since: ",
 	        PicStore.all()[0].created_at
 	      )
 	    );
@@ -31879,6 +31887,7 @@
 	var UserStore = __webpack_require__(166);
 	var NavBar = __webpack_require__(186);
 	var UploadButton = __webpack_require__(239);
+	var cur = window.current_user_id;
 	
 	var Album = React.createClass({
 	  displayName: "Album",
@@ -31923,13 +31932,13 @@
 	        if (PicStore.all().length === 1 && typeof PicStore.all()[0].user_id === "number") {
 	          return "User hasn't uploaded any pics yet!";
 	        } else if (PicStore.all().length === 1) {
-	
-	          if (FolloweesStore.find(parseInt(pic[idx].user_id))) {
-	            var followStatus = "Unfollow";
-	          } else {
-	            followStatus = "Follow";
+	          if (pic[idx].user_id !== cur) {
+	            if (FolloweesStore.find(parseInt(pic[idx].user_id))) {
+	              var followStatus = "Unfollow";
+	            } else {
+	              followStatus = "Follow";
+	            }
 	          }
-	
 	          return React.createElement(
 	            "li",
 	            { key: idx },
@@ -31941,18 +31950,16 @@
 	                onClick: this.handleFollowClick.bind(null, pic[idx].user_id, followStatus) },
 	              followStatus
 	            ),
-	            React.createElement("br", null),
-	            React.createElement("br", null),
 	            React.createElement(AlbumEntry, { pic: pic[idx], key: pic[idx].id })
 	          );
 	        } else {
-	
-	          if (FolloweesStore.find(parseInt(pic.user_id))) {
-	            var followStatus = "Unfollow";
-	          } else {
-	            followStatus = "Follow";
+	          if (pic.user_id !== cur) {
+	            if (FolloweesStore.find(parseInt(pic.user_id))) {
+	              var followStatus = "Unfollow";
+	            } else {
+	              followStatus = "Follow";
+	            }
 	          }
-	
 	          return React.createElement(
 	            "li",
 	            { key: idx },
@@ -31964,8 +31971,6 @@
 	                onClick: this.handleFollowClick.bind(null, pic.user_id, followStatus) },
 	              followStatus
 	            ),
-	            React.createElement("br", null),
-	            React.createElement("br", null),
 	            React.createElement(AlbumEntry, { pic: pic, key: pic.id })
 	          );
 	        }
@@ -32007,19 +32012,28 @@
 	  },
 	
 	  render: function () {
-	    if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
-	      var followStatus = "Unfollow";
+	    // if (this.props.pic.user_id !== cur) {
+	    //   if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
+	    //     var followStatus = "Unfollow";
+	    //   } else {
+	    //         followStatus = "Follow";
+	    //   }
+	    // }
+	    if (this.props.pic.user_id === cur) {
+	      var deleteStatus = React.createElement(
+	        "h4",
+	        {
+	          onClick: this.handleDeleteClick,
+	          className: "cursor" },
+	        "Delete"
+	      );
 	    } else {
-	      followStatus = "Follow";
+	      deleteStatus = "";
 	    }
 	    return React.createElement(
 	      "center",
 	      null,
-	      "pic id: ",
-	      this.props.pic.id,
 	      React.createElement("br", null),
-	      "url: ",
-	      this.props.pic.public_id,
 	      React.createElement(
 	        "div",
 	        { className: "cursor",
@@ -32028,14 +32042,8 @@
 	        React.createElement("img", { src: this.props.pic.public_id })
 	      ),
 	      React.createElement("br", null),
-	      React.createElement(
-	        "h4",
-	        { onClick: this.handleDeleteClick,
-	          className: "cursor" },
-	        "Delete"
-	      ),
+	      deleteStatus,
 	      React.createElement("br", null),
-	      "time since; ",
 	      this.props.pic.created_at,
 	      React.createElement("br", null),
 	      React.createElement("br", null)
@@ -32085,7 +32093,6 @@
 	  },
 	
 	  render: function () {
-	    debugger;
 	    if (this.state.pics.length === 1) {
 	      return React.createElement(
 	        "ul",
@@ -32208,10 +32215,23 @@
 	  },
 	
 	  render: function () {
-	    if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
-	      var followStatus = "Unfollow";
+	    if (this.props.pic.user_id !== cur) {
+	      if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
+	        var followStatus = "Unfollow";
+	      } else {
+	        followStatus = "Follow";
+	      }
+	    }
+	    if (this.props.pic.user_id === cur) {
+	      var deleteStatus = React.createElement(
+	        "h4",
+	        {
+	          onClick: this.handleDeleteClick,
+	          className: "cursor" },
+	        "Delete"
+	      );
 	    } else {
-	      followStatus = "Follow";
+	      deleteStatus = "";
 	    }
 	    return React.createElement(
 	      "center",
@@ -32228,10 +32248,6 @@
 	          onClick: this.handleFollowClick.bind(null, this.props.pic.user_id, followStatus) },
 	        followStatus
 	      ),
-	      "        ",
-	      React.createElement("br", null),
-	      "pic id: ",
-	      this.props.pic.id,
 	      React.createElement("br", null),
 	      React.createElement(
 	        "div",
@@ -32241,15 +32257,10 @@
 	        React.createElement("img", { src: this.props.pic.public_id })
 	      ),
 	      React.createElement("br", null),
-	      React.createElement(
-	        "h4",
-	        { onClick: this.handleDeleteClick,
-	          className: "cursor" },
-	        "Delete"
-	      ),
+	      deleteStatus,
 	      React.createElement("br", null),
-	      "time since: ",
 	      this.props.pic.created_at,
+	      React.createElement("br", null),
 	      React.createElement("br", null),
 	      React.createElement("br", null)
 	    );

@@ -24,30 +24,34 @@ var AlbumEntry = React.createClass({
   },
 
   render: function () {
-    if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
-      var followStatus = "Unfollow";
+    // if (this.props.pic.user_id !== cur) {
+    //   if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
+    //     var followStatus = "Unfollow";
+    //   } else {
+    //         followStatus = "Follow";
+    //   }
+    // }
+    if (this.props.pic.user_id === cur) {
+      var deleteStatus = <h4
+                          onClick={this.handleDeleteClick}
+                          className="cursor">
+                            Delete
+                          </h4>;
     } else {
-          followStatus = "Follow";
+          deleteStatus = "";
     }
     return (
       <center>
-        pic id: { this.props.pic.id }
         <br></br>
-        url: { this.props.pic.public_id }
         <div className="cursor"
           key={ this.props.pic.id }
           onClick={this.handleClick}>
             <img src={ this.props.pic.public_id }></img>
         </div>
         <br></br>
-
-        <h4 onClick={this.handleDeleteClick}
-            className="cursor">
-          Delete
-        </h4>
-
+        { deleteStatus }
         <br></br>
-        time since; { this.props.pic.created_at }
+        { this.props.pic.created_at }
         <br></br>
         <br></br>
       </center>

@@ -5,10 +5,6 @@ var History = require("react-router").History;
 
 var Search = React.createClass({
 
-  handleInput: function (event) {
-    this.setState({ inputVal: event.currentTarget.value });
-  },
-
   getInitialState: function () {
     return {inputVal: "", names: []};
   },
@@ -52,14 +48,25 @@ var Search = React.createClass({
     this.setState({ inputVal: name });
   },
 
-  inputKeyDown: function (e, input) {
-    if (e.keyCode === "13") {
-        var textarea = document.getElementById("search_input");
-        textarea.value += "\n" + input.value;
-        input.value = "";
-        return false;
+  handleInput: function (event) {
+    this.setState({ inputVal: event.currentTarget.value });
+  },
+
+  handleEnter: function (event) {
+    console.log(input);
+    console.log(event.keyCode);
+    console.log(event);
+    if (event.keyCode === 13) {
+      console.log("ENTER")
+      this.props.history.pushState(
+        null, "album", {id: this.matches()[0].id} );
+      input.value = "";
+      // var textarea = document.getElementById("search_input");
+      // textarea.value += "\n" + input.value;
+      // input.value = "";
+      // return false;
     }
-},
+  },
 
   render: function () {
     var results = this.matches();
@@ -69,11 +76,11 @@ var Search = React.createClass({
         <input type="text"
                key="search_input"
 
-               onkeydown="return inputKeyDown(event, this);"
+               onkeydown={this.handleEnter}
 
                placeholder="Search Users"
                onChange={this.handleInput}
-               value={this.state.inputVal} />
+               value={this.state.inputVal} ></input>
         <ul className="left-align">
           {
             users.map(function (result, i) {
