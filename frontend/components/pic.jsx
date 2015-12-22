@@ -7,6 +7,8 @@ var FolloweesStore = require("../stores/followees.js");
 var Search = require("./search.jsx");
 var NavBar = require("./nav_bar.jsx");
 var UploadButton = require("./upload_button");
+var cur = window.current_user_id;
+
 
 var Pic = React.createClass({
 
@@ -53,10 +55,21 @@ var Pic = React.createClass({
   },
 
   render: function () {
-    if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
-      var followStatus = "Unfollow";
+    if (PicStore.all()[0].user_id !== cur) {
+      if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
+        var followStatus = "Unfollow";
+      } else {
+            followStatus = "Follow";
+      }
+    }
+    if (PicStore.all()[0].user_id === cur) {
+      var deleteStatus = <h4
+                          onClick={this.handleDeleteClick}
+                          className="cursor">
+                            Delete
+                          </h4>;
     } else {
-          followStatus = "Follow";
+          deleteStatus = "";
     }
     return (
       <center>
@@ -75,20 +88,11 @@ var Pic = React.createClass({
               { followStatus }
           </div>
           <br></br>
-          <br></br>
-            pic id: { PicStore.all()[0].id }
-          <br></br>
-            url: { PicStore.all()[0].public_id }
             <img src={ PicStore.all()[0].public_id }></img>
-            <br></br>
-            <h4 onClick={this.handleDeleteClick.bind(
-                null, PicStore.all()[0].id)
-              }
-                className="cursor">
-              Delete
-            </h4>
           <br></br>
-            time since: { PicStore.all()[0].created_at }
+            { deleteStatus }
+          <br></br>
+            { PicStore.all()[0].created_at }
         </div>
       </center>
     );

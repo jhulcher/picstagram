@@ -35,7 +35,6 @@ var Feed = React.createClass({
   },
 
   render: function () {
-    debugger
     if (this.state.pics.length === 1) {
       return (
         <ul>

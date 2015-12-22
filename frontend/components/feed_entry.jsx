@@ -43,10 +43,21 @@ var FeedEntry = React.createClass({
   },
 
   render: function () {
-    if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
-      var followStatus = "Unfollow";
+    if (this.props.pic.user_id !== cur) {
+      if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
+        var followStatus = "Unfollow";
+      } else {
+            followStatus = "Follow";
+      }
+    }
+    if (this.props.pic.user_id === cur) {
+      var deleteStatus = <h4
+                          onClick={this.handleDeleteClick}
+                          className="cursor">
+                            Delete
+                          </h4>;
     } else {
-          followStatus = "Follow";
+          deleteStatus = "";
     }
     return (
       <center>
@@ -59,25 +70,20 @@ var FeedEntry = React.createClass({
           onClick={this.handleFollowClick.bind(
           null, this.props.pic.user_id, followStatus)}>
           { followStatus }
-        </div>        <br></br>
-
-            pic id: { this.props.pic.id }
-            <br></br>
-            <div className="cursor"
-              key={ this.props.pic.id }
-              onClick={this.handleClick}>
-                <img src={ this.props.pic.public_id }></img>
-            </div>
-            <br></br>
-            <h4 onClick={this.handleDeleteClick}
-                className="cursor">
-              Delete
-            </h4>
-            <br></br>
-            time since: { this.props.pic.created_at }
-            <br></br>
-            <br></br>
-
+        </div>
+        <br></br>
+        <div className="cursor"
+          key={ this.props.pic.id }
+          onClick={this.handleClick}>
+            <img src={ this.props.pic.public_id }></img>
+        </div>
+        <br></br>
+          { deleteStatus }
+        <br></br>
+          { this.props.pic.created_at }
+        <br></br>
+        <br></br>
+        <br></br>
       </center>
     );
   }
