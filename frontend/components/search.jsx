@@ -69,9 +69,7 @@ var Search = React.createClass({
       <div className="cursor search left">
         <input type="text"
                key="search_input"
-
                onKeyDown={this.handleEnter}
-
                placeholder="Search Users"
                onChange={this.handleInput}
                value={this.state.inputVal} ></input>

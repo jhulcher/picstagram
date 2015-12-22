@@ -26,24 +26,12 @@
 </head>
 <body>
 
-    <% if signed_in? %>
-      <script type="text/javascript">
-        window.current_user_id = <%= current_user.id %>;
-      </script>
+  <% if signed_in? %>
+    <script type="text/javascript">
+      window.current_user_id = <%= current_user.id %>;
+    </script>
+  <% end %>
 
-      <!-- <center>
-        <table>
-          <tr>
-            <td>
-              Logged in as <%= current_user.username %>
-            </td>
-            <td>
-              <%= button_to "Sign Out", sessions_url, :method => :delete %>
-            </td>
-          </tr>
-        </table> -->
-    <% end %>
-      <!-- </center> -->
   <center>
     <%= render "layouts/errors" %>
     <%= yield %>

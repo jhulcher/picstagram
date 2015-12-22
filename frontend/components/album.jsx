@@ -17,7 +17,6 @@ var Album = React.createClass({
   },
 
   componentDidMount: function () {
-    console.log("mounting album");
     ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
     this.listener = PicStore.addListener(function () {
       this.setState({ pics: PicStore.all() });
@@ -31,9 +30,7 @@ var Album = React.createClass({
 
   componentWillReceiveProps: function (newProps) {
     ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
-    this.listener = PicStore.addListener(function () {
-      this.setState({ pics: PicStore.all() });
-    }.bind(this));
+    this.setState({ pics: PicStore.all() });
   },
 
   componentWillUnmount: function () {
@@ -79,7 +76,10 @@ var Album = React.createClass({
                       null, pic[idx].user_id, followStatus)}>
                       { followStatus }
                     </div>
-                    <AlbumEntry pic={pic[idx]} key={pic[idx].id}></AlbumEntry>
+                    <AlbumEntry pic={pic[idx]}
+                                key={pic[idx].id}
+                                className="picdisplay">
+                    </AlbumEntry>
                 </li>
               );
             } else {
@@ -99,7 +99,9 @@ var Album = React.createClass({
                     null, pic.user_id, followStatus)}>
                     { followStatus }
                   </div>
-                  <AlbumEntry pic={pic} key={pic.id}></AlbumEntry>
+                  <AlbumEntry pic={pic}
+                              key={pic.id}>
+                  </AlbumEntry>
                 </li>
               );
             }

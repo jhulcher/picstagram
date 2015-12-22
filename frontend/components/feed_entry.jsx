@@ -75,7 +75,9 @@ var FeedEntry = React.createClass({
         <div className="cursor"
           key={ this.props.pic.id }
           onClick={this.handleClick}>
-            <img src={ this.props.pic.public_id }></img>
+            <img src={ this.props.pic.public_id }
+                 className="picdisplay">
+            </img>
         </div>
         <br></br>
           { deleteStatus }
