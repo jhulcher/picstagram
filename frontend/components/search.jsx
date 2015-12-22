@@ -5,6 +5,8 @@ var History = require("react-router").History;
 
 var Search = React.createClass({
 
+  mixins: [History],
+
   getInitialState: function () {
     return {inputVal: "", names: []};
   },
@@ -53,18 +55,10 @@ var Search = React.createClass({
   },
 
   handleEnter: function (event) {
-    console.log(input);
-    console.log(event.keyCode);
-    console.log(event);
     if (event.keyCode === 13) {
-      console.log("ENTER")
-      this.props.history.pushState(
+      this.history.pushState(
         null, "album", {id: this.matches()[0].id} );
-      input.value = "";
-      // var textarea = document.getElementById("search_input");
-      // textarea.value += "\n" + input.value;
-      // input.value = "";
-      // return false;
+      this.state.inputVal = "";
     }
   },
 
@@ -76,7 +70,7 @@ var Search = React.createClass({
         <input type="text"
                key="search_input"
 
-               onkeydown={this.handleEnter}
+               onKeyDown={this.handleEnter}
 
                placeholder="Search Users"
                onChange={this.handleInput}
