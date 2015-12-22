@@ -82,7 +82,7 @@
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: UserIndex }),
+	  React.createElement(IndexRoute, { component: Feed }),
 	  React.createElement(Route, { path: 'album', component: Album }),
 	  React.createElement(Route, { path: 'pic/:id', component: Pic })
 	);
