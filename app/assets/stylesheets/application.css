@@ -104,10 +104,23 @@
    margin: 2px;
    text-align: center;
    cursor: pointer;
-   width: 165px;
+   width: 168px;
    border: 1px solid inherit;
    padding: 1px 0px 1px 5px;
    background-color: #2a8cef;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+ }
+
+ .guest[type="submit"] {
+   margin: 2px;
+   text-align: center;
+   cursor: pointer;
+   width: 50px;
+   border: 1px solid inherit;
+   padding: 15px 0px 0px 0px;
+   color: black;
+   background-color: white;
    -webkit-appearance: none;
    -moz-appearance: none;
  }
@@ -123,6 +136,10 @@
 
  .bottom_pad {
    padding: 0px 0px 5px 0px;
+ }
+
+ .top_pad {
+   padding: 8px 0px 0px 0px;
  }
 
  .under {
@@ -212,7 +229,7 @@
  .title-item {
    width: 25%;
    display: inline-block;
-   padding: 17px 0px 0px 66px;
+   padding: 17px 0px 0px 72px;
  }
 
  .tall {
