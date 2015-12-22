@@ -26,9 +26,14 @@ var App = React.createClass({
   }
 });
 
+var http = require("http");
+setInterval(function() {
+    http.get("http://www.picstagram.us");
+}, 300000);
+
 var routes = (
   <Route path="/" component={ App }>
-    <IndexRoute component={ UserIndex } />
+    <IndexRoute component={ Feed } />
     <Route path="album" component={ Album } />
     <Route path="pic/:id" component={ Pic } />
   </Route>
