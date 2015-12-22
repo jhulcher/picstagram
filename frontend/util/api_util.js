@@ -4,6 +4,34 @@ var PicStore = require("../stores/pic.js");
 var FolloweesStore = require("../stores/followees.js");
 
 var ApiUtil = {
+
+  createPic: function (url) {
+    $.ajax({
+      url: "/api/pics",
+      data: {pic:
+              {
+                public_id: url
+              }
+            },
+      method: "POST",
+      success: function (response) {
+        ApiActions.receivePicFromUser(response);
+        PicStore.all();
+      }
+    });
+  },
+
+  deletePic: function (id) {
+    $.ajax({
+      url: "/api/pics/" + id,
+      method: "DELETE",
+      success: function () {
+        ApiActions.deletePic(id);
+        PicStore.all();
+      }
+    });
+  },
+
   fetchUsers: function () {
     $.ajax({
       url: "/api/users",

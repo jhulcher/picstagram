@@ -17,6 +17,10 @@ var FeedEntry = React.createClass({
     }.bind(this));
   },
 
+  componentWillUnmount: function () {
+    this.followeesListener.remove();
+  },
+
   handleClick: function () {
     this.history.pushState( null, "pic/" + this.props.pic.id );
   },
@@ -31,6 +35,11 @@ var FeedEntry = React.createClass({
     } else {
       ApiUtil.unfollowUser(id);
     }
+  },
+
+  handleDeleteClick: function () {
+    ApiUtil.deletePic(this.props.pic.id);
+    this.history.pushState( null, "/");
   },
 
   render: function () {
@@ -51,17 +60,24 @@ var FeedEntry = React.createClass({
           null, this.props.pic.user_id, followStatus)}>
           { followStatus }
         </div>        <br></br>
-        <div className="cursor"
-          key={ this.props.pic.id }
-          onClick={this.handleClick}>
+
             pic id: { this.props.pic.id }
             <br></br>
-            url: { this.props.pic.public_id }
+            <div className="cursor"
+              key={ this.props.pic.id }
+              onClick={this.handleClick}>
+                <img src={ this.props.pic.public_id }></img>
+            </div>
+            <br></br>
+            <h4 onClick={this.handleDeleteClick}
+                className="cursor">
+              Delete
+            </h4>
             <br></br>
             time since: { this.props.pic.created_at }
             <br></br>
             <br></br>
-        </div>
+
       </center>
     );
   }

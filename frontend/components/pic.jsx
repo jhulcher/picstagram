@@ -6,6 +6,7 @@ var History = require("react-router").History;
 var FolloweesStore = require("../stores/followees.js");
 var Search = require("./search.jsx");
 var NavBar = require("./nav_bar.jsx");
+var UploadButton = require("./upload_button");
 
 var Pic = React.createClass({
 
@@ -29,6 +30,11 @@ var Pic = React.createClass({
     }.bind(this));
   },
 
+  componentWillUnmount: function () {
+    this.followListener.remove();
+    this.listener.remove();
+  },
+
   handleUserClick: function () {
     this.history.pushState( null, "album", {id: PicStore.all()[0].user_id} );
   },
@@ -39,6 +45,11 @@ var Pic = React.createClass({
     } else {
       ApiUtil.unfollowUser(id);
     }
+  },
+
+  handleDeleteClick: function (id) {
+    ApiUtil.deletePic(id);
+    this.history.pushState( null, "/");
   },
 
   render: function () {
@@ -60,18 +71,24 @@ var Pic = React.createClass({
           <div className="cursor"
               onClick={
                 this.handleFollowClick.bind(
-                  null, PicStore.all()[0].user_id, followStatus
-                )
-              }>
+                  null, PicStore.all()[0].user_id, followStatus)}>
               { followStatus }
           </div>
           <br></br>
           <br></br>
-          pic id: { PicStore.all()[0].id }
+            pic id: { PicStore.all()[0].id }
           <br></br>
-          url: { PicStore.all()[0].public_id }
+            url: { PicStore.all()[0].public_id }
+            <img src={ PicStore.all()[0].public_id }></img>
+            <br></br>
+            <h4 onClick={this.handleDeleteClick.bind(
+                null, PicStore.all()[0].id)
+              }
+                className="cursor">
+              Delete
+            </h4>
           <br></br>
-          time since: { PicStore.all()[0].created_at }
+            time since: { PicStore.all()[0].created_at }
         </div>
       </center>
     );

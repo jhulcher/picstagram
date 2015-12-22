@@ -16,6 +16,20 @@ var ApiActions = {
     });
   },
 
+  receivePicFromUser: function (pic) {
+    AppDispatcher.dispatch({
+      actionType: Constants.PIC_RECEIVED,
+      pic: pic
+    });
+  },
+
+  deletePic: function (id) {
+    AppDispatcher.dispatch({
+      actionType: Constants.DELETE_PIC,
+      id: id
+    });
+  },
+
   receiveAllPicsFromUser: function (pics) {
     AppDispatcher.dispatch({
       actionType: Constants.PICS_RECEIVED,

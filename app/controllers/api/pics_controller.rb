@@ -13,13 +13,12 @@ class Api::PicsController < ApplicationController
     @pic = Pic.new(pic_params)
     @pic.user_id = current_user.id
     @pic.save!
-    render json: @pic
   end
 
   def destroy
     @pic = Pic.find(params[:id])
     @pic.destroy!
-    render json: @pic
+    render json: {}
   end
 
   private

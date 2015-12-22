@@ -4,6 +4,7 @@ var React = require("react");
 var PicStore = require("../stores/pic.js");
 var FolloweesStore = require("../stores/followees.js");
 var NavBar = require("./nav_bar.jsx");
+var UploadButton = require("./upload_button.jsx");
 
 var UserIndex = React.createClass({
 

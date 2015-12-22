@@ -133,15 +133,6 @@
    text-color: #5e5e5e;
  }
 
- .search {
-   padding: 19px 19px 19px 19px;
-   color: #666666;
- }
-
- .float {
-   position: absolute;
- }
-
  input, textarea {
  }
 
@@ -178,17 +169,34 @@
    /*background-color: #2a8cef;*/
  }
 
- .left {
-   float: left;
+ .search {
+   padding: 19px 0px 19px 0px;
+   color: #666666;
  }
 
  .left-align {
    padding: 0px 6px 0px 6px;
    text-align: left;
+   width: 165px;
+   position: absolute;
+ }
+
+ .left {
+   float: left;
+   width: 25%;
  }
 
  .right {
    float: right;
+ }
+
+ .camera-button {
+   background-color: white;
+ }
+
+ .header-item {
+   width: 20%;
+   display: inline-block;
  }
 
  .tall {

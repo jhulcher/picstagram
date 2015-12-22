@@ -7,6 +7,7 @@ var FolloweesStore = require("../stores/followees.js");
 var Search = require("./search.jsx");
 var UserStore = require("../stores/user.js");
 var NavBar = require("./nav_bar.jsx");
+var UploadButton = require("./upload_button.jsx");
 
 var Feed = React.createClass({
 
@@ -34,7 +35,18 @@ var Feed = React.createClass({
   },
 
   render: function () {
-    if (FolloweesStore.all().length === 0) {
+    if (this.state.pics.length === 1) {
+      return (
+        <ul>
+          <NavBar></NavBar>
+            <li key={1} >
+              <center>
+                <FeedEntry pic={ this.state.pics[0][0] }> </FeedEntry>
+              </center>
+            </li>
+        </ul>
+      );
+    } else if (FolloweesStore.all().length === 0) {
       return (
         <ul>
           <NavBar></NavBar>
@@ -61,9 +73,9 @@ var Feed = React.createClass({
         <ul>
           <NavBar></NavBar>
           {
-            this.state.pics.map (function (pic) {
+            this.state.pics.map (function (pic, idx) {
               return (
-                <li key={pic.id} >
+                <li key={idx} >
                   <center>
                     <FeedEntry pic={ pic }> </FeedEntry>
                   </center>
