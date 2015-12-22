@@ -26790,7 +26790,7 @@
 	          }
 	          return React.createElement(
 	            "li",
-	            { key: user.id * idx },
+	            { key: idx },
 	            React.createElement(
 	              "div",
 	              { className: "cursor",
@@ -26801,7 +26801,7 @@
 	            React.createElement(
 	              "div",
 	              { className: "cursor",
-	                key: idx,
+	                key: user.id * 111,
 	                onClick: this.handleFollowClick.bind(null, user.id, followStatus) },
 	              followStatus
 	            ),

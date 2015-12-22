@@ -62,14 +62,14 @@ var UserIndex = React.createClass({
                     followStatus = "Follow";
               }
               return (
-                <li key={user.id * idx}>
+                <li key={idx}>
                   <div className="cursor"
                     key={user.id}
                     onClick={this.handleClick.bind(null, user.id)}>
                     { user.username }
                   </div>
                   <div className="cursor"
-                    key={idx}
+                    key={user.id * 111}
                     onClick={this.handleFollowClick.bind(
                     null, user.id, followStatus)}>
                     { followStatus }
