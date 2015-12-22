@@ -31,8 +31,10 @@
             </tr>
           </table>
           <div class="bottom_pad"> </div>
-      New around here? &nbsp; <%= link_to "Sign Up!", new_user_url, :class => "under" %>
+          <div class="top_pad"> </div>
+            New around here? &nbsp; <%= link_to "Sign Up!", new_user_url, :class => "under" %>
       </form>
+      <%= render "layouts/guest" %>
     </div>
   </center>
 </div>

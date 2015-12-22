@@ -31,8 +31,11 @@
             </tr>
           </table>
           <div class="bottom_pad"> </div>
+          <div class="top_pad"> </div>
+
         Already registered? &nbsp; <%= link_to "Sign In!", new_session_url, :class => "under" %>
       </form>
+      <%= render "layouts/guest" %>
     </div>
   </center>
 </div>
