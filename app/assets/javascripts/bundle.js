@@ -26865,6 +26865,8 @@
 	var Search = React.createClass({
 	  displayName: "Search",
 	
+	  mixins: [History],
+	
 	  getInitialState: function () {
 	    return { inputVal: "", names: [] };
 	  },
@@ -26913,17 +26915,9 @@
 	  },
 	
 	  handleEnter: function (event) {
-	    console.log(input);
-	    console.log(event.keyCode);
-	    console.log(event);
 	    if (event.keyCode === 13) {
-	      console.log("ENTER");
-	      this.props.history.pushState(null, "album", { id: this.matches()[0].id });
-	      input.value = "";
-	      // var textarea = document.getElementById("search_input");
-	      // textarea.value += "\n" + input.value;
-	      // input.value = "";
-	      // return false;
+	      this.history.pushState(null, "album", { id: this.matches()[0].id });
+	      this.state.inputVal = "";
 	    }
 	  },
 	
@@ -26936,7 +26930,7 @@
 	      React.createElement("input", { type: "text",
 	        key: "search_input",
 	
-	        onkeydown: this.handleEnter,
+	        onKeyDown: this.handleEnter,
 	
 	        placeholder: "Search Users",
 	        onChange: this.handleInput,
@@ -31897,6 +31891,7 @@
 	  },
 	
 	  componentDidMount: function () {
+	    console.log("mounting album");
 	    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
 	    this.listener = PicStore.addListener((function () {
 	      this.setState({ pics: PicStore.all() });
@@ -31905,6 +31900,13 @@
 	    ApiUtil.fetchFollowees();
 	    this.followListener = FolloweesStore.addListener((function () {
 	      this.setState({ followees: FolloweesStore.all() });
+	    }).bind(this));
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
+	    this.listener = PicStore.addListener((function () {
+	      this.setState({ pics: PicStore.all() });
 	    }).bind(this));
 	  },
 	
@@ -32012,13 +32014,6 @@
 	  },
 	
 	  render: function () {
-	    // if (this.props.pic.user_id !== cur) {
-	    //   if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
-	    //     var followStatus = "Unfollow";
-	    //   } else {
-	    //         followStatus = "Follow";
-	    //   }
-	    // }
 	    if (this.props.pic.user_id === cur) {
 	      var deleteStatus = React.createElement(
 	        "h4",

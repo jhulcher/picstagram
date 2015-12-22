@@ -17,6 +17,7 @@ var Album = React.createClass({
   },
 
   componentDidMount: function () {
+    console.log("mounting album");
     ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
     this.listener = PicStore.addListener(function () {
       this.setState({ pics: PicStore.all() });
@@ -25,6 +26,13 @@ var Album = React.createClass({
     ApiUtil.fetchFollowees();
     this.followListener = FolloweesStore.addListener(function () {
       this.setState({ followees: FolloweesStore.all() });
+    }.bind(this));
+  },
+
+  componentWillReceiveProps: function (newProps) {
+    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
+    this.listener = PicStore.addListener(function () {
+      this.setState({ pics: PicStore.all() });
     }.bind(this));
   },
 

@@ -24,13 +24,6 @@ var AlbumEntry = React.createClass({
   },
 
   render: function () {
-    // if (this.props.pic.user_id !== cur) {
-    //   if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
-    //     var followStatus = "Unfollow";
-    //   } else {
-    //         followStatus = "Follow";
-    //   }
-    // }
     if (this.props.pic.user_id === cur) {
       var deleteStatus = <h4
                           onClick={this.handleDeleteClick}
