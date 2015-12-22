@@ -46,8 +46,11 @@ var ApiUtil = {
 
   logOut: function () {
     $.ajax({
-      url: "/sessions",
-      method: "DELETE"
+      url: "session",
+      method: "DELETE",
+      success: function (response) {
+        window.location.href = "/";
+      }
     });
   },
 

@@ -88,7 +88,9 @@ var Pic = React.createClass({
               { followStatus }
           </div>
           <br></br>
-            <img src={ PicStore.all()[0].public_id }></img>
+            <img src={ PicStore.all()[0].public_id }
+                 className="picdisplay">
+            </img>
           <br></br>
             { deleteStatus }
           <br></br>

@@ -19731,8 +19731,11 @@
 	
 	  logOut: function () {
 	    $.ajax({
-	      url: "/sessions",
-	      method: "DELETE"
+	      url: "session",
+	      method: "DELETE",
+	      success: function (response) {
+	        window.location.href = "/";
+	      }
 	    });
 	  },
 	
@@ -26827,9 +26830,20 @@
 	var React = __webpack_require__(1);
 	var Search = __webpack_require__(187);
 	var UploadButton = __webpack_require__(239);
+	var History = __webpack_require__(188).History;
 	
 	var NavBar = React.createClass({
 	  displayName: "NavBar",
+	
+	  mixins: [History],
+	
+	  handleClick: function (event) {
+	    this.history.pushState(null, "/");
+	  },
+	
+	  handleLogOut: function (event) {
+	    ApiUtil.logOut();
+	  },
 	
 	  render: function () {
 	    return React.createElement(
@@ -26841,10 +26855,17 @@
 	        React.createElement(Search, null),
 	        React.createElement(
 	          "h2",
-	          { className: "header-item" },
+	          { className: "title-item cursor",
+	            onClick: this.handleClick },
 	          "Picstagram"
 	        ),
-	        React.createElement(UploadButton, { className: "header-item right" })
+	        React.createElement(UploadButton, { className: "header-item  cursor" }),
+	        React.createElement(
+	          "h3",
+	          { className: "header-item logout cursor",
+	            onClick: this.handleLogOut },
+	          "Log Out"
+	        )
 	      )
 	    );
 	  }
@@ -26929,9 +26950,7 @@
 	      { className: "cursor search left" },
 	      React.createElement("input", { type: "text",
 	        key: "search_input",
-	
 	        onKeyDown: this.handleEnter,
-	
 	        placeholder: "Search Users",
 	        onChange: this.handleInput,
 	        value: this.state.inputVal }),
@@ -31739,7 +31758,9 @@
 	      if (!error) {
 	        // results[0].height
 	        // results[0].width
-	        ApiUtil.createPic(results[0].secure_url);
+	        // ApiUtil.createPic(results[0].secure_url);
+	        ApiUtil.createPic("http://res.cloudinary.com/picstagram/image/upload/c_lfill,g_center,h_500,q_81,r_0,w_500/" + results[0].public_id + ".jpg");
+	
 	        // ApiUtil.fetchAllPicsFromUser();
 	      }
 	    });
@@ -31856,7 +31877,8 @@
 	          followStatus
 	        ),
 	        React.createElement("br", null),
-	        React.createElement("img", { src: PicStore.all()[0].public_id }),
+	        React.createElement("img", { src: PicStore.all()[0].public_id,
+	          className: "picdisplay" }),
 	        React.createElement("br", null),
 	        deleteStatus,
 	        React.createElement("br", null),
@@ -31891,7 +31913,6 @@
 	  },
 	
 	  componentDidMount: function () {
-	    console.log("mounting album");
 	    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
 	    this.listener = PicStore.addListener((function () {
 	      this.setState({ pics: PicStore.all() });
@@ -31905,9 +31926,7 @@
 	
 	  componentWillReceiveProps: function (newProps) {
 	    ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
-	    this.listener = PicStore.addListener((function () {
-	      this.setState({ pics: PicStore.all() });
-	    }).bind(this));
+	    this.setState({ pics: PicStore.all() });
 	  },
 	
 	  componentWillUnmount: function () {
@@ -31952,7 +31971,9 @@
 	                onClick: this.handleFollowClick.bind(null, pic[idx].user_id, followStatus) },
 	              followStatus
 	            ),
-	            React.createElement(AlbumEntry, { pic: pic[idx], key: pic[idx].id })
+	            React.createElement(AlbumEntry, { pic: pic[idx],
+	              key: pic[idx].id,
+	              className: "picdisplay" })
 	          );
 	        } else {
 	          if (pic.user_id !== cur) {
@@ -31973,7 +31994,8 @@
 	                onClick: this.handleFollowClick.bind(null, pic.user_id, followStatus) },
 	              followStatus
 	            ),
-	            React.createElement(AlbumEntry, { pic: pic, key: pic.id })
+	            React.createElement(AlbumEntry, { pic: pic,
+	              key: pic.id })
 	          );
 	        }
 	      }).bind(this))
@@ -32034,7 +32056,8 @@
 	        { className: "cursor",
 	          key: this.props.pic.id,
 	          onClick: this.handleClick },
-	        React.createElement("img", { src: this.props.pic.public_id })
+	        React.createElement("img", { src: this.props.pic.public_id,
+	          className: "picdisplay" })
 	      ),
 	      React.createElement("br", null),
 	      deleteStatus,
@@ -32088,7 +32111,20 @@
 	  },
 	
 	  render: function () {
-	    if (this.state.pics.length === 1) {
+	    if (FolloweesStore.all().length === 0) {
+	      return React.createElement(
+	        "ul",
+	        null,
+	        React.createElement(NavBar, null),
+	        React.createElement(
+	          "li",
+	          null,
+	          "You're not following anyone!",
+	          React.createElement("br", null),
+	          "Start following to get your feed going!"
+	        )
+	      );
+	    } else if (this.state.pics.length === 1) {
 	      return React.createElement(
 	        "ul",
 	        null,
@@ -32118,19 +32154,6 @@
 	          "The users you're following haven't uploaded pics yet.",
 	          React.createElement("br", null),
 	          "Follow more users to get your feed going!"
-	        )
-	      );
-	    } else if (FolloweesStore.all().length === 0) {
-	      return React.createElement(
-	        "ul",
-	        null,
-	        React.createElement(NavBar, null),
-	        React.createElement(
-	          "li",
-	          null,
-	          "You're not following anyone!",
-	          React.createElement("br", null),
-	          "Start following to get your feed going!"
 	        )
 	      );
 	    } else {
@@ -32249,7 +32272,8 @@
 	        { className: "cursor",
 	          key: this.props.pic.id,
 	          onClick: this.handleClick },
-	        React.createElement("img", { src: this.props.pic.public_id })
+	        React.createElement("img", { src: this.props.pic.public_id,
+	          className: "picdisplay" })
 	      ),
 	      React.createElement("br", null),
 	      deleteStatus,

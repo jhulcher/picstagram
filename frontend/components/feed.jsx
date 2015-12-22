@@ -35,7 +35,18 @@ var Feed = React.createClass({
   },
 
   render: function () {
-    if (this.state.pics.length === 1) {
+    if (FolloweesStore.all().length === 0) {
+      return (
+        <ul>
+          <NavBar></NavBar>
+          <li>
+            You're not following anyone!
+            <br></br>
+            Start following to get your feed going!
+          </li>
+        </ul>
+      );
+    } else if(this.state.pics.length === 1) {
       return (
         <ul>
           <NavBar></NavBar>
@@ -54,17 +65,6 @@ var Feed = React.createClass({
             The users you're following haven't uploaded pics yet.
             <br></br>
             Follow more users to get your feed going!
-          </li>
-        </ul>
-      );
-    } else if (FolloweesStore.all().length === 0) {
-      return (
-        <ul>
-          <NavBar></NavBar>
-          <li>
-            You're not following anyone!
-            <br></br>
-            Start following to get your feed going!
           </li>
         </ul>
       );
