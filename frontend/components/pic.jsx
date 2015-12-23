@@ -55,6 +55,9 @@ var Pic = React.createClass({
   },
 
   render: function () {
+    // if (PicStore.all().length === 0) {
+    //   return (<div></div>);
+    // }
     if (PicStore.all()[0].user_id !== cur) {
       if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
         var followStatus = "Unfollow";
@@ -82,9 +85,11 @@ var Pic = React.createClass({
                 { PicStore.all()[0].username }
           </div>
           <div className="cursor"
-              onClick={
-                this.handleFollowClick.bind(
-                  null, PicStore.all()[0].user_id, followStatus)}>
+               onClick={
+                 this.handleFollowClick.bind(
+                   null,
+                   PicStore.all()[0].user_id,
+                   followStatus)}>
               { followStatus }
           </div>
           <br></br>

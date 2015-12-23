@@ -45,7 +45,7 @@ PicStore.all = function () {
   if (_pics.length > 1) {
     return _pics.slice(0);
   } else {
-    return [_pics];
+    return _pics;
   }
 };
 
