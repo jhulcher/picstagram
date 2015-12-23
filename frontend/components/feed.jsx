@@ -71,6 +71,7 @@ var Feed = React.createClass({
         </ul>
       );
     } else {
+      
       return (
         <ul>
           <NavBar></NavBar>
