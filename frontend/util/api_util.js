@@ -55,7 +55,7 @@ var ApiUtil = {
       method: "GET",
       dataType: "json",
       success: function (response) {
-        ApiActions.receiveAllPicsFromUser(response);
+        ApiActions.receiveAllPicsFromUser([response]);
         UserStore.all();
       }
     });

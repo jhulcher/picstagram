@@ -63,21 +63,21 @@ var FeedEntry = React.createClass({
       <center>
         <div className="cursor" onClick={
           this.handleUserClick.bind(null, this.props.pic.user_id)}>
-          { this.props.pic.username }
+            { this.props.pic.username }
         </div>
         <div className="cursor"
-          key={1111}
-          onClick={this.handleFollowClick.bind(
-          null, this.props.pic.user_id, followStatus)}>
-          { followStatus }
+             key={1111}
+             onClick={this.handleFollowClick.bind(
+             null, this.props.pic.user_id, followStatus)}>
+              { followStatus }
         </div>
         <br></br>
         <div className="cursor"
-          key={ this.props.pic.id }
-          onClick={this.handleClick}>
-            <img src={ this.props.pic.public_id }
+             key={ this.props.pic.id }
+             onClick={this.handleClick}>
+             <img src={ this.props.pic.public_id }
                  className="picdisplay">
-            </img>
+             </img>
         </div>
         <br></br>
           { deleteStatus }

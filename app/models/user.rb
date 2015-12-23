@@ -10,6 +10,24 @@ class User < ActiveRecord::Base
   foreign_key: :user_id,
   class_name: "Pic"
 
+
+
+  has_many :likes,
+  primary_key: :id,
+  foreign_key: :liker_id,
+  class_name: "Like"
+
+  def likable_pics
+    Pic.joins(:likes).where(:user_id => id)
+  end
+
+
+  has_many :pics_liked,
+  through: :likes,
+  source: :pic
+
+
+
   has_many :follows,
   primary_key: :id,
   foreign_key: :follower_id,
