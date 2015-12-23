@@ -28,7 +28,8 @@ var Pic = React.createClass({
 
     ApiUtil.fetchSinglePic(this.props.params.id);
     this.listener = PicStore.addListener(function () {
-      this.forceUpdate();
+      this.setState( { pic: PicStore.find(parseInt(this.props.params.id)) } );
+      // this.forceUpdate();
     }.bind(this));
   },
 
@@ -38,7 +39,7 @@ var Pic = React.createClass({
   },
 
   handleUserClick: function () {
-    this.history.pushState( null, "album", {id: PicStore.all()[0].user_id} );
+    this.history.pushState( null, "album", {id: this.state.pic.user_id} );
   },
 
   handleFollowClick: function (id, followStatus) {
@@ -55,17 +56,17 @@ var Pic = React.createClass({
   },
 
   render: function () {
-    // if (PicStore.all().length === 0) {
-    //   return (<div></div>);
-    // }
-    if (PicStore.all()[0].user_id !== cur) {
-      if (FolloweesStore.find(parseInt(PicStore.all()[0].user_id))) {
+    if (!this.state.pic) {
+      return (<div></div>);
+    }
+    if (this.state.pic.user_id !== cur) {
+      if (FolloweesStore.find(parseInt(this.state.pic.user_id))) {
         var followStatus = "Unfollow";
       } else {
             followStatus = "Follow";
       }
     }
-    if (PicStore.all()[0].user_id === cur) {
+    if (this.state.pic.user_id === cur) {
       var deleteStatus = <h4
                           onClick={this.handleDeleteClick}
                           className="cursor">
@@ -77,29 +78,29 @@ var Pic = React.createClass({
     return (
       <center>
         <NavBar></NavBar>
-        <div key={ PicStore.all()[0].id }>
+        <div key={ this.state.pic.id }>
           <div className="cursor"
-               key={ PicStore.all()[0].id }
+               key={ this.state.pic.id }
                onClick={this.handleUserClick}
                div>
-                { PicStore.all()[0].username }
+                { this.state.pic.username }
           </div>
           <div className="cursor"
                onClick={
                  this.handleFollowClick.bind(
                    null,
-                   PicStore.all()[0].user_id,
+                   this.state.pic.user_id,
                    followStatus)}>
               { followStatus }
           </div>
           <br></br>
-            <img src={ PicStore.all()[0].public_id }
+            <img src={ this.state.pic.public_id }
                  className="picdisplay">
             </img>
           <br></br>
             { deleteStatus }
           <br></br>
-            { PicStore.all()[0].created_at }
+            { this.state.pic.created_at }
         </div>
       </center>
     );
