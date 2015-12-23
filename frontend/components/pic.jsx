@@ -76,10 +76,10 @@ var Pic = React.createClass({
         <NavBar></NavBar>
         <div key={ PicStore.all()[0].id }>
           <div className="cursor"
-            key={ PicStore.all()[0].id }
-            onClick={this.handleUserClick}
-            div>
-              { PicStore.all()[0].username }
+               key={ PicStore.all()[0].id }
+               onClick={this.handleUserClick}
+               div>
+                { PicStore.all()[0].username }
           </div>
           <div className="cursor"
               onClick={

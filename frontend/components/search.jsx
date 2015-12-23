@@ -57,7 +57,10 @@ var Search = React.createClass({
   handleEnter: function (event) {
     if (event.keyCode === 13) {
       this.history.pushState(
-        null, "album", {id: this.matches()[0].id} );
+        null,
+        "album",
+        {id: this.matches()[0].id}
+      );
       this.state.inputVal = "";
     }
   },
