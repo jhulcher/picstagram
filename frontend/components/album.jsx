@@ -71,10 +71,10 @@ var Album = React.createClass({
                 <li key={idx} >
                     { pic[idx].username }
                     <div className="cursor"
-                      key={11 * idx}
-                      onClick={this.handleFollowClick.bind(
-                      null, pic[idx].user_id, followStatus)}>
-                      { followStatus }
+                         key={11 * idx}
+                         onClick={this.handleFollowClick.bind(
+                         null, pic[idx].user_id, followStatus)}>
+                          { followStatus }
                     </div>
                     <AlbumEntry pic={pic[idx]}
                                 key={pic[idx].id}
@@ -94,9 +94,11 @@ var Album = React.createClass({
                 <li key={idx}>
                   { pic.username }
                   <div className="cursor"
-                    key={1111}
-                    onClick={this.handleFollowClick.bind(
-                    null, pic.user_id, followStatus)}>
+                       key={1111}
+                       onClick={this.handleFollowClick.bind(
+                         null,
+                         pic.user_id,
+                         followStatus)}>
                     { followStatus }
                   </div>
                   <AlbumEntry pic={pic}

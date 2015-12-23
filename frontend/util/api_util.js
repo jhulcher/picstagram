@@ -8,11 +8,7 @@ var ApiUtil = {
   createPic: function (callBack, url) {
     $.ajax({
       url: "/api/pics",
-      data: {pic:
-              {
-                public_id: url
-              }
-            },
+      data: {pic: {public_id: url} },
       method: "POST",
       success: function (response) {
         callBack(response);
