@@ -8,6 +8,7 @@ var Search = require("./search.jsx");
 var NavBar = require("./nav_bar.jsx");
 var UploadButton = require("./upload_button");
 var cur = window.current_user_id;
+var Comments = require("./comment.jsx");
 
 
 var Pic = React.createClass({
@@ -125,6 +126,7 @@ var Pic = React.createClass({
             { likeStatus }
             { this.state.pic.created_at }
             { deleteStatus }
+            <Comments pic={this.state.pic}></Comments>
         </div>
       </center>
     );

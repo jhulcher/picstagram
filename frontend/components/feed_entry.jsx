@@ -5,6 +5,7 @@ var PicStore = require("../stores/pic.js");
 var History = require("react-router").History;
 var cur = window.current_user_id;
 var FolloweesStore = require("../stores/followees.js");
+var Comments = require("./comment.jsx");
 
 var FeedEntry = React.createClass({
 
@@ -98,6 +99,8 @@ var FeedEntry = React.createClass({
           { likeStatus }
           { this.props.pic.created_at }
           { deleteStatus }
+          <Comments pic={this.props.pic}></Comments>
+
       </center>
     );
   }
