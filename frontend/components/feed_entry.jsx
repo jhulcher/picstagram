@@ -92,7 +92,7 @@ var FeedEntry = React.createClass({
         <div className="cursor"
              key={ this.props.pic.id }
              onClick={this.handleClick}>
-             <img src={ this.props.pic.public_id }
+             <img src={"http://res.cloudinary.com/picstagram/image/upload/c_lfill,g_center,h_500,q_81,r_0,w_500/" + this.props.pic.public_id + ".jpg"}
                  className="picdisplay">
              </img>
         </div>
