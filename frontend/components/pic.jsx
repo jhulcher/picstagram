@@ -39,6 +39,10 @@ var Pic = React.createClass({
     this.listener.remove();
   },
 
+  componentWillReceiveProps: function (newProps) {
+    ApiUtil.fetchSinglePic(parseInt(newProps.params.id));
+  },
+
   handleUserClick: function () {
     this.history.pushState( null, "album", {id: this.state.pic.user_id} );
   },
@@ -59,8 +63,8 @@ var Pic = React.createClass({
     }
   },
 
-  handleDeleteClick: function (id) {
-    ApiUtil.deletePic(id);
+  handleDeleteClick: function () {
+    ApiUtil.deletePic(this.state.pic.id);
     this.history.pushState( null, "/");
   },
 
