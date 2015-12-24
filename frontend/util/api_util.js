@@ -5,6 +5,27 @@ var FolloweesStore = require("../stores/followees.js");
 
 var ApiUtil = {
 
+  createLike: function (id) {
+    $.ajax({
+      url: "/api/likes",
+      data: { like: {pic_id: id} },
+      method: "POST",
+      success: function (response) {
+        ApiActions.receivePicFromUser(response);
+      }
+    });
+  },
+
+  deleteLike: function (id) {
+    $.ajax({
+      url: "/api/likes/" + id,
+      method: "DELETE",
+      success: function (response) {
+        ApiActions.receivePicFromUser(response);
+      }
+    });
+  },
+
   createPic: function (callBack, url) {
     $.ajax({
       url: "/api/pics",
