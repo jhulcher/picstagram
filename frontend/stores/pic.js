@@ -27,6 +27,11 @@ PicStore.__onDispatch = function (payload) {
         PicStore.__emitChange();
         break;
       case CONSTANTS.PIC_RECEIVED:
+        _pics.forEach (function (pic, idx) {
+          if (payload.pic.id === pic.id) {
+            _pics.splice(idx, 1);
+          }
+        });
         _pics.push(payload.pic);
         PicStore.__emitChange();
         break;

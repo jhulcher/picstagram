@@ -29,7 +29,7 @@ var Pic = React.createClass({
     ApiUtil.fetchSinglePic(this.props.params.id);
     this.listener = PicStore.addListener(function () {
       this.setState( { pic: PicStore.find(parseInt(this.props.params.id)) } );
-      // this.forceUpdate();
+      this.forceUpdate();
     }.bind(this));
   },
 
@@ -50,6 +50,14 @@ var Pic = React.createClass({
     }
   },
 
+  handleLikeClick: function (likeStatus, id) {
+    if (likeStatus === false) {
+      ApiUtil.createLike(id);
+    } else {
+      ApiUtil.deleteLike(id);
+    }
+  },
+
   handleDeleteClick: function (id) {
     ApiUtil.deletePic(id);
     this.history.pushState( null, "/");
@@ -59,6 +67,7 @@ var Pic = React.createClass({
     if (!this.state.pic) {
       return (<div></div>);
     }
+
     if (this.state.pic.user_id !== cur) {
       if (FolloweesStore.find(parseInt(this.state.pic.user_id))) {
         var followStatus = "Unfollow";
@@ -70,10 +79,27 @@ var Pic = React.createClass({
       var deleteStatus = <h4
                           onClick={this.handleDeleteClick}
                           className="cursor">
-                            Delete
+                            "Delete"
                           </h4>;
     } else {
           deleteStatus = "";
+    }
+    if (this.state.pic.already_liked === true) {
+      var likeStatus = <h4 className="cursor"
+                           onClick={this.handleLikeClick.bind(
+                           null,
+                           this.state.pic.already_liked,
+                           this.state.pic.id)}>
+                              Unlike
+                       </h4>;
+    } else {
+          likeStatus = <h4 className="cursor"
+                           onClick={this.handleLikeClick.bind(
+                           null,
+                           this.state.pic.already_liked,
+                           this.state.pic.id)}>
+                              Like
+                           </h4>;
     }
     return (
       <center>
@@ -99,6 +125,7 @@ var Pic = React.createClass({
             </img>
           <br></br>
             { deleteStatus }
+            { likeStatus }
           <br></br>
             { this.state.pic.created_at }
         </div>

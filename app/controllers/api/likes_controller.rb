@@ -5,13 +5,11 @@ class Api::LikesController < ApplicationController
     @like = Like.new(like_params)
     @like.liker_id = current_user.id
     @like.save!
-    render json: @like
   end
 
   def destroy
     @like = Like.find_by(pic_id: params[:id], liker_id: current_user.id)
     @like.destroy!
-    render json: @like
   end
 
   private
