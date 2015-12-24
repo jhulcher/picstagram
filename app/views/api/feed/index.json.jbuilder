@@ -8,4 +8,7 @@ json.array! @followee_pics do |pic|
   json.likes_count pic.likes.count
   json.already_liked pic.likers.include?(current_user)
 
+
+    json.partial! 'api/pics/pic', pic: pic 
+
 end

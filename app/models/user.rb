@@ -5,10 +5,19 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  after_initialize :ensure_session_token
+
   has_many :pics,
   primary_key: :id,
   foreign_key: :user_id,
   class_name: "Pic"
+
+
+
+  has_many :comments,
+  primary_key: :id,
+  foreign_key: :user_id,
+  class_name: "Comment"
 
 
 
@@ -21,12 +30,9 @@ class User < ActiveRecord::Base
     Pic.joins(:likes).where(:user_id => id)
   end
 
-
   has_many :pics_liked,
   through: :likes,
   source: :pic
-
-
 
   has_many :follows,
   primary_key: :id,
@@ -44,8 +50,6 @@ class User < ActiveRecord::Base
   has_many :followee_pics,
   through: :followees,
   source: :pics
-
-  after_initialize :ensure_session_token
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)
