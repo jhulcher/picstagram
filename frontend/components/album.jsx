@@ -46,6 +46,14 @@ var Album = React.createClass({
     }
   },
 
+  handleLikeClick: function (likeStatus, id) {
+    if (likeStatus === false) {
+      ApiUtil.createLike(id);
+    } else {
+      ApiUtil.deleteLike(id);
+    }
+  },
+
   render: function () {
     if (typeof PicStore.all().length === "undefined") {
       return (
@@ -67,6 +75,23 @@ var Album = React.createClass({
                         followStatus = "Follow";
                   }
                 }
+                if (pic.already_liked === true) {
+                  var likeStatus = <h4 className="cursor"
+                                       onClick={this.handleLikeClick.bind(
+                                       null,
+                                       pic.already_liked,
+                                       pic.id)}>
+                                          Unlike
+                                   </h4>;
+                } else {
+                      likeStatus = <h4 className="cursor"
+                                       onClick={this.handleLikeClick.bind(
+                                       null,
+                                       pic.already_liked,
+                                       pic.id)}>
+                                          Like
+                                       </h4>;
+                }
                 return (
                   <li key={idx}>
                     { pic.username }
@@ -81,6 +106,7 @@ var Album = React.createClass({
                     <AlbumEntry pic={pic}
                                 key={pic.id}>
                     </AlbumEntry>
+                    { likeStatus }
                   </li>
                 );
               }.bind(this))

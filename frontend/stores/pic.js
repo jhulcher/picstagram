@@ -27,12 +27,22 @@ PicStore.__onDispatch = function (payload) {
         PicStore.__emitChange();
         break;
       case CONSTANTS.PIC_RECEIVED:
+        var slot = 0;
+        var array = [];
+
         _pics.forEach (function (pic, idx) {
           if (payload.pic.id === pic.id) {
-            _pics.splice(idx, 1);
+            // _pics.splice(idx, 1);
+            array.push(payload.pic);
+            slot = idx;
+          } else {
+            array.push(pic);
           }
         });
-        _pics.push(payload.pic);
+
+        _pics = array;
+        // _pics[slot] = payload.pic;
+        // _pics.push(payload.pic);
         PicStore.__emitChange();
         break;
       case CONSTANTS.DELETE_PIC:
