@@ -119,15 +119,12 @@ var Pic = React.createClass({
                    followStatus)}>
               { followStatus }
           </div>
-          <br></br>
             <img src={ this.state.pic.public_id }
                  className="picdisplay">
             </img>
-          <br></br>
-            { deleteStatus }
             { likeStatus }
-          <br></br>
             { this.state.pic.created_at }
+            { deleteStatus }
         </div>
       </center>
     );

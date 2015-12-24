@@ -23,6 +23,14 @@ var AlbumEntry = React.createClass({
     this.history.pushState( null, 'album', {id: this.props.pic.user_id} );
   },
 
+  handleLikeClick: function (likeStatus, id) {
+    if (likeStatus === false) {
+      ApiUtil.createLike(id);
+    } else {
+      ApiUtil.deleteLike(id);
+    }
+  },
+
   render: function () {
     if (this.props.pic.user_id === cur) {
       var deleteStatus = <h4
@@ -33,9 +41,25 @@ var AlbumEntry = React.createClass({
     } else {
           deleteStatus = "";
     }
+    if (this.props.pic.already_liked === true) {
+      var likeStatus = <h4 className="cursor"
+                           onClick={this.handleLikeClick.bind(
+                           null,
+                           this.props.pic.already_liked,
+                           this.props.pic.id)}>
+                              Unlike
+                       </h4>;
+    } else {
+          likeStatus = <h4 className="cursor"
+                           onClick={this.handleLikeClick.bind(
+                           null,
+                           this.props.pic.already_liked,
+                           this.props.pic.id)}>
+                              Like
+                           </h4>;
+    }
     return (
       <center>
-        <br></br>
         <div className="cursor"
              key={ this.props.pic.id }
              onClick={this.handleClick}>
@@ -43,12 +67,9 @@ var AlbumEntry = React.createClass({
                   className="picdisplay">
              </img>
         </div>
-        <br></br>
-        { deleteStatus }
-        <br></br>
+        { likeStatus }
         { this.props.pic.created_at }
-        <br></br>
-        <br></br>
+        { deleteStatus }
       </center>
     );
   }

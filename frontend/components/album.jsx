@@ -65,7 +65,7 @@ var Album = React.createClass({
     } else {
       return (
         <ul>
-          <NavBar />
+          <NavBar></NavBar>
             {
               this.state.pics.map (function (pic, idx) {
                 if (pic.user_id !== cur) {
@@ -90,89 +90,39 @@ var Album = React.createClass({
                                        pic.already_liked,
                                        pic.id)}>
                                           Like
-                                       </h4>;
+                                   </h4>;
                 }
-                return (
-                  <li key={idx}>
-                    { pic.username }
-                    <div className="cursor"
-                         key={1111}
-                         onClick={this.handleFollowClick.bind(
-                           null,
-                           pic.user_id,
-                           followStatus)}>
-                      { followStatus }
-                    </div>
-                    <AlbumEntry pic={pic}
-                                key={pic.id}>
-                    </AlbumEntry>
-                    { likeStatus }
-                  </li>
-                );
+                if (idx === 0) {
+                  return (
+                    <li key={idx}>
+                      { pic.username }
+                      <div className="cursor"
+                           key={1111}
+                           onClick={this.handleFollowClick.bind(
+                              null,
+                              pic.user_id,
+                              followStatus)}>
+                        { followStatus }
+                      </div>
+                      <AlbumEntry pic={pic}
+                                  key={pic.id}>
+                      </AlbumEntry>
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li key={idx}>
+                      <AlbumEntry pic={pic}
+                                  key={pic.id}>
+                      </AlbumEntry>
+                    </li>
+                  );
+                }
               }.bind(this))
             }
         </ul>
       );
     }
-          // this.state.pics.map (function (pic, idx) {
-          //   if (PicStore.all().length === 1 &&
-          //       typeof PicStore.all()[0].user_id === "number"
-          //     ) {
-          //     return (
-          //       "User hasn't uploaded any pics yet!"
-          //     );
-          //   } else if (PicStore.all().length === 1) {
-          //     if (pic[idx].user_id !== cur) {
-          //       if (FolloweesStore.find(parseInt(pic[idx].user_id))) {
-          //         var followStatus = "Unfollow";
-          //       } else {
-          //             followStatus = "Follow";
-          //       }
-          //     }
-          //     return (
-          //       <li key={idx} >
-          //           { pic[idx].username }
-          //           <div className="cursor"
-          //                key={11 * idx}
-          //                onClick={this.handleFollowClick.bind(
-          //                null, pic[idx].user_id, followStatus)}>
-          //                 { followStatus }
-          //           </div>
-          //           <AlbumEntry pic={pic[idx]}
-          //                       key={pic[idx].id}
-          //                       className="picdisplay">
-          //           </AlbumEntry>
-          //       </li>
-          //     );
-          //   } else {
-          //     if (pic.user_id !== cur) {
-          //       if (FolloweesStore.find(parseInt(pic.user_id))) {
-          //             followStatus = "Unfollow";
-          //       } else {
-          //             followStatus = "Follow";
-          //       }
-          //     }
-          //     return (
-          //       <li key={idx}>
-          //         { pic.username }
-          //         <div className="cursor"
-          //              key={1111}
-          //              onClick={this.handleFollowClick.bind(
-          //                null,
-          //                pic.user_id,
-          //                followStatus)}>
-          //           { followStatus }
-          //         </div>
-          //         <AlbumEntry pic={pic}
-          //                     key={pic.id}>
-          //         </AlbumEntry>
-          //       </li>
-          //     );
-          //   }
-          // }.bind(this))
-    //     }
-    //   </ul>
-    // );
   }
 });
 

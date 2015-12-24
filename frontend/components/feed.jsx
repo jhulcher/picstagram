@@ -8,8 +8,12 @@ var Search = require("./search.jsx");
 var UserStore = require("../stores/user.js");
 var NavBar = require("./nav_bar.jsx");
 var UploadButton = require("./upload_button.jsx");
+var cur = window.current_user_id;
+var History = require("react-router").History;
 
 var Feed = React.createClass({
+
+  mixins: [History],
 
   getInitialState: function () {
     return (
@@ -32,6 +36,19 @@ var Feed = React.createClass({
   componentWillUnmount: function () {
     this.listener.remove();
     this.followeesListener.remove();
+  },
+
+  handleUserClick: function (id) {
+    this.history.pushState( null, "album", {id: id} );
+  },
+
+  handleFollowClick: function (id, followStatus) {
+    if (followStatus === "Follow") {
+      ApiUtil.followUser(id);
+    } else {
+      ApiUtil.unfollowUser(id);
+    }
+    ApiUtil.fetchFeedForUser();
   },
 
   render: function () {
@@ -71,20 +88,40 @@ var Feed = React.createClass({
         </ul>
       );
     } else {
-      
+
       return (
         <ul>
           <NavBar></NavBar>
+
           {
             this.state.pics.map (function (pic, idx) {
+              if (pic.user_id !== cur) {
+                if (FolloweesStore.find(parseInt(pic.user_id))) {
+                  var followStatus = "Unfollow";
+                } else {
+                      followStatus = "Follow";
+                }
+              }
               return (
+
                 <li key={idx} >
                   <center>
+                  <div className="cursor" onClick={
+                    this.handleUserClick.bind(null, pic.user_id)}>
+                      { pic.username }
+                  </div>
+                  <div className="cursor"
+                       key={1111}
+                       onClick={this.handleFollowClick.bind(
+                       null, pic.user_id, followStatus)}>
+                        { followStatus }
+                  </div>
                     <FeedEntry pic={ pic }> </FeedEntry>
                   </center>
                 </li>
+
               );
-            })
+            }.bind(this))
           }
         </ul>
       );
