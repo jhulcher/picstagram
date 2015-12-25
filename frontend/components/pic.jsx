@@ -124,8 +124,8 @@ var Pic = React.createClass({
                    followStatus)}>
               { followStatus }
           </div>
-            <img src={ "http://res.cloudinary.com/picstagram/image/upload/c_lfill,g_center,h_500,q_81,r_0,w_500/" + this.state.pic.public_id + ".jpg" }
-                 className="picdisplay">
+            <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.state.pic.public_id + ".jpg" }
+                 className="picdisplaylarge">
             </img>
             { likeStatus }
             { this.state.pic.created_at }

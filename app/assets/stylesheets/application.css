@@ -242,9 +242,14 @@
    padding: 0px 4px 0px 4px;
  }
 
- .picdisplay {
-   width: 500px;
-   height: 500px;
+ .picdisplaylarge {
+   width: 550px;
+   height: 550px;
+ }
+
+ .picdisplaysmall {
+   width: 375px;
+   height: 375px;
  }
 
  .wide {
