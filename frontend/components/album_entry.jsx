@@ -73,7 +73,7 @@ var AlbumEntry = React.createClass({
                   className="picdisplaysmall picshadow">
              </img>
         </div>
-        <div className="albumwidth albumcomments">
+        <div className="entryinfowidth albumcomments">
           <div className="commentleft underpic">
             { likeStatus }
           </div>

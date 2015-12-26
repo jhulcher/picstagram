@@ -79,7 +79,7 @@ var Feed = React.createClass({
               return (
                 <li key={idx} className="feedentrypad">
                   <center>
-                    <div className="albumwidth albumcomments">
+                    <div className="albumheaderwidth albumcomments">
                       <div className="cursor feedname commentleft" onClick={
                         this.handleUserClick.bind(null, pic.user_id)}>
                           { pic.username }

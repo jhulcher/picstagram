@@ -109,7 +109,7 @@ var Album = React.createClass({
                 if (idx === 0) {
                   return (
                     <li key={idx} className="albumtop">
-                      <div className="albumwidth albumcomments">
+                      <div className="albumheaderwidth albumcomments">
                         <div className="useralbumtitle commentleft">
                           { pic.username + "'s album"}
                         </div>
