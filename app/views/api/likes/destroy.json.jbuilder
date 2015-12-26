@@ -7,7 +7,7 @@ json.created_at time_ago_in_words(@like.pic.created_at) + " ago"
 json.likes_count @like.pic.likes.count
 json.already_liked @like.pic.likers.include?(current_user)
 
-json.comments @like.pic.comments do |comment|
+json.comments @like.pic.comments.sort do |comment|
   json.author comment.author.username
   json.author_id comment.author.id
   json.id comment.id

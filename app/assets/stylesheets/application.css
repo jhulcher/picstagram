@@ -95,10 +95,13 @@
     -o-transition: all .2s ease-in;
     -webkit-transition: all .2s ease-in;
     transition: all .2s ease-in;
+    color: #2a8cef;
+    text-shadow: .5px .5px #9e9e9e;
 }
 
 .commentname:hover {
-    color: #2a8cef;
+    color: #5CE600;
+    text-shadow: .5px .5px #9e9e9e;
 }
 
 .deletex {
@@ -143,7 +146,7 @@
 }
 
 .commentcolor:hover {
-    background: #EBEDED;
+    background: #dbdbdb;
 }
 
  input[type="comment"],
@@ -155,8 +158,12 @@
    /*background-color: #EBEDED;*/
    margin: 2px;
    font-size: 15px;
-   padding: 0px 0px 0px 7px;
+   padding: 0px 0px 0px 8px;
    margin: 4px 0px 10px 0px;
+ }
+
+ .comment-size {
+   font-size: 15px;
  }
 
  input[type="password"],
@@ -341,8 +348,16 @@
    padding: 2px 2px 2px 4px;
  }
 
+ .commentwidth {
+   width: 100%;
+ }
+
 .feedentrypad {
   padding: 20px 0px 4px 0px;
+}
+
+.albumtop {
+  padding: 27px 0px 4px 0px;
 }
 
 .albumentrypad {
@@ -351,7 +366,7 @@
 
  .commentdelete {
    width: 10px;
-   padding: 3px 0px 0px 7px
+   padding: 2px 0px 0px 7px
  }
 
 .albumwidth {
@@ -384,7 +399,7 @@
 }
 
 .picwhen {
-  width: 75%;
+  width: 71%;
 }
 
  .count {
@@ -421,13 +436,13 @@
  }
 
  .unlikebutton {
-   color: #F2EA00;
+   color: #FFCE00;
    font-size: 30px;
    text-shadow: 1px 1px #9e9e9e;
  }
 
 .likebutton:hover {
-    color: #F2EA00;
+    color: #FFCE00;
     text-shadow: .5px .5px #9e9e9e;
 }
 
@@ -439,16 +454,18 @@
   color: #C9C9C9;
   font-size: 40px;
   text-shadow: 1px 1px #9e9e9e;
+
 }
 
 .bigunlikebutton {
-  color: #F2EA00;
+  color: #FFCE00;
   font-size: 40px;
   text-shadow: 1px 1px #9e9e9e;
 }
 
 .biglikebutton:hover {
-   color: #F2EA00;
+   color: #FFCE00;
+   font-size: 40px;
 }
 
  .right {
@@ -485,6 +502,10 @@
 
  .tall {
    height: 100%;
+ }
+
+ .average-text {
+   font-size: 16px;
  }
 
  .drop-text {
