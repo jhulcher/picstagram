@@ -39,7 +39,7 @@ var Album = React.createClass({
   },
 
   handleFollowClick: function (id, followStatus) {
-    if (followStatus === "Follow") {
+    if (followStatus === "follow") {
       ApiUtil.followUser(id);
     } else {
       ApiUtil.unfollowUser(id);
@@ -70,9 +70,23 @@ var Album = React.createClass({
               this.state.pics.map (function (pic, idx) {
                 if (pic.user_id !== cur) {
                   if (FolloweesStore.find(parseInt(pic.user_id))) {
-                    var followStatus = "Unfollow";
+                    var followStatus = <div className="cursor albumfollow right deletex"
+                                            key={1111}
+                                            onClick={this.handleFollowClick.bind(
+                                               null,
+                                               pic.user_id,
+                                               "unfollow")}>
+                                         unfollow
+                                       </div>;
                   } else {
-                        followStatus = "Follow";
+                        followStatus = <div className="cursor albumfollow right addfollow"
+                                            key={1111}
+                                            onClick={this.handleFollowClick.bind(
+                                               null,
+                                               pic.user_id,
+                                               "follow")}>
+                                         follow
+                                       </div>;
                   }
                 }
                 if (pic.already_liked === true) {
@@ -94,15 +108,20 @@ var Album = React.createClass({
                 }
                 if (idx === 0) {
                   return (
-                    <li key={idx}>
-                      { pic.username }
-                      <div className="cursor"
-                           key={1111}
-                           onClick={this.handleFollowClick.bind(
-                              null,
-                              pic.user_id,
-                              followStatus)}>
-                        { followStatus }
+                    <li key={idx} className="feedentrypad">
+                      <div className="albumwidth albumcomments">
+                        <div className="useralbumtitle commentleft">
+                          { pic.username + "'s album"}
+                        </div>
+
+                          { followStatus }
+
+                      </div>
+                      <br></br>
+                      <div className="albumwidth albumcomments">
+                        <div className="albumcomments commentleft albumentrypad">
+                          User since { pic.user_since }
+                        </div>
                       </div>
                       <AlbumEntry pic={pic}
                                   key={pic.id}>
@@ -111,7 +130,7 @@ var Album = React.createClass({
                   );
                 } else {
                   return (
-                    <li key={idx}>
+                    <li key={idx} className="feedentrypad">
                       <AlbumEntry pic={pic}
                                   key={pic.id}>
                       </AlbumEntry>

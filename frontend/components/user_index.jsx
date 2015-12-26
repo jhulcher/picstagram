@@ -74,8 +74,6 @@ var UserIndex = React.createClass({
                     null, user.id, followStatus)}>
                     { followStatus }
                   </div>
-                  <br></br>
-                  <br></br>
                 </li>
               );
             }.bind(this))
