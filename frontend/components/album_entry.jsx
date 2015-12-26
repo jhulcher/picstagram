@@ -70,7 +70,7 @@ var AlbumEntry = React.createClass({
              key={ this.props.pic.id }
              onClick={this.handleClick}>
              <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.props.pic.public_id + ".jpg" }
-                  className="picdisplaysmall">
+                  className="picdisplaysmall picshadow">
              </img>
         </div>
         <div className="albumwidth albumcomments">

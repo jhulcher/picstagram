@@ -1,8 +1,8 @@
   if @user.pics.length == 0
+    json.user_since @user.created_at.strftime("%b %d, %Y")
 
     json.user_id @user.id
     json.username @user.username
-    json.user_since @user.created_at.strftime("%b %d, %Y")
   else
     json.array! @user.pics.reverse do |pic|
       json.user_since pic.user.created_at.strftime("%b %d, %Y")

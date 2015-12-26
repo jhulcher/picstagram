@@ -1,3 +1,4 @@
+json.user_since @like.pic.user.created_at.strftime("%b %d, %Y")
 json.id @like.pic.id
 json.public_id @like.pic.public_id
 json.user_id @like.pic.user_id

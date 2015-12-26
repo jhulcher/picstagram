@@ -140,7 +140,7 @@ var Pic = React.createClass({
         </div>
         <div>
             <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.state.pic.public_id + ".jpg" }
-                 className="picdisplaylarge">
+                 className="picdisplaylarge picshadow">
             </img>
             <div className="showpicwidth albumcomments">
               <div className="commentleft underpic">
