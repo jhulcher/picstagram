@@ -265,6 +265,7 @@
    -webkit-transition: all .2s ease-in;
    transition: all .2s ease-in;
    font-size: 20px;
+   padding: 0px 0px 0px 4px;
  }
 
 .feedname:hover {
@@ -314,8 +315,19 @@
  }
 
  .picshadow {
+   -moz-transition: all .3s ease-in;
+   -o-transition: all .3s ease-in;
+   -webkit-transition: all .3s ease-in;
+   transition: all .3s ease-in;
    box-shadow: 10px 10px 10px #E0E0E0;
-   /*box-shadow: 5px 5px #9e9e9e;*/
+ }
+
+ .picshadow:hover {
+   box-shadow: 10px 10px 10px #B5B5B5;
+ }
+
+ .showpicshadow {
+   box-shadow: 14px 14px 14px #E0E0E0;
  }
 
  .bar {
@@ -373,12 +385,30 @@
   width: 368px;
 }
 
+.entryinfowidth {
+  width: 374px;
+  padding: 0px 0px 0px 5px
+}
+
+.albumheaderwidth {
+  width: 378px;
+}
+
 .showtitlewidth {
-  width: 548px;
+  width: 552px;
 }
 
 .showpicwidth {
   width: 550px;
+}
+
+.showfollow {
+  padding: 4px 2px 0px 0px;
+}
+
+.showpicinfowidth {
+  width: 553px;
+  float: left;
 }
 
 .showpiccommentwidth {
@@ -395,7 +425,7 @@
  }
 
 .when {
-  width: 70%;
+  width: 69%;
 }
 
 .picwhen {
@@ -410,7 +440,7 @@
    font-size: 25px;
    color: #2a8cef;
    text-shadow: .5px .5px #9e9e9e;
-   /*padding: 16px 0px 0px 0px;*/
+   padding: 0px 0px 0px 5px;
  }
 
  .commentleft {

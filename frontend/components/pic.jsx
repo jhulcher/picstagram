@@ -136,13 +136,15 @@ var Pic = React.createClass({
                div>
                 { this.state.pic.username }
           </div>
+          <div className="showfollow">
               { followStatus }
+          </div>
         </div>
         <div className="showpicwidth">
             <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.state.pic.public_id + ".jpg" }
-                 className="picdisplaylarge picshadow">
+                 className="picdisplaylarge showpicshadow">
             </img>
-            <div className="showpicwidth albumcomments">
+            <div className="showpicinfowidth albumcomments">
               <div className="commentleft underpic">
                 { likeStatus }
               </div>
