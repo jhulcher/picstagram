@@ -42,13 +42,13 @@ var Comments = React.createClass({
                                       onClick={this.handleDeleteClick.bind(
                                         null,
                                         comment.id)}>
-                                  ×
+                                  ✕
                                 </div>;
             } else {
                   deleteStatus = "";
             }
             return (
-                <li key={comment.id} className="commentpad textleft">
+                <li key={comment.id} className="commentpad commentwidth commentleft comment-size textleft">
                   <div className="cursor commentleft commentpad commentname" onClick={
                     this.handleUserClick.bind(null, comment.author_id)}>
                       { comment.author }:
@@ -62,14 +62,14 @@ var Comments = React.createClass({
             );
           }.bind(this))
         }
-        <li>
+        <li className="">
           <form method="POST"
                 className="textleft"
                 onSubmit={this.handleSubmit}>
             <input type="comment"
                    maxLength="30"
                    className="commentcolor"
-                   placeholder="Add Comment"
+                   placeholder="..."
                    valueLink={this.linkState('content')}/>
 
           </form>

@@ -108,18 +108,18 @@ var Album = React.createClass({
                 }
                 if (idx === 0) {
                   return (
-                    <li key={idx} className="feedentrypad">
+                    <li key={idx} className="albumtop">
                       <div className="albumwidth albumcomments">
                         <div className="useralbumtitle commentleft">
                           { pic.username + "'s album"}
                         </div>
-
+                        <div className="average-text">
                           { followStatus }
-
+                        </div>
                       </div>
                       <br></br>
                       <div className="albumwidth albumcomments">
-                        <div className="albumcomments commentleft albumentrypad">
+                        <div className="albumcomments average-text commentleft albumentrypad">
                           User since { pic.user_since }
                         </div>
                       </div>

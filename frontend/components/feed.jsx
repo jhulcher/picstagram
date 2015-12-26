@@ -84,7 +84,7 @@ var Feed = React.createClass({
                         this.handleUserClick.bind(null, pic.user_id)}>
                           { pic.username }
                       </div>
-                      <div className="cursor feedfollow right deletex"
+                      <div className="cursor average-text feedfollow right deletex"
                            key={1111}
                            onClick={this.handleFollowClick.bind(
                            null, pic.user_id, followStatus)}>

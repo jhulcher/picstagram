@@ -96,13 +96,13 @@ var FeedEntry = React.createClass({
           <div className="commentleft underpic">
             { likeStatus }
           </div>
-          <div className="commentleft underpic likecount underpicpad">
+          <div className="commentleft average-text underpic likecount underpicpad">
             { likeCount }
           </div>
-          <div className="commentleft underpic underpicpad when">
+          <div className="commentleft underpic average-text underpicpad when">
             { this.props.pic.created_at }
           </div>
-          <div className="right underpic underpicpad deletex">
+          <div className="right underpic average-text underpicpad deletex">
             { deleteStatus }
           </div>
         </div>
