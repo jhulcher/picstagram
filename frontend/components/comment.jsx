@@ -12,17 +12,11 @@ var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var Comments = React.createClass({
 
-  mixins: [LinkedStateMixin],
+  mixins: [LinkedStateMixin, History],
 
   getInitialState: function() {
     return {content: ""};
   },
-
-  // handleClick: function (e) {
-  //   e.preventDefault();
-  //   ApiUtil.createComment(this.props.pic.id, this.state.content);
-  //   this.setState({content: ""});
-  // },
 
   handleDeleteClick: function (id) {
     ApiUtil.deleteComment(id);
@@ -34,35 +28,47 @@ var Comments = React.createClass({
       this.setState({content: ""});
   },
 
+  handleUserClick: function (id) {
+    this.history.pushState( null, "album", {id: id} );
+  },
+
   render: function () {
     return (
       <ul>
         {
           this.props.pic.comments.map (function (comment, idx) {
-
             if (cur === comment.author_id) {
-
-              var deleteStatus = <div className="cursor"
+              var deleteStatus = <div className="cursor commentleft deletex commentdelete"
                                       onClick={this.handleDeleteClick.bind(
                                         null,
                                         comment.id)}>
-                                  X
+                                  ×
                                 </div>;
             } else {
                   deleteStatus = "";
             }
             return (
-                <li key={comment.id}>
-                  { comment.author }: &nbsp;
-                  { comment.comment }
+                <li key={comment.id} className="commentpad textleft">
+                  <div className="cursor commentleft commentpad commentname" onClick={
+                    this.handleUserClick.bind(null, comment.author_id)}>
+                      { comment.author }:
+                  </div>
+                  <div className="commentleft commentpad">
+                    { comment.comment }
+                  </div>
                   { deleteStatus }
+                  <br></br>
                 </li>
             );
           }.bind(this))
         }
         <li>
-          <form type="" method="POST" onSubmit={this.handleSubmit}>
-            <input type="text"
+          <form method="POST"
+                className="textleft"
+                onSubmit={this.handleSubmit}>
+            <input type="comment"
+                   maxLength="30"
+                   className="commentcolor"
                    placeholder="Add Comment"
                    valueLink={this.linkState('content')}/>
 

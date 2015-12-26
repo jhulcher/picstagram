@@ -2,7 +2,7 @@ class Comment < ActiveRecord::Base
   validates :user_id, presence: true
   validates :pic_id, presence: true
   validates :body, presence: true
-  validates_length_of :body, :minimum => 1, :maximum => 50, :allow_blank => false
+  validates_length_of :body, :minimum => 1, :maximum => 35, :allow_blank => false
 
   belongs_to :pic,
   primary_key: :id,

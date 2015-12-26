@@ -43,7 +43,7 @@ var Feed = React.createClass({
   },
 
   handleFollowClick: function (id, followStatus) {
-    if (followStatus === "Follow") {
+    if (followStatus === "follow") {
       ApiUtil.followUser(id);
     } else {
       ApiUtil.unfollowUser(id);
@@ -71,25 +71,26 @@ var Feed = React.createClass({
             this.state.pics.map (function (pic, idx) {
               if (pic.user_id !== cur) {
                 if (FolloweesStore.find(parseInt(pic.user_id))) {
-                  var followStatus = "Unfollow";
+                  var followStatus = "unfollow";
                 } else {
-                      followStatus = "Follow";
+                      followStatus = "follow";
                 }
               }
               return (
-
-                <li key={idx} >
+                <li key={idx} className="feedentrypad">
                   <center>
-                  <div className="cursor" onClick={
-                    this.handleUserClick.bind(null, pic.user_id)}>
-                      { pic.username }
-                  </div>
-                  <div className="cursor"
-                       key={1111}
-                       onClick={this.handleFollowClick.bind(
-                       null, pic.user_id, followStatus)}>
-                        { followStatus }
-                  </div>
+                    <div className="albumwidth albumcomments">
+                      <div className="cursor feedname commentleft" onClick={
+                        this.handleUserClick.bind(null, pic.user_id)}>
+                          { pic.username }
+                      </div>
+                      <div className="cursor feedfollow right deletex"
+                           key={1111}
+                           onClick={this.handleFollowClick.bind(
+                           null, pic.user_id, followStatus)}>
+                            { followStatus }
+                      </div>
+                    </div>
                     <FeedEntry pic={ pic }> </FeedEntry>
                   </center>
                 </li>

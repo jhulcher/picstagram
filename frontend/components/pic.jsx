@@ -48,7 +48,7 @@ var Pic = React.createClass({
   },
 
   handleFollowClick: function (id, followStatus) {
-    if (followStatus === "Follow") {
+    if (followStatus === "follow") {
       ApiUtil.followUser(id);
     } else {
       ApiUtil.unfollowUser(id);
@@ -75,62 +75,90 @@ var Pic = React.createClass({
 
     if (this.state.pic.user_id !== cur) {
       if (FolloweesStore.find(parseInt(this.state.pic.user_id))) {
-        var followStatus = "Unfollow";
+        var followStatus = <div className="cursor showfollow right deletex"
+                                key={1111}
+                                onClick={this.handleFollowClick.bind(
+                                   null,
+                                   this.state.pic.user_id,
+                                   "unfollow")}>
+                             unfollow
+                           </div>;
       } else {
-            followStatus = "Follow";
+            followStatus = <div className="cursor showfollow right addfollow"
+                                key={1111}
+                                onClick={this.handleFollowClick.bind(
+                                   null,
+                                   this.state.pic.user_id,
+                                   "follow")}>
+                             follow
+                           </div>;
       }
     }
     if (this.state.pic.user_id === cur) {
-      var deleteStatus = <h4
+      var deleteStatus = <div
                           onClick={this.handleDeleteClick}
                           className="cursor">
-                            "Delete"
-                          </h4>;
+                            Delete
+                          </div>;
     } else {
           deleteStatus = "";
     }
     if (this.state.pic.already_liked === true) {
-      var likeStatus = <h4 className="cursor"
+      var likeStatus = <div className="cursor albumcomments bigunlikebutton"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.state.pic.already_liked,
                            this.state.pic.id)}>
-                              Unlike
-                       </h4>;
+                              ★
+                       </div>;
     } else {
-          likeStatus = <h4 className="cursor"
+          likeStatus = <div className="cursor albumcomments biglikebutton"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.state.pic.already_liked,
                            this.state.pic.id)}>
-                              Like
-                           </h4>;
+                              ★
+                       </div>;
+    }
+    if (this.state.pic.likes_count > 0) {
+      var likeCount = this.state.pic.likes_count;
+    } else {
+          likeCount = " ";
     }
     return (
       <center>
         <NavBar></NavBar>
-        <div key={ this.state.pic.id }>
-          <div className="cursor"
+        <div key={ this.state.pic.id }
+             className="showtitlewidth albumcomments feedentrypad">
+          <div className="showname commentleft cursor"
                key={ this.state.pic.id }
                onClick={this.handleUserClick}
                div>
                 { this.state.pic.username }
           </div>
-          <div className="cursor"
-               onClick={
-                 this.handleFollowClick.bind(
-                   null,
-                   this.state.pic.user_id,
-                   followStatus)}>
               { followStatus }
-          </div>
+        </div>
+        <div>
             <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.state.pic.public_id + ".jpg" }
                  className="picdisplaylarge">
             </img>
-            { likeStatus }
-            { this.state.pic.created_at }
-            { deleteStatus }
-            <Comments pic={this.state.pic}></Comments>
+            <div className="showpicwidth albumcomments">
+              <div className="commentleft underpic">
+                { likeStatus }
+              </div>
+              <div className="commentleft underpic likecount undershowpic">
+                { likeCount }
+              </div>
+              <div className="commentleft underpic undershowpic picwhen">
+                { this.state.pic.created_at }
+              </div>
+              <div className="right underpic showdeletepad deletex">
+                { deleteStatus }
+              </div>
+            </div>
+            <div className="showpiccommentwidth">
+              <Comments pic={this.state.pic} className="albumcomments"></Comments>
+            </div>
         </div>
       </center>
     );

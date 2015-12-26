@@ -52,13 +52,6 @@ var FeedEntry = React.createClass({
   },
 
   render: function () {
-    // if (this.props.pic.user_id !== cur) {
-    //   if (FolloweesStore.find(parseInt(this.props.pic.user_id))) {
-    //     var followStatus = "Unfollow";
-    //   } else {
-    //         followStatus = "Follow";
-    //   }
-    // }
     if (this.props.pic.user_id === cur) {
       var deleteStatus = <h4
                           onClick={this.handleDeleteClick}
@@ -69,38 +62,53 @@ var FeedEntry = React.createClass({
           deleteStatus = "";
     }
     if (this.props.pic.already_liked === true) {
-      var likeStatus = <h4 className="cursor"
+      var likeStatus = <div className="cursor albumcomments unlikebutton"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.props.pic.already_liked,
                            this.props.pic.id)}>
-                              Unlike
-                       </h4>;
+                              ★
+                       </div>;
     } else {
-          likeStatus = <h4 className="cursor"
+          likeStatus = <div className="cursor albumcomments likebutton"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.props.pic.already_liked,
                            this.props.pic.id)}>
-                              Like
-                           </h4>;
+                              ★
+                           </div>;
+    }
+    if (this.props.pic.likes_count > 0) {
+      var likeCount = this.props.pic.likes_count;
+    } else {
+          likeCount = " ";
     }
     return (
       <center>
-
-
-        <div className="cursor"
+        <div className="cursor pictoppad albumwidth"
              key={ this.props.pic.id }
              onClick={this.handleClick}>
-             <img src={"http://res.cloudinary.com/picstagram/image/upload/c_lfill,g_center,h_500,q_81,r_0,w_500/" + this.props.pic.public_id + ".jpg"}
-                 className="picdisplaysmall">
+             <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.props.pic.public_id + ".jpg" }
+                  className="picdisplaysmall">
              </img>
         </div>
-          { likeStatus }
-          { this.props.pic.created_at }
-          { deleteStatus }
-          <Comments pic={this.props.pic}></Comments>
-
+        <div className="albumwidth albumcomments">
+          <div className="commentleft underpic">
+            { likeStatus }
+          </div>
+          <div className="commentleft underpic likecount underpicpad">
+            { likeCount }
+          </div>
+          <div className="commentleft underpic underpicpad when">
+            { this.props.pic.created_at }
+          </div>
+          <div className="right underpic underpicpad deletex">
+            { deleteStatus }
+          </div>
+        </div>
+        <div className="albumwidth">
+          <Comments pic={this.props.pic} className="albumcomments"></Comments>
+        </div>
       </center>
     );
   }
