@@ -22,14 +22,16 @@ var NavBar = React.createClass({
       <div className="header">
         <div className="bar">
           <Search></Search>
-          <h2 className="title-item cursor"
-              onClick={this.handleClick}>
-                Picstagram
-          </h2>
-          <UploadButton className="header-item  cursor"></UploadButton>
-          <h3 className="header-item logout cursor"
+          <div className="title-item headerleft">
+            <h2 onClick={this.handleClick}
+                className="cursor">
+                  Picstagram
+            </h2>
+          </div>
+          <UploadButton className="header-item cursor"></UploadButton>
+          <h3 className="header-item logout right cursor"
               onClick={this.handleLogOut}>
-            Log Out
+            Sign Out
           </h3>
         </div>
       </div>

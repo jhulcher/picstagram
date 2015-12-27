@@ -38,12 +38,11 @@ var Comments = React.createClass({
         {
           this.props.pic.comments.map (function (comment, idx) {
             if (cur === comment.author_id) {
-              var deleteStatus = <div className="cursor commentleft deletex commentdelete"
+              var deleteStatus = <i className="fa fa-times cursor commentleft deletex commentdelete"
                                       onClick={this.handleDeleteClick.bind(
                                         null,
                                         comment.id)}>
-                                  ✕
-                                </div>;
+                                </i>;
             } else {
                   deleteStatus = "";
             }

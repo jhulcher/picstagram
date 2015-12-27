@@ -56,10 +56,21 @@ var Feed = React.createClass({
       return (
         <ul>
           <NavBar></NavBar>
-          <li>
-            The users you're following haven't uploaded pics yet.
-            <br></br>
-            Follow more users to get your feed going!
+          <div className="feedentrypad">
+          </div>
+          <div className="feedentrypad">
+          </div>
+          <li className="top_pad">
+            The users you're following haven't uploaded any pics yet!
+          </li>
+          <li className="top_pad">
+            You can find other users by using the search field.
+          </li>
+          <li className="top_pad">
+            Follow more users to jump-start your feed!
+          </li>
+          <li className="top_pad">
+            <i className="bigimage fa fa-picture-o"></i>
           </li>
         </ul>
       );

@@ -28,7 +28,11 @@ var UploadButton = React.createClass({
 
   render: function () {
     return (
-      <button onClick={this.upload} className="camera-button">📷</button>
+      <div className="camera-button headerleft">
+        <i className="cursor fa fa-camera"
+           onClick={this.upload}>
+         </i>
+      </div>
     );
   }
 
