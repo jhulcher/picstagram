@@ -73,10 +73,11 @@ var Search = React.createClass({
         <input type="text"
                key="search_input"
                className="loginusername"
+               placeholder="search users  ⚲"
                onKeyDown={this.handleEnter}
-               placeholder="Search Users"
                onChange={this.handleInput}
-               value={this.state.inputVal} ></input>
+               value={this.state.inputVal} >
+        </input>
         <ul className="left-align">
           {
             users.map(function (result, i) {
