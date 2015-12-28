@@ -54,15 +54,24 @@ var Search = React.createClass({
     this.setState({ inputVal: event.currentTarget.value });
   },
 
-  handleEnter: function (event) {
-    if (event.keyCode === 13) {
-      this.history.pushState(
-        null,
-        "album",
-        {id: this.matches()[0].id}
-      );
-      this.state.inputVal = "";
-    }
+  // handleEnter: function (event) {
+  //   if (event.keyCode === 13) {
+  //     this.history.pushState(
+  //       null,
+  //       "album",
+  //       {id: this.matches()[0].id}
+  //     );
+  //     this.state.inputVal = "";
+  //   }
+  // },
+
+  handleUserClick: function (e) {
+    this.history.pushState( null, "album/", {
+      id: parseInt(
+        e.target.dataset.reactid.split("$")[1]
+      )
+    });
+        this.state.inputVal = "";
   },
 
   render: function () {
@@ -74,7 +83,6 @@ var Search = React.createClass({
                key="search_input"
                className="loginusername"
                placeholder="search users  ⚲"
-               onKeyDown={this.handleEnter}
                onChange={this.handleInput}
                value={this.state.inputVal} >
         </input>
@@ -84,7 +92,9 @@ var Search = React.createClass({
               return (
                 <li key={result.id}
                     className="drop-text"
-                    onClick={this.selectName}>
+                    value="result.id"
+                    onClick={this.handleUserClick}
+                    >
                   {result.username}
                 </li>
               );
