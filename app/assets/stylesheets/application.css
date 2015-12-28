@@ -262,6 +262,22 @@
    position: relative;
  }
 
+ .camera-color {
+   -moz-transition: all .2s ease-in;
+   -o-transition: all .2s ease-in;
+   -webkit-transition: all .2s ease-in;
+   transition: all .2s ease-in;
+   color: #9e9e9e;
+ }
+
+ .camera-color:hover {
+   color: #5CE600;
+   -webkit-transform: scale(1.2);
+   -ms-transform: scale(1.2);
+   transform: scale(1.2);
+   /*text-shadow: .5px .5px #9e9e9e;*/
+ }
+
  .feedname {
    color: #2a8cef;
    text-shadow: .5px .5px #9e9e9e;
@@ -326,11 +342,14 @@
    -o-transition: all .3s ease-in;
    -webkit-transition: all .3s ease-in;
    transition: all .3s ease-in;
-   box-shadow: 10px 10px 10px #E0E0E0;
+   box-shadow: 6px 6px 6px #E0E0E0;
  }
 
  .picshadow:hover {
    box-shadow: 10px 10px 10px #B5B5B5;
+   -webkit-transform: scale(1.005);
+   -ms-transform: scale(1.005);
+   transform: scale(1.005);
  }
 
  .showpicshadow {
@@ -386,6 +405,12 @@
  .commentdelete {
    width: 10px;
    padding: 4px 0px 0px 7px
+ }
+
+.commentdelete:hover {
+   -webkit-transform: scale(1.3);
+   -ms-transform: scale(1.3);
+   transform: scale(1.3);
  }
 
 .albumwidth {
@@ -485,6 +510,9 @@
 .likebutton:hover {
     color: #FFCE00;
     text-shadow: .5px .5px #9e9e9e;
+    -webkit-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3);
 }
 
 .biglikebutton {
@@ -507,6 +535,9 @@
 .biglikebutton:hover {
    color: #FFCE00;
    font-size: 40px;
+   -webkit-transform: scale(1.3);
+   -ms-transform: scale(1.3);
+   transform: scale(1.3);
 }
 
  .right {
@@ -553,6 +584,12 @@
 
  .average-text {
    font-size: 16px;
+ }
+
+ .albumfollowtext {
+   font-size: 14px;
+   color: grey;
+   padding: 0px 0px 0px 1px;
  }
 
  .drop-text {

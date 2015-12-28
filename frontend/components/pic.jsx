@@ -141,25 +141,33 @@ var Pic = React.createClass({
           </div>
         </div>
         <div className="showpicwidth">
-            <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.state.pic.public_id + ".jpg" }
+            <img src={
+                  "http://res.cloudinary.com/picstagram/image/upload/s-" +
+                  "-cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" +
+                  this.state.pic.public_id + ".jpg"
+                }
                  className="picdisplaylarge showpicshadow">
             </img>
             <div className="showpicinfowidth albumcomments">
               <div className="commentleft underpic">
                 { likeStatus }
               </div>
-              <div className="commentleft underpic average-text likecount undershowpic">
+              <div className="commentleft underpic average-text
+                              likecount undershowpic">
                 { likeCount }
               </div>
-              <div className="commentleft underpic average-text undershowpic picwhen">
+              <div className="commentleft underpic average-text
+                              undershowpic picwhen">
                 { this.state.pic.created_at }
               </div>
-              <div className="right underpic average-text showdeletepad deletex">
+              <div className="right underpic average-text
+                              showdeletepad deletex">
                 { deleteStatus }
               </div>
             </div>
             <div className="albumcomments commentleft showpiccommentwidth">
-              <Comments pic={this.state.pic} className="commentleft albumcomments"></Comments>
+              <Comments pic={this.state.pic}
+                        className="commentleft albumcomments"></Comments>
             </div>
         </div>
       </center>

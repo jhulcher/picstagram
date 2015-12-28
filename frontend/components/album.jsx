@@ -68,6 +68,8 @@ var Album = React.createClass({
                                        "unfollow")}>
                                unfollow
                              </div>;
+          var followSentence = "You're following " +
+                PicStore.all().username + "!";
         } else {
               followStatus = <div className="cursor albumfollow
                                              right addfollow"
@@ -79,6 +81,8 @@ var Album = React.createClass({
                                        "follow")}>
                                follow
                              </div>;
+              followSentence = "You're not following " +
+              PicStore.all().username;
         }
       }
       return (
@@ -96,8 +100,15 @@ var Album = React.createClass({
             <br></br>
             <div className="albumwidth albumcomments">
               <div className="albumcomments average-text
-                              commentleft albumentrypad">
+                              commentleft">
                 User since { PicStore.all().user_since }
+              </div>
+            </div>
+            <br></br>
+            <div className="albumwidth albumcomments">
+              <div className="albumcomments albumfollowtext
+                              commentleft albumentrypad">
+                { followSentence }
               </div>
             </div>
           </li>
@@ -119,7 +130,7 @@ var Album = React.createClass({
               this.state.pics.map (function (pic, idx) {
                 if (pic.user_id !== cur) {
                   if (FolloweesStore.find(parseInt(pic.user_id))) {
-                    var followStatus = <div className="cursor albumfollow
+                        followStatus = <div className="cursor albumfollow
                                                        right deletex"
                                             key={1111}
                                             onClick={
@@ -129,6 +140,7 @@ var Album = React.createClass({
                                                  "unfollow")}>
                                          unfollow
                                        </div>;
+                      followSentence = "You're following " + pic.username + "!";
                   } else {
                         followStatus = <div className="cursor albumfollow
                                                        right addfollow"
@@ -140,7 +152,10 @@ var Album = React.createClass({
                                                  "follow")}>
                                          follow
                                        </div>;
+                        followSentence = "You're not following " + pic.username;
                   }
+                } else {
+                  followSentence = "This is your album";
                 }
                 if (pic.already_liked === true) {
                   var likeStatus = <h4 className="cursor"
@@ -173,8 +188,15 @@ var Album = React.createClass({
                       <br></br>
                       <div className="albumwidth albumcomments">
                         <div className="albumcomments average-text
-                                        commentleft albumentrypad">
+                                        commentleft">
                           User since { pic.user_since }
+                        </div>
+                      </div>
+                      <br></br>
+                      <div className="albumwidth albumcomments">
+                        <div className="albumcomments albumfollowtext
+                                        commentleft albumentrypad">
+                          { followSentence }
                         </div>
                       </div>
                       <AlbumEntry pic={pic}

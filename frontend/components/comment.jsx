@@ -38,19 +38,23 @@ var Comments = React.createClass({
         {
           this.props.pic.comments.map (function (comment, idx) {
             if (cur === comment.author_id) {
-              var deleteStatus = <i className="fa fa-times cursor commentleft deletex commentdelete"
-                                      onClick={this.handleDeleteClick.bind(
-                                        null,
+              var deleteStatus = <i className="fa fa-times cursor commentleft
+                                               deletex commentdelete"
+                                    onClick={this.handleDeleteClick.bind(
+                                      null,
                                         comment.id)}>
                                 </i>;
             } else {
                   deleteStatus = "";
             }
             return (
-                <li key={comment.id} className="commentpad commentwidth commentleft comment-size textleft">
-                  <div className="cursor commentleft commentpad commentname" onClick={
-                    this.handleUserClick.bind(null, comment.author_id)}>
-                      { comment.author }:
+                <li key={comment.id} className="commentpad commentwidth
+                                                commentleft comment-size
+                                                textleft">
+                  <div className="cursor commentleft commentpad commentname"
+                       onClick={
+                         this.handleUserClick.bind(null, comment.author_id)}>
+                    { comment.author }:
                   </div>
                   <div className="commentleft commentpad">
                     { comment.comment }

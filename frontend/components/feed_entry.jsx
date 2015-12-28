@@ -88,7 +88,11 @@ var FeedEntry = React.createClass({
         <div className="cursor pictoppad albumwidth"
              key={ this.props.pic.id }
              onClick={this.handleClick}>
-             <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.props.pic.public_id + ".jpg" }
+             <img src={
+                    "http://res.cloudinary.com/picstagram/image/upload/s-" +
+                    "-cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" +
+                    this.props.pic.public_id + ".jpg"
+                }
                   className="picdisplaysmall picshadow">
              </img>
         </div>
@@ -96,7 +100,8 @@ var FeedEntry = React.createClass({
           <div className="commentleft underpic">
             { likeStatus }
           </div>
-          <div className="commentleft average-text underpic likecount underpicpad">
+          <div className="commentleft average-text underpic
+                          likecount underpicpad">
             { likeCount }
           </div>
           <div className="commentleft underpic average-text underpicpad when">
