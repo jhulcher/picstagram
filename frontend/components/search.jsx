@@ -82,7 +82,7 @@ var Search = React.createClass({
         <input type="text"
                key="search_input"
                className="loginusername"
-               placeholder="search users  ⚲"
+               placeholder="find users"
                onChange={this.handleInput}
                value={this.state.inputVal} >
         </input>

@@ -51,7 +51,8 @@ var Comments = React.createClass({
                 <li key={comment.id} className="commentpad commentwidth
                                                 commentleft comment-size
                                                 textleft">
-                  <div className="cursor commentleft commentpad commentname"
+                  <div className="cursor commentleft
+                                  commentpad commentname"
                        onClick={
                          this.handleUserClick.bind(null, comment.author_id)}>
                     { comment.author }:
