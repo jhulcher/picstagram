@@ -91,11 +91,12 @@ var Feed = React.createClass({
                 <li key={idx} className="feedentrypad">
                   <center>
                     <div className="albumheaderwidth albumcomments">
-                      <div className="cursor feedname commentleft" onClick={
+                      <div className="cursor feedname hovgrow commentleft" onClick={
                         this.handleUserClick.bind(null, pic.user_id)}>
                           { pic.username }
                       </div>
-                      <div className="cursor average-text feedfollow right deletex"
+                      <div className="cursor average-text hovgrow
+                                      feedfollow right deletex"
                            key={1111}
                            onClick={this.handleFollowClick.bind(
                            null, pic.user_id, followStatus)}>

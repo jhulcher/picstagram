@@ -1,41 +1,58 @@
 <div class="tall wide">
   <center>
     <div class="vert_center wide">
+      <div class="logoholder">
+        <div class="tall wide logo2">
+          <div class="logo">
+            ★
+          </div>
+        </div>
+      </div>
       <h1>Picstagram</h1>
+      <div class="slogan">
+        Your life in pictures begins here
+      </div>
       <form action="<%= session_url %>" method="post">
         <%= auth_token_input %>
-          <table class="bottom_pad">
-            <tr>
-              <td>
-                <input type="text"
-                        name="user[username]"
-                        class="loginusername"
-                        placeholder='Username'
-                        value="">
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="bottom_pad">
-                  <input type="password"
-                         name="user[password]"
-                         placeholder='Password'
-                         value=""
-                         class="bottom_pad">
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="submit" value="Sign In!" class="login">
-              </td>
-            </tr>
-          </table>
-          <div class="bottom_pad"> </div>
-          <div class="top_pad"> </div>
-            New around here? &nbsp; <%= link_to "Sign Up!", new_user_url, :class => "under" %>
+          <input type="text"
+                  name="user[username]"
+                  class="loginusername"
+                  placeholder='Username'
+                  value="">
+          <div class="bottom_pad"></div>
+          <input type="password"
+                   name="user[password]"
+                   placeholder='Password'
+                   value=""
+                   class="bottom_pad">
+          <div class="bottom_pad"></div>
+          <input type="submit" value="Sign In!" class="login" >
+          <div class="bottom_pad"></div>
+          <div class="bottom_pad"></div>
+          <div class="bottom_pad"></div>
+          <div class="bottom_pad"></div>
+
+
+
+          <div class="guest_pad"> </div>
+
+          <div class="inline textgrey">
+
+            <div class="headerleft logswitch inline">
+              <div class="average-text headerleft">
+                New around here?
+              </div>
+              <div class="right linktosignin">
+                <%= link_to "Sign Up!", new_user_url %>
+              </div>
+            </div>
+
+            <div class="right inline">
+              <%= render "layouts/guest" %>
+            </div>
+
+          </div>
       </form>
-      <%= render "layouts/guest" %>
     </div>
   </center>
 </div>

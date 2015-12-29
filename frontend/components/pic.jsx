@@ -75,7 +75,7 @@ var Pic = React.createClass({
 
     if (this.state.pic.user_id !== cur) {
       if (FolloweesStore.find(parseInt(this.state.pic.user_id))) {
-        var followStatus = <div className="cursor showfollow right deletex"
+        var followStatus = <div className="cursor showfollow hovgrow right deletex"
                                 key={1111}
                                 onClick={this.handleFollowClick.bind(
                                    null,
@@ -84,7 +84,7 @@ var Pic = React.createClass({
                              unfollow
                            </div>;
       } else {
-            followStatus = <div className="cursor showfollow right addfollow"
+            followStatus = <div className="cursor showfollow hovgrow right addfollow"
                                 key={1111}
                                 onClick={this.handleFollowClick.bind(
                                    null,
@@ -98,7 +98,7 @@ var Pic = React.createClass({
       var deleteStatus = <div
                           onClick={this.handleDeleteClick}
                           className="cursor">
-                            Delete
+                            delete
                           </div>;
     } else {
           deleteStatus = "";
@@ -130,7 +130,7 @@ var Pic = React.createClass({
         <NavBar></NavBar>
         <div key={ this.state.pic.id }
              className="showtitlewidth albumcomments feedentrypad">
-          <div className="showname commentleft cursor"
+          <div className="showname commentleft cursor hovgrow"
                key={ this.state.pic.id }
                onClick={this.handleUserClick}
                div>
@@ -161,7 +161,7 @@ var Pic = React.createClass({
                 { this.state.pic.created_at }
               </div>
               <div className="right underpic average-text
-                              showdeletepad deletex">
+                              showdeletepad hovgrow deletex">
                 { deleteStatus }
               </div>
             </div>

@@ -36,8 +36,8 @@ var AlbumEntry = React.createClass({
     if (this.props.pic.user_id === cur) {
       var deleteStatus = <h5
                           onClick={this.handleDeleteClick}
-                          className="cursor albumcomments">
-                            Delete
+                          className="cursor albumcomments hovgrow">
+                            delete
                           </h5>;
     } else {
           deleteStatus = "      ";
@@ -69,7 +69,11 @@ var AlbumEntry = React.createClass({
         <div className="cursor pictoppad albumwidth"
              key={ this.props.pic.id }
              onClick={this.handleClick}>
-             <img src={ "http://res.cloudinary.com/picstagram/image/upload/s--cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" + this.props.pic.public_id + ".jpg" }
+             <img src={
+                    "http://res.cloudinary.com/picstagram/image/upload/s-" +
+                    "-cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" +
+                    this.props.pic.public_id + ".jpg"
+                  }
                   className="picdisplaysmall picshadow">
              </img>
         </div>
