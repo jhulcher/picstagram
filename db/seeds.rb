@@ -16,11 +16,11 @@ u1 = User.create!(
   password: "12345678"
 )
 u2 = User.create!(
-  username: "rachael",
+  username: "kristen_b",
   password: "12345678"
 )
 u3 = User.create!(
-  username: "jesse",
+  username: "kevin",
   password: "42131607"
 )
 u4 = User.create!(
