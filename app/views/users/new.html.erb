@@ -15,6 +15,7 @@
       <form action="<%= users_url %>" method="post">
         <%= auth_token_input %>
           <input type="text"
+                 maxLength="10"
                  class="loginusername"
                  name="user[username]"
                  placeholder='Username'
