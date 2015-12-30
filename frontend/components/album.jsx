@@ -16,11 +16,18 @@ var Album = React.createClass({
     );
   },
 
+  addToLoadAmount: function () {
+    this.loadAmount += 7;
+    this.forceUpdate();
+  },
+
   componentDidMount: function () {
     ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
     this.listener = PicStore.addListener(function () {
       this.setState({ pics: PicStore.all() });
     }.bind(this));
+
+    this.loadAmount = 7;
 
     ApiUtil.fetchFollowees();
     this.followListener = FolloweesStore.addListener(function () {
@@ -31,6 +38,7 @@ var Album = React.createClass({
   componentWillReceiveProps: function (newProps) {
     ApiUtil.fetchPicsFromUser(parseInt(this.props.location.query.id));
     this.setState({ pics: PicStore.all() });
+    this.loadAmount = 7;
   },
 
   componentWillUnmount: function () {
@@ -55,6 +63,20 @@ var Album = React.createClass({
   },
 
   render: function () {
+    if (this.loadAmount < PicStore.all().length) {
+      var loadMoreButton = <div>
+                             <div className="cursor loadmore"
+                                  onClick={this.addToLoadAmount}
+                                  >
+                                  <h5 className="loadtext">
+                                    Load More?
+                                  </h5>
+                             </div>
+                             <div className="bottom_pad"></div>
+                           </div>;
+    } else {
+          loadMoreButton = <div className="bottom_pad"></div>;
+    }
     if (typeof PicStore.all().length === "undefined") {
       if (PicStore.all().user_id !== cur) {
         if (FolloweesStore.find(parseInt(PicStore.all().user_id))) {
@@ -128,93 +150,98 @@ var Album = React.createClass({
           <NavBar></NavBar>
             {
               this.state.pics.map (function (pic, idx) {
-                if (pic.user_id !== cur) {
-                  if (FolloweesStore.find(parseInt(pic.user_id))) {
-                        followStatus = <div className="cursor albumfollow
-                                                       right deletex"
-                                            key={1111}
-                                            onClick={
-                                               this.handleFollowClick.bind(
-                                                 null,
-                                                 pic.user_id,
-                                                 "unfollow")}>
-                                         unfollow
-                                       </div>;
-                      followSentence = "You're following " + pic.username + "!";
+                if (this.loadAmount >= idx) {
+                  if (pic.user_id !== cur) {
+                    if (FolloweesStore.find(parseInt(pic.user_id))) {
+                          followStatus = <div className="cursor albumfollow
+                                                         right deletex"
+                                              key={1111}
+                                              onClick={
+                                                 this.handleFollowClick.bind(
+                                                   null,
+                                                   pic.user_id,
+                                                   "unfollow")}>
+                                           unfollow
+                                         </div>;
+                        followSentence = "You're following " +
+                                          pic.username + "!";
+                    } else {
+                          followStatus = <div className="cursor albumfollow
+                                                         right addfollow"
+                                              key={1111}
+                                              onClick={
+                                                 this.handleFollowClick.bind(
+                                                   null,
+                                                   pic.user_id,
+                                                   "follow")}>
+                                           follow
+                                         </div>;
+                          followSentence = "You're not following " +
+                                            pic.username;
+                    }
                   } else {
-                        followStatus = <div className="cursor albumfollow
-                                                       right addfollow"
-                                            key={1111}
-                                            onClick={
-                                               this.handleFollowClick.bind(
-                                                 null,
-                                                 pic.user_id,
-                                                 "follow")}>
-                                         follow
-                                       </div>;
-                        followSentence = "You're not following " + pic.username;
+                    followSentence = "This is your album";
                   }
-                } else {
-                  followSentence = "This is your album";
-                }
-                if (pic.already_liked === true) {
-                  var likeStatus = <h4 className="cursor"
-                                       onClick={this.handleLikeClick.bind(
-                                         null,
-                                         pic.already_liked,
-                                         pic.id)}>
-                                            Unlike
-                                   </h4>;
-                } else {
-                      likeStatus = <h4 className="cursor"
-                                       onClick={this.handleLikeClick.bind(
-                                         null,
-                                         pic.already_liked,
-                                         pic.id)}>
-                                            Like
-                                   </h4>;
-                }
-                if (idx === 0) {
-                  return (
-                    <li key={idx} className="albumtop">
-                      <div className="albumheaderwidth albumcomments">
-                        <div className="useralbumtitle commentleft">
-                          { pic.username + "'s album"}
+                  if (pic.already_liked === true) {
+                    var likeStatus = <h4 className="cursor"
+                                         onClick={this.handleLikeClick.bind(
+                                           null,
+                                           pic.already_liked,
+                                           pic.id)}>
+                                              Unlike
+                                     </h4>;
+                  } else {
+                        likeStatus = <h4 className="cursor"
+                                         onClick={this.handleLikeClick.bind(
+                                           null,
+                                           pic.already_liked,
+                                           pic.id)}>
+                                              Like
+                                     </h4>;
+                  }
+                  if (idx === 0) {
+                    return (
+                      <li key={idx} className="albumtop">
+                        <div className="albumheaderwidth albumcomments">
+                          <div className="useralbumtitle commentleft">
+                            { pic.username + "'s album"}
+                          </div>
+                          <div className="average-text">
+                            { followStatus }
+                          </div>
                         </div>
-                        <div className="average-text">
-                          { followStatus }
+                        <br></br>
+                        <div className="albumwidth albumcomments">
+                          <div className="albumcomments average-text
+                                          commentleft">
+                            User since { pic.user_since }
+                          </div>
                         </div>
-                      </div>
-                      <br></br>
-                      <div className="albumwidth albumcomments">
-                        <div className="albumcomments average-text
-                                        commentleft">
-                          User since { pic.user_since }
+                        <br></br>
+                        <div className="albumwidth albumcomments">
+                          <div className="albumcomments albumfollowtext
+                                          commentleft albumentrypad">
+                            { followSentence }
+                          </div>
                         </div>
-                      </div>
-                      <br></br>
-                      <div className="albumwidth albumcomments">
-                        <div className="albumcomments albumfollowtext
-                                        commentleft albumentrypad">
-                          { followSentence }
-                        </div>
-                      </div>
-                      <AlbumEntry pic={pic}
-                                  key={pic.id}>
-                      </AlbumEntry>
-                    </li>
-                  );
-                } else {
-                  return (
-                    <li key={idx} className="feedentrypad">
-                      <AlbumEntry pic={pic}
-                                  key={pic.id}>
-                      </AlbumEntry>
-                    </li>
-                  );
+                        <AlbumEntry pic={pic}
+                                    key={pic.id}>
+                        </AlbumEntry>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li key={idx} className="feedentrypad">
+                        <AlbumEntry pic={pic}
+                                    key={pic.id}>
+                        </AlbumEntry>
+                      </li>
+                    );
+                  }
                 }
               }.bind(this))
             }
+            { loadMoreButton }
         </ul>
       );
     }
