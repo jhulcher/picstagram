@@ -53,11 +53,11 @@ var FeedEntry = React.createClass({
 
   render: function () {
     if (this.props.pic.user_id === cur) {
-      var deleteStatus = <h4
+      var deleteStatus = <h5
                           onClick={this.handleDeleteClick}
-                          className="cursor">
-                            Delete
-                          </h4>;
+                          className="cursor albumcomments hovgrow">
+                            delete
+                          </h5>;
     } else {
           deleteStatus = "";
     }
@@ -107,7 +107,7 @@ var FeedEntry = React.createClass({
           <div className="commentleft underpic average-text underpicpad when">
             { this.props.pic.created_at }
           </div>
-          <div className="right underpic average-text underpicpad deletex">
+          <div className="right underpic underpicpad deletex">
             { deleteStatus }
           </div>
         </div>

@@ -80,19 +80,21 @@ var Feed = React.createClass({
           <NavBar></NavBar>
           {
             this.state.pics.map (function (pic, idx) {
-              if (pic.user_id !== cur) {
-                if (FolloweesStore.find(parseInt(pic.user_id))) {
-                  var followStatus = "unfollow";
-                } else {
-                      followStatus = "follow";
-                }
+              if (pic.user_id === cur) {
+                var followStatus = "";
+              } else if (FolloweesStore.find(parseInt(pic.user_id))) {
+                    followStatus = "unfollow";
+              } else {
+                    followStatus = "follow";
               }
               return (
                 <li key={idx} className="feedentrypad">
                   <center>
                     <div className="albumheaderwidth albumcomments">
-                      <div className="cursor feedname hovgrow commentleft" onClick={
-                        this.handleUserClick.bind(null, pic.user_id)}>
+                      <div className="cursor feedname hovgrow commentleft"
+                           onClick={
+                             this.handleUserClick.bind(null, pic.user_id)
+                           }>
                           { pic.username }
                       </div>
                       <div className="cursor average-text hovgrow

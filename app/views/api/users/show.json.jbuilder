@@ -4,7 +4,7 @@
     json.user_id @user.id
     json.username @user.username
   else
-    json.array! @user.pics.reverse do |pic|
+    json.array! @user.pics.sort.reverse do |pic|
       json.user_since pic.user.created_at.strftime("%b %d, %Y")
       json.partial! 'api/pics/pic', pic: pic
 
