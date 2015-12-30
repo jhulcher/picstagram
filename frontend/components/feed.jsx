@@ -21,11 +21,18 @@ var Feed = React.createClass({
     );
   },
 
+  addToLoadAmount: function () {
+    this.loadAmount += 7;
+    this.forceUpdate();
+  },
+
   componentWillMount: function () {
     ApiUtil.fetchFeedForUser();
     this.listener = PicStore.addListener(function () {
       this.setState({ pics: PicStore.all() });
     }.bind(this));
+
+    this.loadAmount = 7;
 
     ApiUtil.fetchFollowees();
     this.followeesListener = FolloweesStore.addListener(function () {
@@ -52,6 +59,20 @@ var Feed = React.createClass({
   },
 
   render: function () {
+    if (this.loadAmount < PicStore.all().length) {
+      var loadMoreButton = <div>
+                             <div className="cursor loadmore"
+                                  onClick={this.addToLoadAmount}
+                                  >
+                                  <h5 className="loadtext">
+                                    Load More?
+                                  </h5>
+                             </div>
+                             <div className="bottom_pad"></div>
+                           </div>;
+    } else {
+          loadMoreButton = <div className="bottom_pad"></div>;
+    }
     if (PicStore.all().length === 0) {
       return (
         <ul>
@@ -80,37 +101,40 @@ var Feed = React.createClass({
           <NavBar></NavBar>
           {
             this.state.pics.map (function (pic, idx) {
-              if (pic.user_id === cur) {
-                var followStatus = "";
-              } else if (FolloweesStore.find(parseInt(pic.user_id))) {
-                    followStatus = "unfollow";
-              } else {
-                    followStatus = "follow";
+              if (this.loadAmount >= idx) {
+                if (pic.user_id === cur) {
+                  var followStatus = "";
+                } else if (FolloweesStore.find(parseInt(pic.user_id))) {
+                      followStatus = "unfollow";
+                } else {
+                      followStatus = "follow";
+                }
+                return (
+                  <li key={idx} className="feedentrypad">
+                    <center>
+                      <div className="albumheaderwidth albumcomments">
+                        <div className="cursor feedname hovgrow commentleft"
+                             onClick={
+                               this.handleUserClick.bind(null, pic.user_id)
+                             }>
+                            { pic.username }
+                        </div>
+                        <div className="cursor average-text hovgrow
+                                        feedfollow right deletex"
+                             key={1111}
+                             onClick={this.handleFollowClick.bind(
+                             null, pic.user_id, followStatus)}>
+                              { followStatus }
+                        </div>
+                      </div>
+                      <FeedEntry pic={ pic }> </FeedEntry>
+                    </center>
+                  </li>
+                );
               }
-              return (
-                <li key={idx} className="feedentrypad">
-                  <center>
-                    <div className="albumheaderwidth albumcomments">
-                      <div className="cursor feedname hovgrow commentleft"
-                           onClick={
-                             this.handleUserClick.bind(null, pic.user_id)
-                           }>
-                          { pic.username }
-                      </div>
-                      <div className="cursor average-text hovgrow
-                                      feedfollow right deletex"
-                           key={1111}
-                           onClick={this.handleFollowClick.bind(
-                           null, pic.user_id, followStatus)}>
-                            { followStatus }
-                      </div>
-                    </div>
-                    <FeedEntry pic={ pic }> </FeedEntry>
-                  </center>
-                </li>
-              );
             }.bind(this))
           }
+          { loadMoreButton }
         </ul>
       );
     }
