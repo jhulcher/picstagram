@@ -40,7 +40,7 @@ var AlbumEntry = React.createClass({
                             delete
                           </h5>;
     } else {
-          deleteStatus = "      ";
+          deleteStatus = "";
     }
     if (this.props.pic.already_liked === true) {
       var likeStatus = <div className="cursor albumcomments unlikebutton"
