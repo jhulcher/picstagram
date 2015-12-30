@@ -40,7 +40,7 @@ u7 = User.create!(
   password: "12345678"
 )
 u8 = User.create!(
-  username: "vtg_bike_lover",
+  username: "vtg_bikes",
   password: "12345678"
 )
 
@@ -77,7 +77,7 @@ p58 = Pic.create!(user_id: u6.id, public_id: "xsqgdh6zckeqb8ke3oz6")
 p68 = Pic.create!(user_id: u7.id, public_id: "ii7vavxjb8tzidnuzfld")
 p78 = Pic.create!(user_id: u8.id, public_id: "xbhdznn6t2hq4najvg0q")
 
-p7 = Pic.create!(user_id: u1.id, public_id: "g7fc1ampuwqlanidzj54")
+p7 = Pic.create!(user_id: u1.id, public_id: "cnalcemtlnj4ho66vgvy")
 p17 = Pic.create!(user_id: u2.id, public_id: "czjbwohmr9ssfszbdvpv")
 p27 = Pic.create!(user_id: u3.id, public_id: "nbaheukz8zjgxc1qyxrf")
 p37 = Pic.create!(user_id: u4.id, public_id: "rq4uqs5t0y1lsf1oh3wy")
@@ -95,7 +95,7 @@ p56 = Pic.create!(user_id: u6.id, public_id: "o8zgwwyjrfg3he2yaace")
 p66 = Pic.create!(user_id: u7.id, public_id: "y4sggnxonv5xfqeehwe6")
 p76 = Pic.create!(user_id: u8.id, public_id: "binjlhu5ikbwoubjxgck")
 
-p5 = Pic.create!(user_id: u1.id, public_id: "fdlbolcdrnhzsaknokoc")
+p5 = Pic.create!(user_id: u1.id, public_id: "a6cbwckxw8wwxp3osbhx")
 p15 = Pic.create!(user_id: u2.id, public_id: "zq5uiitmw4ziryjio4jn")
 p25 = Pic.create!(user_id: u3.id, public_id: "hfwau2ptyq20vjdxsjjf")
 p35 = Pic.create!(user_id: u4.id, public_id: "tlcx1zhtxhnomdntqtd8")
@@ -122,7 +122,7 @@ p53 = Pic.create!(user_id: u6.id, public_id: "qt1ecdeevbedtf3dnrse")
 p63 = Pic.create!(user_id: u7.id, public_id: "liiawa6otpp6s02ydsui")
 p73 = Pic.create!(user_id: u8.id, public_id: "wam274sf0ep2ocgidh2a")
 
-p2 = Pic.create!(user_id: u1.id, public_id: "drzv6m8vdujcj1abgt2e")
+p2 = Pic.create!(user_id: u1.id, public_id: "g7fc1ampuwqlanidzj54")
 p12 = Pic.create!(user_id: u2.id, public_id: "rwceh2f6qzthoksgp8ue")
 p22 = Pic.create!(user_id: u3.id, public_id: "upeclzfyyxfcp9qnszqp")
 p32 = Pic.create!(user_id: u4.id, public_id: "oqig2w9q93yjfia4arbr")
@@ -131,7 +131,7 @@ p52 = Pic.create!(user_id: u6.id, public_id: "bwsjkufg2ckend9zo3tt")
 p62 = Pic.create!(user_id: u7.id, public_id: "vo5yhysjperzrqffsamf")
 p72 = Pic.create!(user_id: u8.id, public_id: "vwriqmwtkiat2phvkozx")
 
-p1 = Pic.create!(user_id: u1.id, public_id: "cnalcemtlnj4ho66vgvy")
+p1 = Pic.create!(user_id: u1.id, public_id: "drzv6m8vdujcj1abgt2e")
 p11 = Pic.create!(user_id: u2.id, public_id: "iq6zjo1gtmas5cbun2nv")
 p61 = Pic.create!(user_id: u7.id, public_id: "ys2qa59tkokyrulnbzgl")
 p31 = Pic.create!(user_id: u4.id, public_id: "rlopqb2ijq92qscw0q3m")
