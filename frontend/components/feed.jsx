@@ -59,7 +59,7 @@ var Feed = React.createClass({
   },
 
   render: function () {
-    if (this.loadAmount < PicStore.all().length) {
+    if (this.loadAmount < PicStore.all().length - 1) {
       var loadMoreButton = <div>
                              <div className="cursor loadmore"
                                   onClick={this.addToLoadAmount}
