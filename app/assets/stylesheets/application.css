@@ -107,8 +107,8 @@
 }
 
 .commentname:hover {
-    color: #5CE600;
-    text-shadow: .5px .5px #9e9e9e;
+    color: #2ACDEF;
+    text-shadow: 1px 1px #9e9e9e;
 }
 
 .slogan {
@@ -202,8 +202,8 @@
 }
 
 .addfollow:hover {
-  color: #5CE600;
-  text-shadow: .5px .5px #9e9e9e;
+  color: #2ACDEF;
+  text-shadow: 1px 1px #9e9e9e;
 }
 
 .likecount {
@@ -219,6 +219,10 @@
 }
 
 .commentcolor:hover {
+    background: #dbdbdb;
+}
+
+.commentcolor:focus {
     background: #dbdbdb;
 }
 
@@ -385,7 +389,7 @@
  }
 
  .camera-color:hover {
-   color: #5CE600;
+   color: #2ACDEF;
    -webkit-transform: scale(1.2);
    -ms-transform: scale(1.2);
    transform: scale(1.2);
@@ -403,7 +407,7 @@
  }
 
 .feedname:hover {
-  color: #5CE600;
+  color: #2ACDEF;
 }
 
 .showname {
@@ -417,7 +421,7 @@
 }
 
 .showname:hover {
- color: #5CE600;
+ color: #2ACDEF;
 }
 
  h1 {
@@ -459,14 +463,14 @@
  }
 
  .picshadow:hover {
-   box-shadow: 10px 10px 10px #B5B5B5;
+   box-shadow: 9px 9px 9px #dbdbdb;
    -webkit-transform: scale(1.005);
    -ms-transform: scale(1.005);
    transform: scale(1.005);
  }
 
  .showpicshadow {
-   box-shadow: 14px 14px 14px #E0E0E0;
+   box-shadow: 12px 12px 12px #E0E0E0;
  }
 
  .bar {
@@ -752,7 +756,7 @@
  }
 
  .drop-text:hover {
-   color: rgba(92, 230, 0, 1);
+   color: #2ACDEF;
    text-shadow: .5px .5px #9e9e9e;
  }
 
