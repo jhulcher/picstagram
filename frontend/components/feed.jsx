@@ -65,7 +65,7 @@ var Feed = React.createClass({
                                   onClick={this.addToLoadAmount}
                                   >
                                   <h5 className="loadtext">
-                                    Load More?
+                                    Load More
                                   </h5>
                              </div>
                              <div className="bottom_pad"></div>
