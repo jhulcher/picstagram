@@ -65,10 +65,10 @@ var Album = React.createClass({
   render: function () {
     if (this.loadAmount < PicStore.all().length - 1) {
       var loadMoreButton = <div>
-                             <div className="cursor loadmore"
+                             <div className="cursor load_more"
                                   onClick={this.addToLoadAmount}
                                   >
-                                  <h5 className="loadtext">
+                                  <h5 className="load_more_text">
                                     Load More
                                   </h5>
                              </div>
@@ -80,8 +80,7 @@ var Album = React.createClass({
     if (typeof PicStore.all().length === "undefined") {
       if (PicStore.all().user_id !== cur) {
         if (FolloweesStore.find(parseInt(PicStore.all().user_id))) {
-          var followStatus = <div className="cursor albumfollow
-                                             right deletex"
+          var followStatus = <div className="cursor"
                                   key={1111}
                                   onClick={
                                      this.handleFollowClick.bind(
@@ -93,8 +92,7 @@ var Album = React.createClass({
           var followSentence = "You're following " +
                 PicStore.all().username + "!";
         } else {
-              followStatus = <div className="cursor albumfollow
-                                             right addfollow"
+              followStatus = <div className="cursor"
                                   key={1111}
                                   onClick={
                                      this.handleFollowClick.bind(
@@ -110,37 +108,35 @@ var Album = React.createClass({
       return (
         <ul>
           <NavBar></NavBar>
-          <li key={1} className="albumtop">
-            <div className="albumheaderwidth albumcomments">
-              <div className="useralbumtitle commentleft">
+          <li key={1} className="album_top">
+            <div className="album_header_div">
+              <div className="">
                 { PicStore.all().username + "'s album"}
               </div>
-              <div className="average-text">
+              <div className="average_text">
                 { followStatus }
               </div>
             </div>
             <br></br>
-            <div className="albumwidth albumcomments">
-              <div className="albumcomments average-text
-                              commentleft">
+            <div className="album_text">
+              <div className="album_user_since">
                 User since { PicStore.all().user_since }
               </div>
             </div>
             <br></br>
-            <div className="albumwidth albumcomments">
-              <div className="albumcomments albumfollowtext
-                              commentleft albumentrypad">
+            <div className="album_text">
+              <div className="album_follow_outer">
                 { followSentence }
               </div>
             </div>
           </li>
           <li>
-            <div className="feedentrypad">
+            <div className="feed_entry_pad">
             </div>
             User hasn't uploaded any pics yet!
           </li>
           <li className="top_pad">
-            <i className="bigimage fa fa-picture-o"></i>
+            <i className="no_pics_icon fa fa-picture-o"></i>
           </li>
         </ul>
       );
@@ -153,8 +149,8 @@ var Album = React.createClass({
                 if (this.loadAmount >= idx) {
                   if (pic.user_id !== cur) {
                     if (FolloweesStore.find(parseInt(pic.user_id))) {
-                          followStatus = <div className="cursor albumfollow
-                                                         right deletex"
+                          followStatus = <div className="cursor
+                                                         album_follow_delete"
                                               key={1111}
                                               onClick={
                                                  this.handleFollowClick.bind(
@@ -166,8 +162,7 @@ var Album = React.createClass({
                         followSentence = "You're following " +
                                           pic.username + "!";
                     } else {
-                          followStatus = <div className="cursor albumfollow
-                                                         right addfollow"
+                          followStatus = <div className="cursor album_follow"
                                               key={1111}
                                               onClick={
                                                  this.handleFollowClick.bind(
@@ -201,26 +196,24 @@ var Album = React.createClass({
                   }
                   if (idx === 0) {
                     return (
-                      <li key={idx} className="albumtop">
-                        <div className="albumheaderwidth albumcomments">
-                          <div className="useralbumtitle commentleft">
+                      <li key={idx} className="album_top_pad">
+                        <div className="album_header_div">
+                          <div className="album_username">
                             { pic.username + "'s album"}
                           </div>
-                          <div className="average-text">
+                          <div className="average_text">
                             { followStatus }
                           </div>
                         </div>
                         <br></br>
-                        <div className="albumwidth albumcomments">
-                          <div className="albumcomments average-text
-                                          commentleft">
+                        <div className="album_text">
+                          <div className="album_user_since">
                             User since { pic.user_since }
                           </div>
                         </div>
                         <br></br>
-                        <div className="albumwidth albumcomments">
-                          <div className="albumcomments albumfollowtext
-                                          commentleft albumentrypad">
+                        <div className="album_text">
+                          <div className="album_follow_text">
                             { followSentence }
                           </div>
                         </div>
@@ -231,7 +224,7 @@ var Album = React.createClass({
                     );
                   } else {
                     return (
-                      <li key={idx} className="feedentrypad">
+                      <li key={idx} className="feed_entry_pad">
                         <AlbumEntry pic={pic}
                                     key={pic.id}>
                         </AlbumEntry>

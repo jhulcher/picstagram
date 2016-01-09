@@ -75,7 +75,7 @@ var Pic = React.createClass({
 
     if (this.state.pic.user_id !== cur) {
       if (FolloweesStore.find(parseInt(this.state.pic.user_id))) {
-        var followStatus = <div className="cursor showfollow hovgrow right deletex"
+        var followStatus = <div className="cursor show_unfollow"
                                 key={1111}
                                 onClick={this.handleFollowClick.bind(
                                    null,
@@ -84,7 +84,7 @@ var Pic = React.createClass({
                              unfollow
                            </div>;
       } else {
-            followStatus = <div className="cursor showfollow hovgrow right addfollow"
+            followStatus = <div className="cursor show_follow"
                                 key={1111}
                                 onClick={this.handleFollowClick.bind(
                                    null,
@@ -104,7 +104,7 @@ var Pic = React.createClass({
           deleteStatus = "";
     }
     if (this.state.pic.already_liked === true) {
-      var likeStatus = <div className="cursor albumcomments bigunlikebutton"
+      var likeStatus = <div className="cursor show_unlike_button"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.state.pic.already_liked,
@@ -112,7 +112,7 @@ var Pic = React.createClass({
                               ★
                        </div>;
     } else {
-          likeStatus = <div className="cursor albumcomments biglikebutton"
+          likeStatus = <div className="cursor show_like_button"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.state.pic.already_liked,
@@ -129,51 +129,46 @@ var Pic = React.createClass({
       <center>
         <NavBar></NavBar>
         <div key={ this.state.pic.id }
-             className="showtitlewidth albumcomments feedentrypad">
-          <div className="showname commentleft cursor hovgrow"
+             className="show_pic_title_info">
+          <div className="show_pic_username cursor"
                key={ this.state.pic.id }
                onClick={this.handleUserClick}
                div>
                 { this.state.pic.username }
           </div>
-          <div className="showfollow">
+          <div className="show_follow">
               { followStatus }
           </div>
         </div>
-        <div className="showpicwidth">
-            <img src={
-                  "http://res.cloudinary.com/picstagram/image/upload/s-" +
-                  "-cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" +
-                  this.state.pic.public_id + ".jpg"
-                }
-                 className="picdisplaylarge showpicshadow">
+        <div className="show_pic_width">
+            <img src={"http://res.cloudinary.com/picstagram/image/upload/s-" +
+                      "-cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" +
+                      this.state.pic.public_id + ".jpg"
+                 }
+                 className="show_pic_display">
             </img>
-            <div className="showpicinfowidth albumcomments">
-              <div className="commentleft underpic">
+            <div className="show_pic_info">
+              <div className="album_like_div">
                 { likeStatus }
               </div>
-              <div className="commentleft underpic average-text
-                              likecount undershowpic">
+              <div className="show_like_count">
                 { likeCount }
               </div>
-              <div className="commentleft underpic average-text
-                              undershowpic picwhen">
+              <div className="pic_when">
                 { this.state.pic.created_at }
               </div>
-              <div className="right underpic average-text
-                              showdeletepad hovgrow deletex">
+              <div className="show_pic_delete delete_x">
                 { deleteStatus }
               </div>
             </div>
-            <div className="albumcomments commentleft showpiccommentwidth">
+            <div className="show_pic_comments">
               <Comments pic={this.state.pic}
-                        className="commentleft albumcomments"></Comments>
+                        className="album_like_div"></Comments>
             </div>
         </div>
       </center>
     );
   }
-
 });
 
 module.exports = Pic;

@@ -78,20 +78,20 @@ var Search = React.createClass({
     var results = this.matches();
     var users = this.uniq(results);
     return (
-      <div className="cursor search left">
+      <div className="cursor search_div">
         <input type="text"
                key="search_input"
-               className="loginusername"
+               className="search_field"
                placeholder="find users"
                onChange={this.handleInput}
                value={this.state.inputVal} >
         </input>
-        <ul className="left-align">
+        <ul className="search_ul">
           {
             users.map(function (result, i) {
               return (
                 <li key={result.id}
-                    className="drop-text"
+                    className="search_li"
                     value="result.id"
                     onClick={this.handleUserClick}
                     >

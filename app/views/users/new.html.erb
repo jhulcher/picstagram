@@ -1,22 +1,22 @@
-<div class="tall wide">
+<div class="splash_outer">
   <center>
-    <div class="vert_center wide">
-      <div class="logoholder">
-        <div class="tall wide logo2">
-          <div class="logo">
+    <div class="vert_center">
+      <div class="logo_outer">
+        <div class="star_div">
+          <div class="splash_logo">
             ★
           </div>
         </div>
       </div>
       <h1>Picstagram</h1>
-      <div class="slogan">
+      <div class="login_slogan">
         Your life in pictures begins here
       </div>
       <form action="<%= users_url %>" method="post">
         <%= auth_token_input %>
           <input type="text"
                  maxLength="10"
-                 class="loginusername"
+                 class="login_username"
                  name="user[username]"
                  placeholder='New Username'
                  value="">
@@ -36,18 +36,18 @@
 
 </form>
           <div class="guest_pad"> </div>
-          <div class="inline textgrey">
+          <div class="login_text">
 
-            <div class="headerleft logswitch inline">
-              <div class="average-text headerleft">
+            <div class="login_switch_div">
+              <div class="registered_text">
                 Already registered?
               </div>
-              <div class="right linktosignin">
+              <div class="sign_up_link">
                 <%= link_to "Sign In!", new_session_url %>
               </div>
             </div>
 
-            <div class="right inline">
+            <div class="login_render">
               <%= render "layouts/guest" %>
             </div>
 

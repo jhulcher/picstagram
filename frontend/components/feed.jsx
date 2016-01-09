@@ -61,10 +61,9 @@ var Feed = React.createClass({
   render: function () {
     if (this.loadAmount < PicStore.all().length - 1) {
       var loadMoreButton = <div>
-                             <div className="cursor loadmore"
-                                  onClick={this.addToLoadAmount}
-                                  >
-                                  <h5 className="loadtext">
+                             <div className="cursor load_more"
+                                  onClick={this.addToLoadAmount}>
+                                  <h5 className="load_more_text">
                                     Load More
                                   </h5>
                              </div>
@@ -77,9 +76,9 @@ var Feed = React.createClass({
       return (
         <ul>
           <NavBar></NavBar>
-          <div className="feedentrypad">
+          <div className="feed_entry_pad">
           </div>
-          <div className="feedentrypad">
+          <div className="feed_entry_pad">
           </div>
           <li className="top_pad">
             The users you're following haven't uploaded any pics yet!
@@ -91,7 +90,7 @@ var Feed = React.createClass({
             Follow more users to jump-start your feed!
           </li>
           <li className="top_pad">
-            <i className="bigimage fa fa-picture-o"></i>
+            <i className="no_pics_icon fa fa-picture-o"></i>
           </li>
         </ul>
       );
@@ -110,17 +109,16 @@ var Feed = React.createClass({
                       followStatus = "follow";
                 }
                 return (
-                  <li key={idx} className="feedentrypad">
+                  <li key={idx} className="feed_entry_pad">
                     <center>
-                      <div className="albumheaderwidth albumcomments">
-                        <div className="cursor feedname hovgrow commentleft"
+                      <div className="album_header">
+                        <div className="cursor feed_username"
                              onClick={
                                this.handleUserClick.bind(null, pic.user_id)
                              }>
                             { pic.username }
                         </div>
-                        <div className="cursor average-text hovgrow
-                                        feedfollow right deletex"
+                        <div className="cursor feed_follow_delete"
                              key={1111}
                              onClick={this.handleFollowClick.bind(
                              null, pic.user_id, followStatus)}>
