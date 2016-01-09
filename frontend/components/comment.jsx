@@ -38,26 +38,23 @@ var Comments = React.createClass({
         {
           this.props.pic.comments.map (function (comment, idx) {
             if (cur === comment.author_id) {
-              var deleteStatus = <i className="fa fa-times cursor commentleft
-                                               deletex commentdelete"
-                                    onClick={this.handleDeleteClick.bind(
-                                      null,
-                                        comment.id)}>
+              var deleteStatus = <i
+                                   className="fa fa-times cursor comment_delete"
+                                   onClick={this.handleDeleteClick.bind(
+                                     null,
+                                     comment.id)}>
                                 </i>;
             } else {
                   deleteStatus = "";
             }
             return (
-                <li key={comment.id} className="commentpad commentwidth
-                                                commentleft comment-size
-                                                textleft">
-                  <div className="cursor commentleft
-                                  commentpad commentname"
+                <li key={comment.id} className="comment_div">
+                  <div className="cursor comment_name"
                        onClick={
                          this.handleUserClick.bind(null, comment.author_id)}>
                     { comment.author }:
                   </div>
-                  <div className="commentleft commentpad">
+                  <div className="comment_body">
                     { comment.comment }
                   </div>
                   { deleteStatus }
@@ -66,13 +63,12 @@ var Comments = React.createClass({
             );
           }.bind(this))
         }
-        <li className="">
+        <li className="text_left">
           <form method="POST"
-                className="textleft"
                 onSubmit={this.handleSubmit}>
             <input type="comment"
                    maxLength="30"
-                   className="commentcolor"
+                   className="comment_field"
                    placeholder="..."
                    valueLink={this.linkState('content')}/>
 

@@ -55,14 +55,14 @@ var FeedEntry = React.createClass({
     if (this.props.pic.user_id === cur) {
       var deleteStatus = <h5
                           onClick={this.handleDeleteClick}
-                          className="cursor albumcomments hovgrow">
+                          className="cursor album_pic_delete">
                             delete
                           </h5>;
     } else {
           deleteStatus = "";
     }
     if (this.props.pic.already_liked === true) {
-      var likeStatus = <div className="cursor albumcomments unlikebutton"
+      var likeStatus = <div className="cursor album_unlike_button"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.props.pic.already_liked,
@@ -70,7 +70,7 @@ var FeedEntry = React.createClass({
                               ★
                        </div>;
     } else {
-          likeStatus = <div className="cursor albumcomments likebutton"
+          likeStatus = <div className="cursor album_like_button"
                            onClick={this.handleLikeClick.bind(
                            null,
                            this.props.pic.already_liked,
@@ -85,34 +85,33 @@ var FeedEntry = React.createClass({
     }
     return (
       <center>
-        <div className="cursor pictoppad albumwidth"
+        <div className="cursor album_pic_div"
              key={ this.props.pic.id }
              onClick={this.handleClick}>
-             <img src={
-                    "http://res.cloudinary.com/picstagram/image/upload/s-" +
-                    "-cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" +
-                    this.props.pic.public_id + ".jpg"
-                }
-                  className="picdisplaysmall picshadow">
+             <img className="album_pic_display"
+                  src={
+                       "http://res.cloudinary.com/picstagram/image/upload/s-" +
+                       "-cdzgeeOu--/c_fill,g_center,h_550,q_91,w_550/" +
+                       this.props.pic.public_id + ".jpg"
+                  }>
              </img>
         </div>
-        <div className="entryinfowidth albumcomments">
-          <div className="commentleft underpic">
+        <div className="album_entry_width">
+          <div className="album_like_div">
             { likeStatus }
           </div>
-          <div className="commentleft average-text underpic
-                          likecount underpicpad">
+          <div className="album_like">
             { likeCount }
           </div>
-          <div className="commentleft underpic average-text underpicpad when">
+          <div className="album_when">
             { this.props.pic.created_at }
           </div>
-          <div className="right underpic underpicpad deletex">
+          <div className="delete_x">
             { deleteStatus }
           </div>
         </div>
-        <div className="albumwidth">
-          <Comments pic={this.props.pic} className="albumcomments"></Comments>
+        <div className="album_width">
+          <Comments pic={this.props.pic} className="album_comments"></Comments>
         </div>
       </center>
     );
