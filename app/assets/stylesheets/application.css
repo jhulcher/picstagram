@@ -187,7 +187,7 @@
  }
 
 .link_to_sign_in {
-  padding: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 5px;
   font-size: 16px;
   font-weight: normal;
   text-decoration: underline;
@@ -476,6 +476,10 @@
     -o-transition: all .2s ease-in;
     -webkit-transition: all .2s ease-in;
     transition: all .2s ease-in;
+ }
+
+ .guest_div {
+   padding: 1px 0px 0px 0px;
  }
 
  .load_more:hover {
@@ -818,6 +822,7 @@
 .login_text {
   color: grey;
   display: inline-block;
+  padding: 1px 0px 0px 0px;
 }
 
 .guest_pad {

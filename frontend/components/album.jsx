@@ -80,7 +80,7 @@ var Album = React.createClass({
     if (typeof PicStore.all().length === "undefined") {
       if (PicStore.all().user_id !== cur) {
         if (FolloweesStore.find(parseInt(PicStore.all().user_id))) {
-          var followStatus = <div className="cursor"
+          var followStatus = <div className="cursor album_follow_delete"
                                   key={1111}
                                   onClick={
                                      this.handleFollowClick.bind(
@@ -92,7 +92,7 @@ var Album = React.createClass({
           var followSentence = "You're following " +
                 PicStore.all().username + "!";
         } else {
-              followStatus = <div className="cursor"
+              followStatus = <div className="cursor album_follow"
                                   key={1111}
                                   onClick={
                                      this.handleFollowClick.bind(
@@ -108,9 +108,9 @@ var Album = React.createClass({
       return (
         <ul>
           <NavBar></NavBar>
-          <li key={1} className="album_top">
+          <li key={1} className="album_top_pad">
             <div className="album_header_div">
-              <div className="">
+              <div className="album_username">
                 { PicStore.all().username + "'s album"}
               </div>
               <div className="average_text">
@@ -125,7 +125,7 @@ var Album = React.createClass({
             </div>
             <br></br>
             <div className="album_text">
-              <div className="album_follow_outer">
+              <div className="album_follow_text">
                 { followSentence }
               </div>
             </div>
