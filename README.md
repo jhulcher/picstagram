@@ -2,11 +2,11 @@
 
 www.picstagram.us
 
-## An image sharing web app inspired on Instagram.
+## An image sharing web app inspired by Instagram
 
-<img src="app/assets/images/picstagram.jpg" /><img src="app/assets/images/picstagram2.jpg" />
+<img src="app/assets/images/picstagram.jpg" border="1" /> <img src="app/assets/images/picstagram2.jpg" border="1" />
 
-## App offers users a platform to share, like and comment on images.
+## App offers users a platform to share, like and comment on images
 
 - [ ] Front-end built using Javascript and React/Flux.
 - [ ] Single-page structure after login allows for immediate update of page based on user interaction.
