@@ -2,6 +2,10 @@
 
 www.picstagram.us
 
+<img src="app/assets/images/picstagram.jpg" />
+<br></br>
+<img src="app/assets/images/picstagram2.jpg" />
+
 ## Picstagram is a image sharing web app inspired on Instagram.
 
 ## The app offers users a platform to share, like and comment on images.
