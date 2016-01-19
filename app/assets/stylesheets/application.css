@@ -173,7 +173,7 @@
    font-size: 16px;
    width: 47px;
    background-color: white;
-   padding: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 2px;
  }
 
  .guest:hover {
@@ -199,7 +199,6 @@
 
 .link_to_sign_in:hover {
   text-decoration: none;
-  font-weight: bold;
   color: #2a8cef;
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
@@ -793,7 +792,6 @@
 
 .sign_up_link:hover {
   text-decoration: none;
-  font-weight: bold;
   color: #2a8cef;
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
@@ -814,6 +812,7 @@
 }
 
 .login_switch_div {
+  width: 230px;
   float: left;
   display: inline-block;
   padding: 3px 35px 0px 0px;
@@ -821,6 +820,7 @@
 
 .login_text {
   color: grey;
+  width: 438px;
   display: inline-block;
   padding: 1px 0px 0px 0px;
 }
